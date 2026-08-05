@@ -22,7 +22,7 @@ export default function EstimationBlock({ eyebrow, heading, subText, details, ca
   const monthly = months ? monthlyPayment(financed, months, apr / 100) : 0;
 
   return (
-    <section className="estimator p30 py70 flex align-center gap-50 justify-center">
+    <section className="estimator p30 py70 flex align-center gap-50 justify-center m-flex-col">
       <Content eyebrow={eyebrow} heading={heading} subText={subText} details={details} />
       <Calculator calcEyebrow={calcEyebrow} calcHeading={calcHeading} minFinanced={minFinanced} maxFinanced={maxFinanced} financed={financed} setFinanced={setFinanced} terms={terms} months={months} setMonths={setMonths} monthly={monthly} disclaimer={disclaimer} />
     </section>
@@ -33,16 +33,16 @@ function Content({ eyebrow, heading, subText, details }) {
   return (
     <div className="flex flex-col gap-40 max-700">
       <div className="flex flex-col gap-15">
-        <div>
+        <div className='fade--in' data-sal>
           {eyebrow && <span className="eyebrow">{eyebrow}</span>}
           {heading && <h2 className="h2">{heading}</h2>}
         </div>
-        {subText && <p className="">{subText}</p>}
+        {subText && <p className="fade--in" data-sal>{subText}</p>}
       </div>
       <div className='flex flex-col gap-20'>
-        <div className="line" />
+        <div className="line" data-sal />
         {details?.length > 0 && (
-          <div className="flex gap-30">
+          <div className="flex gap-30 fade--in" data-sal>
             {details.map((item, i) => (
               <div key={i}>
                 <p className="h5">{item.value}</p>

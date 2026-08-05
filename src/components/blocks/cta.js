@@ -6,7 +6,7 @@ export default function Cta({ heading, subText, buttons }) {
 
   return (
     <section className="p30 py70 bg-flame flex flex-col align-center gap-30">
-      <div className="flex flex-col gap-15 align-center">
+      <div className="flex flex-col gap-15 align-center fade--in" data-sal>
         {heading && <h2 className="h2">{heading}</h2>}
         {subText && <p className="max-400 text-center">{subText}</p>}
       </div>

@@ -1,9 +1,11 @@
 import Link from 'next/link';
+import FooterReveal from './footerReveal';
 
 export default function Footer({ tagline, socials, columns, legalText }) {
   if (!tagline && !socials?.length && !columns?.length && !legalText) return null;
   return (
-    <footer className="p30 py40 flex flex-col gap-40">
+    <FooterReveal>
+      <div className='footer-content p30 py40 flex flex-col space-between'>
       <div className="flex space-between gap-20">
         <div className='flex flex-col gap-20'>
           <div className="flex flex-col gap-10">
@@ -39,8 +41,9 @@ export default function Footer({ tagline, socials, columns, legalText }) {
         )}
       </div>
       <div className='flex flex-col gap-20'>
-        <div className='line' />
+        <div className='line' data-sal />
       {legalText && <p className="f-14 text-silk-dim">{legalText}</p>}</div>
-    </footer>
+      </div>
+    </FooterReveal>
   );
 }

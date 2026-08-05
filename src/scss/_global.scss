@@ -83,6 +83,24 @@ a {
 }
 
 .line {
+  position: relative;
+  height: 1px;
+  &:before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 1px;
+    width: 0%;
+    background-color: var(--line);
+    transition: 0.65s ease width 0.3s;
+  }
+  &.sal-animate:before {
+    width: 100%;
+  }
+}
+
+.line-static {
   border-bottom: 1px solid var(--line);
 }
 
@@ -496,5 +514,17 @@ div.bg-image,
 .m-100 {
   @media (max-width: 768px) {
     width: 100%;
+  }
+}
+
+.m-flex-col {
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
+}
+
+.m-max-unset {
+  @media (max-width: 768px) {
+    max-width: unset;
   }
 }

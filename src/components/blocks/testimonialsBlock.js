@@ -6,10 +6,10 @@ export default function TestimonialsBlock({ items }) {
 
   return (
     <section className="p30 py70 bg-silk text-ink-dim flex justify-center">
-      <div className="flex gap-45">
+      <div className="flex gap-45 m-flex-col">
         {items.map((item) => (
           <div className="max-600 flex flex-col gap-25 space-between" key={item._key}>
-            <div className="flex flex-col gap-10">
+            <div className="flex flex-col gap-10 fade--in" data-sal>
               {item.eyebrow && <span className="eyebrow">{item.eyebrow}</span>}
               {item.quote && <p className="f-20 f-serif text-midnight italic">{item.quote}</p>}
               {item.attribution && <div className="f-14">{item.attribution}</div>}

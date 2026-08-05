@@ -4,6 +4,7 @@ import Header from '@/components/header';
 import Footer from '@/components/footer';
 import { getFooter } from '@/lib/sanity';
 import SmoothScroll from '@/components/smoothScroll';
+import SalInit from '@/components/salInit';
 
 export const metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.rizzlending.com'),
@@ -32,6 +33,7 @@ export default async function RootLayout({ children }) {
     <SmoothScroll>
       <html lang="en" className={`${clash.variable} ${gambetta.variable} ${archivo.variable}`}>
         <body>
+          <SalInit />
           <Header />
           {children}
           <Footer {...footer} />

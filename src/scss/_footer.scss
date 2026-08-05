@@ -1,0 +1,22 @@
+/*--------------------------------------------------------------
+## Footer Styling
+--------------------------------------------------------------*/
+
+.footer {
+    height: 400px;
+    position: relative;
+    clip-path: polygon(0% 0, 100% 0%, 100% 100%, 0 100%);
+}
+
+.footer-content {
+    height: 400px;
+    position: fixed;
+    width: 100vw;
+    bottom: 0;
+    opacity: 0;
+    transition: opacity 0.65s ease 0.2s;
+}
+
+.footer.sal-animate .footer-content {
+    opacity: 1;
+}

@@ -27,20 +27,20 @@ export default function FaqBlock({ eyebrow, heading, items }) {
   return (
     <section className="p30 py70 flex flex-col gap-30 align-center">
       {(eyebrow || heading) && (
-        <div className="flex flex-col gap-10 align-center">
+        <div className="flex flex-col gap-10 align-center fade--in" data-sal>
           {eyebrow && <span className="eyebrow">{eyebrow}</span>}
           {heading && <h2 className="h2 text-silk">{heading}</h2>}
         </div>
       )}
       {hasItems && (
         <div className="max-800">
-          <div className='line' />
+          <div className='line-static' />
           {items.map((item) => {
             const isOpen = openKeys.has(item._key);
             return (
-              <div className={`line ${isOpen ? 'open' : ''}`} key={item._key}>
+              <div className={`line-static ${isOpen ? 'open' : ''}`} key={item._key}>
                 <button type="button" className="py20 w-100 f-20 weight-600 flex align-center space-between gap-20" onClick={() => toggle(item._key)}>
-                  <span>{item.question}</span>
+                  <span className='fade--in' data-sal>{item.question}</span>
                   <span
                     className="text-flame f-25"
                     ref={(el) => {

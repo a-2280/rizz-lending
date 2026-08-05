@@ -14,19 +14,19 @@ export default function ThreeCardBlock({ eyebrow, heading, description, cards })
       <div className="flex flex-col gap-40">
         {(eyebrow || heading || description) && (
           <div className="flex flex-col gap-15">
-            <div className="flex flex-col gap-10">
+            <div className="flex flex-col gap-10 fade--in" data-sal>
               {eyebrow && <span className="eyebrow">{eyebrow}</span>}
               {heading && <h2 className="h2 text-carbon">{heading}</h2>}
             </div>
-            {description && <p className="max-600">{description}</p>}
+            {description && <p className="max-600 fade--in" data-sal>{description}</p>}
           </div>
         )}
         {hasCards && (
-          <div className="flex gap-20">
+          <div className="flex gap-20 m-flex-col">
             {cards.map((card) => {
               const href = resolveHref(card.link);
               return (
-                <Link className='card max-400 p30 bg-white radius-5 border-line-d flex flex-col gap-10' key={card._key} href={href}>
+                <Link className='card max-400 p30 bg-white radius-5 border-line-d flex flex-col gap-10 m-max-unset' key={card._key} href={href}>
                   <div className="flex flex-col gap-5">
                     {card.eyebrow && <span className="eyebrow f-14">{card.eyebrow}</span>}
                     {card.heading && <h3 className="h5 text-midnight">{card.heading}</h3>}

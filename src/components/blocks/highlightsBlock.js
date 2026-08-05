@@ -6,17 +6,17 @@ export default function HighlightsBlock({ eyebrow, heading, description, items }
       <div className="flex flex-col gap-40">
         {(eyebrow || heading || description) && (
           <div className="flex flex-col gap-15">
-            <div className="flex flex-col gap-10">
+            <div className="flex flex-col gap-10 fade--in" data-sal>
               {eyebrow && <span className="eyebrow">{eyebrow}</span>}
               {heading && <h2 className="h2 text-silk">{heading}</h2>}
             </div>
-            {description && <p className="">{description}</p>}
+            {description && <p className="fade--in" data-sal>{description}</p>}
           </div>
         )}
         {hasItems && (
-          <div className="flex gap-20">
+          <div className="flex gap-20 m-flex-col">
             {items.map((item) => (
-              <div className="flex flex-col gap-15 max-300" key={item._key}>
+              <div className="flex flex-col gap-15 max-300 m-max-unset" key={item._key}>
                 <div className="line-flame" />
                 <div className="flex flex-col gap-10">
                   {item.heading && <h3 className="f-18 weight-700 text-silk">{item.heading}</h3>}

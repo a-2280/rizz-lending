@@ -14,7 +14,7 @@ export default function ImageMarquee({ eyebrow, heading, images }) {
     <section className='p40 py70 flex justify-center'>
       <div className="flex flex-col gap-30 max-1400 w-100">
         {(eyebrow || heading) && (
-          <div className="flex flex-col gap-10 max-700" style={{ textAlign: 'center', margin: '0 auto' }}>
+          <div className="flex flex-col gap-10 max-700 fade--in" data-sal style={{ textAlign: 'center', margin: '0 auto' }}>
             {eyebrow && <span className="eyebrow">{eyebrow}</span>}
             {heading && <h2 className="h2">{heading}</h2>}
           </div>
