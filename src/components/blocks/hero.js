@@ -63,7 +63,7 @@ export default function Hero({ eyebrow, heading, subText, buttons, disclaimer, s
         )}
       </div>
       {(imageUrl || videoUrl) && <div className="hero-scrim" />}
-      <div className="h-100 flex flex-col justify-center p30 z-3 pos-rel gap-30">
+      <div className="h-100 flex flex-col justify-center p30 z-3 pos-rel gap-30 fade--in" data-sal>
         <div className='flex flex-col gap-20'>
           <div>
             {eyebrow && <p className="eyebrow">{eyebrow}</p>}
