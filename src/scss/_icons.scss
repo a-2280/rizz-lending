@@ -1,0 +1,45 @@
+/*--------------------------------------------------------------
+## Icon Styling
+--------------------------------------------------------------*/
+
+.icon {
+    transition: all .3s ease;
+  &:hover {
+    transform: translateY(-3px);
+  }
+}
+
+.icon--instagram,
+.icon--x,
+.icon--linkedin,
+.icon--tiktok,
+.icon--youtube {
+  width: 20px;
+  aspect-ratio: 1/1;
+  display: inline-block;
+  vertical-align: middle;
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  transition: filter 0.3s ease;
+}
+
+.icon--instagram {
+  background-image: url('/Instagram.svg');
+}
+
+.icon--x {
+  background-image: url('/X.svg');
+}
+
+.icon--linkedin {
+  background-image: url('/Linkedin.svg');
+}
+
+.icon--tiktok {
+  background-image: url('/TikTok.svg');
+}
+
+.icon--youtube {
+  background-image: url('/YouTube.svg');
+}

@@ -1,0 +1,93 @@
+/*--------------------------------------------------------------
+## Layout Styling
+--------------------------------------------------------------*/
+
+.h1 {
+  font-size: 62px;
+  font-weight: 700px;
+  font-family: var(--display);
+  line-height: 100%;
+}
+
+.h2 {
+  font-size: 44px;
+  font-family: var(--display);
+  font-weight: 700;
+}
+
+.h3 {
+  font-size: 33px;
+  font-family: var(--display);
+  font-weight: 700;
+}
+
+.h5 {
+  font-size: 23px;
+  font-family: var(--display);
+  font-weight: 600;
+}
+
+.h3 {
+  font-size: 23px;
+}
+
+.f-12 {
+  font-size: 12px;
+}
+
+.f-14 {
+  font-size: 14px;
+}
+
+.f-18 {
+  font-size: 18px;
+}
+
+.f-20 {
+  font-size: 20px;
+}
+
+.f-25 {
+  font-size: 25px;
+}
+
+.f-display {
+  font-family: var(--display);
+}
+
+.f-serif {
+  font-family: var(--serif);
+}
+
+body {
+  color: var(--silk);
+  font-size: 16px;
+  font-family: var(--body);
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  background-color: var(--midnight);
+  font-smooth: always;
+  text-rendering: optimizeLegibility;
+  ::selection {
+    background: var(--flame);
+    color: var(--silk);
+  }
+}
+
+:root {
+  --flame: rgb(181, 64, 36);
+  --flame-bright: rgb(210, 78, 46);
+  --adventure: rgb(158, 94, 49);
+  --silk: rgb(249, 243, 237);
+  --carbon: rgb(38, 38, 38);
+  --midnight: rgb(14, 14, 14);
+
+  --silk-dim: rgb(207, 199, 189);
+  --ink-dim: rgb(91, 82, 73);
+  --line: rgba(249, 243, 237, 0.12);
+  --line-d: rgba(38, 38, 38, 0.14);
+
+  --display: var(--font-clash), system-ui, sans-serif;
+  --body: var(--font-archivo), system-ui, sans-serif;
+  --serif: var(--font-gambetta), Georgia, serif;
+}

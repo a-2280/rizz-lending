@@ -1,0 +1,43 @@
+/*--------------------------------------------------------------
+## Price Estimator Styling
+--------------------------------------------------------------*/
+
+.estimator {
+  input[type="range"] {
+    width: 100%;
+    appearance: auto;
+    border: 1px solid rgb(144, 144, 144);
+    background-color: var(--silk-dim);
+    accent-color: var(--flame);
+    height: 10px;
+    cursor: pointer;
+
+    &:active {
+      cursor: grabbing;
+    }
+  }
+}
+
+.estimator .term-button {
+    background-color: white;
+    color: var(--ink-dim);
+    padding: 10px;
+    border: 1px solid var(--line-d);
+    border-radius: 3px;
+    width: 100%;
+    text-align: center;
+    transition: all 0.65s ease;
+    &:hover {
+        border-color: var(--flame);
+    }
+    &.on {
+        background: var(--carbon);
+        color: var(--silk);
+        border-color: var(--carbon);
+    }
+}
+
+.estimator .disclaimer {
+    color: #8a8076;
+    font-size: 12px;
+}

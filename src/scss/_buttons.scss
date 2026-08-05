@@ -1,0 +1,32 @@
+/*--------------------------------------------------------------
+## Button Styling
+--------------------------------------------------------------*/
+
+.button-1 {
+    padding: 15px;
+    width: fit-content;
+    border-radius: 5px;
+    height: fit-content;
+    background-color: var(--flame);
+    transition: all .3s ease;
+    color: var(--silk);
+    font-weight: 600;
+    &:hover {
+        transform: translateY(-3px);
+        background-color: var(--flame-bright);
+    }
+}
+
+.button-2 {
+    padding: 15px;
+    width: fit-content;
+    border-radius: 5px;
+    height: fit-content;
+    background-color: var(--midnight);
+    transition: all .3s ease;
+    color: var(--silk);
+    font-weight: 600;
+    &:hover {
+        transform: translateY(-3px);
+    }
+}

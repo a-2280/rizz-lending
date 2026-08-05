@@ -1,0 +1,500 @@
+/*--------------------------------------------------------------
+## Global Styling
+--------------------------------------------------------------*/
+
+a {
+  color: inherit;
+}
+
+.link {
+  text-decoration: none;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.uppercase {
+  text-transform: uppercase;
+}
+
+.overflow {
+  overflow: hidden;
+}
+
+.op-0 {
+  opacity: 0;
+}
+
+.text-flame {
+  color: var(--flame);
+}
+
+.text-light-orange {
+  color: var(--flame-bright);
+}
+
+.text-silk {
+  color: var(--silk);
+}
+
+.text-silk-dim {
+  color: var(--silk-dim);
+}
+
+.text-ink-dim {
+  color: var(--ink-dim);
+}
+
+.text-carbon {
+  color: var(--carbon);
+}
+
+.text-midnight {
+  color: var(--midnight);
+}
+
+.weight-500 {
+  font-weight: 500;
+}
+
+.weight-600 {
+  font-weight: 600;
+}
+
+.weight-700 {
+  font-weight: 700;
+}
+
+.weight-900 {
+  font-weight: 900;
+}
+
+.text-balanced {
+  text-wrap: balance;
+}
+
+.border-line {
+  border: 1px solid var(--line);
+}
+
+.border-line-d {
+  border: 1px solid var(--line-d);
+}
+
+.line {
+  border-bottom: 1px solid var(--line);
+}
+
+.line-flame {
+  border-bottom: 2px solid var(--flame);
+}
+
+.radius-5 {
+  border-radius: 5px;
+}
+
+.radius-10 {
+  border-radius: 10px;
+}
+
+.radius-circle {
+  border-radius: 50%;
+}
+
+.italic {
+  font-style: italic;
+}
+
+/* ------------ Block Component Styles ------------ */
+
+.eyebrow {
+  font-size: 17px;
+  font-style: italic;
+  font-family: var(--serif);
+  color: var(--adventure);
+  font-weight: 500;
+}
+
+.image-marquee {
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+}
+
+/* ------------ Grid Styles ------------ */
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+/* ------------ Flex Styles ------------ */
+
+.flex {
+  display: flex;
+}
+
+.flex-1 {
+  flex: 1;
+}
+
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
+.shrink-0 {
+  flex-shrink: 0;
+}
+
+.flex-col {
+  flex-direction: column;
+}
+
+.align-center {
+  align-items: center;
+}
+
+.align-baseline {
+  align-items: baseline;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.justify-end {
+  justify-content: end;
+}
+
+.space-between {
+  justify-content: space-between;
+}
+
+/* ------------ Gap Styles ------------ */
+
+.gap-5 {
+  gap: 5px;
+}
+
+.gap-10 {
+  gap: 10px;
+}
+
+.gap-15 {
+  gap: 15px;
+}
+
+.gap-20 {
+  gap: 20px;
+}
+
+.gap-25 {
+  gap: 25px;
+}
+
+.gap-30 {
+  gap: 30px;
+}
+
+.gap-40 {
+  gap: 40px;
+}
+
+.gap-45 {
+  gap: 45px;
+}
+
+.gap-50 {
+  gap: 50px;
+}
+
+/* ------------ Margin Styles ------------ */
+
+.m0 {
+  margin: 0px;
+}
+
+.ma {
+  margin: auto;
+}
+
+.mla {
+  margin-left: auto;
+}
+
+.mra {
+  margin-right: auto;
+}
+
+.mta {
+  margin-top: auto;
+}
+
+.mba {
+  margin-bottom: auto;
+}
+
+/* ------------ Padding Styles ------------ */
+
+.p0 {
+  padding: 0px;
+}
+
+.p10 {
+  padding: 10px;
+}
+
+.p20 {
+  padding: 20px;
+}
+.p30 {
+  padding: 30px;
+}
+
+.p40 {
+  padding: 40px;
+}
+
+.p90 {
+  padding: 90px;
+}
+
+.py20 {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.py40 {
+  padding-top: 40px;
+  padding-bottom: 40px;
+}
+
+.py70 {
+  padding-top: 70px;
+  padding-bottom: 70px;
+}
+
+.pth {
+  padding-top: 76px;
+}
+
+.pb20 {
+  padding-bottom: 20px;
+}
+
+/* ------------ Position Styles ------------ */
+
+.pos-rel {
+  position: relative;
+}
+
+.sticky {
+  position: sticky;
+  top: 0;
+}
+
+.absolute {
+  position: absolute;
+}
+
+.bottom-15 {
+  bottom: 15px;
+}
+
+.left-15 {
+  left: 15px;
+}
+
+/* ------------ Z-Index Styles ------------ */
+
+.z-2 {
+  z-index: 2;
+}
+
+.z-3 {
+  z-index: 3;
+}
+
+/* ------------ BG Styles ------------ */
+
+.bg-grey {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.bg-red {
+  background-color: rgba(255, 0, 0, 0.25);
+}
+
+.bg-blue {
+  background-color: rgba(0, 0, 255, 0.25);
+}
+
+.bg-white {
+  background-color: white;
+}
+
+.bg-silk {
+  background-color: var(--silk);
+}
+
+.bg-midnight {
+  background-color: var(--midnight);
+}
+
+.bg-flame {
+  background-color: var(--flame);
+}
+
+.scrim-b {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0) 55%);
+  pointer-events: none;
+}
+
+.bg-glow {
+  background: radial-gradient(1300px 760px at 74% 8%, color-mix(in srgb, var(--flame) 16%, transparent), transparent 60%), radial-gradient(1000px 640px at 3% 100%, color-mix(in srgb, var(--adventure) 10%, transparent), transparent 55%), linear-gradient(180deg, rgba(14, 14, 14, 0.5), rgba(14, 14, 14, 0.28) 42%, rgba(14, 14, 14, 0.82)), linear-gradient(120deg, #1c0e08, var(--midnight) 42%, #170d07 72%, var(--midnight));
+  background-size: auto, auto, auto, 220% 220%;
+  animation: drift 20s ease-in-out infinite;
+}
+
+@keyframes drift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* ------------ Image Styles ------------ */
+
+div.bg-image,
+.bg-image {
+  left: 0px;
+  top: 0px;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  object-fit: cover;
+}
+
+/* ------------ Spacer Styles ------------ */
+
+.spacer {
+  height: 100px;
+}
+
+/* ------------ Ratio Styles ------------ */
+
+.ratio-1-2 {
+  width: 100%;
+  aspect-ratio: 1 / 2;
+}
+
+.ratio-2-1 {
+  width: 100%;
+  aspect-ratio: 2 / 1;
+}
+
+.ratio-16-10 {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+}
+
+/* ------------ Width Styles ------------ */
+
+.w-50 {
+  width: 50%;
+}
+
+.w-100 {
+  width: 100%;
+}
+
+/* ------------ Height Styles ------------ */
+
+.h-100 {
+  height: 100%;
+}
+
+.h-100vh {
+  height: 100vh;
+}
+
+.h-0 {
+  height: 0;
+}
+
+/* ------------ Max Styles ------------ */
+
+.max-250 {
+  max-width: 250px;
+}
+
+.max-300 {
+  max-width: 300px;
+}
+
+.max-400 {
+  max-width: 400px;
+}
+
+.max-500 {
+  max-width: 500px;
+}
+
+.max-600 {
+  max-width: 600px;
+}
+
+.max-700 {
+  max-width: 700px;
+}
+
+.max-800 {
+  max-width: 800px;
+}
+
+.max-1300 {
+  max-width: 1300px;
+}
+
+.max-1400 {
+  max-width: 1400px;
+}
+
+.max-1600 {
+  max-width: 1600px;
+}
+
+/* ------------ Mobile Styles ------------ */
+
+.m-hide {
+  @media (max-width: 768px) {
+    display: none;
+  }
+}
+
+.m-show {
+  display: none;
+  @media (max-width: 768px) {
+    display: inherit;
+  }
+}
+
+.m-wrap {
+  @media (max-width: 768px) {
+    flex-wrap: wrap;
+  }
+}
+
+.m-100 {
+  @media (max-width: 768px) {
+    width: 100%;
+  }
+}
