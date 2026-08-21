@@ -1,0 +1,78 @@
+/*--------------------------------------------------------------
+## Availability Map Styling
+--------------------------------------------------------------*/
+
+.availability-map {
+  &__swatch {
+    width: 16px;
+    height: 16px;
+    border-radius: 3px;
+    display: inline-block;
+
+    &--available {
+      background-color: var(--flame);
+    }
+    &--soon {
+      background-color: var(--soon-fill);
+      border: 1px solid var(--amber);
+    }
+    &--unavailable {
+      background-color: var(--carbon);
+    }
+  }
+
+  &__wrap {
+    position: relative;
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+
+  &__svg {
+    width: 100%;
+    height: auto;
+  }
+
+  &__state {
+    stroke: var(--midnight);
+    stroke-width: 1;
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+    outline: none;
+
+    &--available {
+      fill: var(--flame);
+    }
+    &--soon {
+      fill: var(--soon-fill);
+      stroke: var(--amber);
+    }
+    &--unavailable {
+      fill: var(--carbon);
+    }
+
+    &:hover,
+    &:focus-visible {
+      opacity: 0.8;
+    }
+  }
+
+  &__state-outline {
+    fill: none;
+    stroke: var(--amber);
+    stroke-width: 1;
+    pointer-events: none;
+  }
+
+  &__tooltip {
+    position: absolute;
+    z-index: 10;
+    pointer-events: none;
+    transform: translate(-50%, -110%);
+    background-color: var(--carbon);
+    border: 1px solid var(--line);
+    border-radius: 5px;
+    padding: 10px 12px;
+    white-space: nowrap;
+  }
+}

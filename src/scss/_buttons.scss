@@ -4,13 +4,15 @@
 
 .button-1 {
     padding: 15px;
-    width: fit-content;
     border-radius: 5px;
     height: fit-content;
     background-color: var(--flame);
     transition: all .3s ease;
     color: var(--silk);
     font-weight: 600;
+    &:not(.w-100) {
+        width: fit-content;
+    }
     &:hover {
         transform: translateY(-3px);
         background-color: var(--flame-bright);
@@ -26,7 +28,25 @@
     transition: all .3s ease;
     color: var(--silk);
     font-weight: 600;
+    border: 1px solid var(--line);
     &:hover {
         transform: translateY(-3px);
+        border-color: var(--silk-dim);
+    }
+}
+
+.button-3 {
+    padding: 15px;
+    width: fit-content;
+    border-radius: 5px;
+    height: fit-content;
+    background-color: var(--silk);
+    transition: all .3s ease;
+    color: var(--carbon);
+    font-weight: 600;
+    border: 1px solid var(--line-d);
+    &:hover {
+        transform: translateY(-3px);
+        border-color: var(--carbon);
     }
 }

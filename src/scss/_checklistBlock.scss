@@ -1,0 +1,16 @@
+/*--------------------------------------------------------------
+## Checklist Block Styling
+--------------------------------------------------------------*/
+
+.checklist-icon {
+  padding: 5px;
+  display: flex;
+  flex-shrink: 0;
+  border-radius: 50%;
+  height: fit-content;
+  align-items: center;
+  justify-content: center;
+  background-color: color-mix(in srgb, var(--flame) 10%, transparent);
+  color: var(--flame);
+  width: fit-content;
+}

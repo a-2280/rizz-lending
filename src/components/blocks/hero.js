@@ -9,6 +9,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import ApplyNow from '../applyNow';
 import { Check } from 'lucide-react';
 import ScrollArrow from '../scrollArrow';
+import { resolveHref } from '@/lib/links';
 
 const headingComponents = {
   block: {
@@ -53,7 +54,7 @@ export default function Hero({ eyebrow, heading, subText, buttons, disclaimer, s
   }, []);
 
   return (
-    <section className="hero h-100vh pth bg-glow" ref={sectionRef}>
+    <section className="hero h-100vh pos-rel pth bg-glow" ref={sectionRef}>
       <div className="background-media pos-rel">
         {(imageUrl || videoUrl) && (
           <div className="bg-image" style={{ top: '-15%', height: '115%' }} ref={mediaRef}>
@@ -72,10 +73,11 @@ export default function Hero({ eyebrow, heading, subText, buttons, disclaimer, s
           {subText && <p className="max-500 text-balanced">{subText}</p>}
         </div>
         <div className="flex flex-col gap-20">
-          <div className="flex gap-10">
-            <ApplyNow />
-            <button className="button-2">How it Works</button>
-          </div>
+          {buttons?.length > 0 && (
+            <div className="flex gap-10">
+              {buttons.map((btn) => (btn._type === 'applyButton' ? <ApplyNow key={btn._key} /> : <Link key={btn._key} className="button-2" href={resolveHref(btn)}>{btn.label}</Link>))}
+            </div>
+          )}
           {disclaimer && (
             <div className="f-14 flex gap-10 align-center">
               {showIcon && <Check size={14} strokeWidth={3} color="#7fc98a" />}

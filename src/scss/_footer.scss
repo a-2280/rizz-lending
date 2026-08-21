@@ -21,3 +21,10 @@
     opacity: 1;
     transition: opacity 0.65s ease 0.2s;
 }
+
+.footer-link {
+    transition: color .3s ease;
+    &:hover {
+        color: var(--silk);
+    }
+}

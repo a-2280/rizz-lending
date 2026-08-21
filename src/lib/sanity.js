@@ -13,10 +13,14 @@ const PAGE_BUILDER_FIELDS = `pageBuilder[]{
   eyebrow,
   heading,
   description,
+  quote,
   subText,
-  buttons[]{ _key, _type, label, href },
+  buttons[]{ _key, _type, label, linkType, href, "pageSlug": page->slug.current },
   disclaimer,
+  note,
   showIcon,
+  theme,
+  layout,
   image{ asset->{ url } },
   video{ asset->{ url } },
   images[]{ _key, asset->{ url } },
@@ -27,9 +31,27 @@ const PAGE_BUILDER_FIELDS = `pageBuilder[]{
   maxFinanced,
   apr,
   terms[]{ months },
+  calcDisclaimer,
+  formHeading,
+  formSubtext,
+  submitLabel,
+  loginHeading,
+  loginSubtext,
+  emailLabel,
+  emailPlaceholder,
+  passwordLabel,
+  loginButtonLabel,
+  forgotPasswordLink{ label, linkType, href, "pageSlug": page->slug.current },
+  newCustomerLink{ label, linkType, href, "pageSlug": page->slug.current },
+  footerNote,
+  vehicleLabel,
+  vehiclePlaceholder,
+  continueLabel,
+  card{ eyebrow, name, bio },
   cards[]{
     _key,
     eyebrow,
+    marker,
     heading,
     description,
     link{ label, linkType, href, "pageSlug": page->slug.current }
@@ -46,7 +68,13 @@ const PAGE_BUILDER_FIELDS = `pageBuilder[]{
     photoSubcaption,
     question,
     answer
-  }
+  },
+  logos[]{
+    _key,
+    brand,
+    logo{ asset->{ url } }
+  },
+  states[]{ abbr, name, status, note }
 }`;
 
 const PAGE_QUERY = groq`*[_type == "page" && slug.current == $slug][0]{

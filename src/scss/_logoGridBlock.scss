@@ -1,0 +1,11 @@
+/*--------------------------------------------------------------
+## Logo Grid Block Styling
+--------------------------------------------------------------*/
+
+.logo-grid .card {
+    transition: all 0.3s ease;
+    &:hover {
+        border-color: var(--flame);
+        transform: translateY(-5px);
+    }
+}

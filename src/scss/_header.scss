@@ -23,6 +23,10 @@
     }
 }
 
+.masthead a.active {
+    color: var(--silk);
+}
+
 .masthead .nav-modal {
     top: 100%;
     display: flex;

@@ -40,7 +40,7 @@ export default function FaqBlock({ eyebrow, heading, items }) {
             return (
               <div className={`line-static ${isOpen ? 'open' : ''}`} key={item._key}>
                 <button type="button" className="py20 w-100 f-20 weight-600 flex align-center space-between gap-20" onClick={() => toggle(item._key)}>
-                  <span className='fade--in' data-sal>{item.question}</span>
+                  <span className='f-display fade--in' data-sal>{item.question}</span>
                   <span
                     className="text-flame f-25"
                     ref={(el) => {

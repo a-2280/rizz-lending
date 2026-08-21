@@ -27,10 +27,6 @@
   font-weight: 600;
 }
 
-.h3 {
-  font-size: 23px;
-}
-
 .f-12 {
   font-size: 12px;
 }
@@ -81,6 +77,8 @@ body {
   --silk: rgb(249, 243, 237);
   --carbon: rgb(38, 38, 38);
   --midnight: rgb(14, 14, 14);
+  --amber: rgb(230, 178, 68);
+  --soon-fill: color-mix(in srgb, var(--amber) 15%, var(--carbon));
 
   --silk-dim: rgb(207, 199, 189);
   --ink-dim: rgb(91, 82, 73);

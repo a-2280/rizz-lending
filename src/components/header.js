@@ -3,38 +3,43 @@
 import { useState } from 'react';
 import { ChevronDown, Globe, Menu, X } from 'lucide-react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import ApplyNow from './applyNow';
+
+const BORROW_SMART_PATHS = ['/overview', '/cash-out-refinance', '/lease-buyout'];
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const closeMenu = () => setMenuOpen(false);
+  const pathname = usePathname();
+  const isActive = (href) => pathname === href;
 
   return (
     <header className="masthead flex justify-center weight-500">
       <div className="flex space-between align-center w-100 max-1400">
         <div className="flex-1">
-          <Link className="f-display h3 weight-700" href="/">
+          <Link className="f-display f-25 weight-700" href="/">
             Rizz <span className="text-light-orange">Lending</span>
           </Link>
         </div>
         <nav className="nav-links flex gap-30">
           <div className='modal-parent pos-rel'>
-            <Link className="flex align-center" href="#">Borrow Smart<ChevronDown size={14} /></Link>
+            <Link className={`flex align-center${BORROW_SMART_PATHS.includes(pathname) ? ' active' : ''}`} href="/overview">Borrow Smart<ChevronDown size={14} /></Link>
             <div className='nav-modal'>
-              <Link href="#"><span>Overview</span></Link>
-              <Link href="#"><span>Cash-Out Refinance</span></Link>
-              <Link href="#"><span>Lease Buyout</span></Link>
+              <Link className={isActive('/overview') ? 'active' : undefined} href="/overview"><span>Overview</span></Link>
+              <Link className={isActive('/cash-out-refinance') ? 'active' : undefined} href="/cash-out-refinance"><span>Cash-Out Refinance</span></Link>
+              <Link className={isActive('/lease-buyout') ? 'active' : undefined} href="/lease-buyout"><span>Lease Buyout</span></Link>
             </div>
           </div>
-          <Link href="#">Vehicles</Link>
-          <Link href="#">Hypercar</Link>
-          <Link href="#">Eligibility</Link>
-          <Link href="#">Dealers</Link>
-          <Link href="#">Partners</Link>
-          <Link href="#">About</Link>
+          <Link href="/vehicles">Vehicles</Link>
+          <Link href="/hypercar">Hypercar</Link>
+          <Link href="/eligibility">Eligibility</Link>
+          <Link href="/dealers">Dealers</Link>
+          <Link href="/partners">Partners</Link>
+          <Link href="/about">About</Link>
         </nav>
         <div className="flex-1 flex justify-end align-center gap-20">
-          <Link className="account flex align-center gap-5" href="#">
+          <Link className="account flex align-center gap-5" href="/my-account">
             <Globe size={14} />
             My Account
           </Link>

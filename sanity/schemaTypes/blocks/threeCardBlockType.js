@@ -65,8 +65,7 @@ export const threeCardBlockType = defineType({
                 defineField({
                   name: 'href',
                   title: 'Custom URL',
-                  type: 'url',
-                  validation: (rule) => rule.uri({scheme: ['http', 'https', 'mailto', 'tel']}),
+                  type: 'string',
                   hidden: ({parent}) => parent?.linkType !== 'external',
                 }),
               ],

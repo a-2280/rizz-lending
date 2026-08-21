@@ -1,0 +1,11 @@
+/*--------------------------------------------------------------
+## Two Card Block Styling
+--------------------------------------------------------------*/
+
+.two-card .card {
+    transition: all 0.3s ease;
+    &:hover {
+        border-color: var(--flame);
+        transform: translateY(-5px);
+    }
+}

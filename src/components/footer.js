@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import FooterReveal from './footerReveal';
+import { resolveHref } from '@/lib/links';
 
 export default function Footer({ tagline, socials, columns, legalText }) {
   if (!tagline && !socials?.length && !columns?.length && !legalText) return null;
@@ -9,7 +10,7 @@ export default function Footer({ tagline, socials, columns, legalText }) {
       <div className="flex space-between gap-20">
         <div className='flex flex-col gap-20'>
           <div className="flex flex-col gap-10">
-            <Link className="f-display h3 weight-700" href="/">
+            <Link className="f-display f-25 weight-700" href="/">
               Rizz <span className="text-light-orange">Lending</span>
             </Link>
             {tagline && <p className='max-250'>{tagline}</p>}
@@ -31,7 +32,7 @@ export default function Footer({ tagline, socials, columns, legalText }) {
                 <p className='weight-700 uppercase'>{column.heading}</p>
                 <div className='flex flex-col gap-10'>
                 {column.links?.map((link) => (
-                  <Link className='text-silk-dim' key={link._key} href={link.pageSlug ? `/${link.pageSlug}` : '#'}>
+                  <Link className='footer-link text-silk-dim' key={link._key} href={resolveHref(link) || '#'}>
                     {link.label}
                   </Link>
                 ))}</div>
