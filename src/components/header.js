@@ -13,6 +13,7 @@ export default function Header() {
   const closeMenu = () => setMenuOpen(false);
   const pathname = usePathname();
   const isActive = (href) => pathname === href;
+  const navClass = (href) => (isActive(href) ? 'text-silk' : undefined);
 
   return (
     <header className="masthead flex justify-center weight-500">
@@ -24,19 +25,19 @@ export default function Header() {
         </div>
         <nav className="nav-links flex gap-30">
           <div className='modal-parent pos-rel'>
-            <Link className={`flex align-center${BORROW_SMART_PATHS.includes(pathname) ? ' active' : ''}`} href="/overview">Borrow Smart<ChevronDown size={14} /></Link>
+            <Link className={`flex align-center${BORROW_SMART_PATHS.includes(pathname) ? ' text-silk' : ''}`} href="/overview">Borrow Smart<ChevronDown size={14} /></Link>
             <div className='nav-modal'>
-              <Link className={isActive('/overview') ? 'active' : undefined} href="/overview"><span>Overview</span></Link>
-              <Link className={isActive('/cash-out-refinance') ? 'active' : undefined} href="/cash-out-refinance"><span>Cash-Out Refinance</span></Link>
-              <Link className={isActive('/lease-buyout') ? 'active' : undefined} href="/lease-buyout"><span>Lease Buyout</span></Link>
+              <Link className={navClass('/overview')} href="/overview"><span>Overview</span></Link>
+              <Link className={navClass('/cash-out-refinance')} href="/cash-out-refinance"><span>Cash-Out Refinance</span></Link>
+              <Link className={navClass('/lease-buyout')} href="/lease-buyout"><span>Lease Buyout</span></Link>
             </div>
           </div>
-          <Link href="/vehicles">Vehicles</Link>
-          <Link href="/hypercar">Hypercar</Link>
-          <Link href="/eligibility">Eligibility</Link>
-          <Link href="/dealers">Dealers</Link>
-          <Link href="/partners">Partners</Link>
-          <Link href="/about">About</Link>
+          <Link className={navClass('/vehicles')} href="/vehicles">Vehicles</Link>
+          <Link className={navClass('/hypercar')} href="/hypercar">Hypercar</Link>
+          <Link className={navClass('/eligibility')} href="/eligibility">Eligibility</Link>
+          <Link className={navClass('/dealers')} href="/dealers">Dealers</Link>
+          <Link className={navClass('/partners')} href="/partners">Partners</Link>
+          <Link className={navClass('/about')} href="/about">About</Link>
         </nav>
         <div className="flex-1 flex justify-end align-center gap-20">
           <Link className="account flex align-center gap-5" href="/my-account">

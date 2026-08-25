@@ -67,7 +67,8 @@ const PAGE_BUILDER_FIELDS = `pageBuilder[]{
     photoCaption,
     photoSubcaption,
     question,
-    answer
+    answer,
+    link{ label, linkType, href, "pageSlug": page->slug.current }
   },
   logos[]{
     _key,
@@ -85,7 +86,7 @@ const PAGE_QUERY = groq`*[_type == "page" && slug.current == $slug][0]{
 const FOOTER_QUERY = groq`*[_id == "siteLayout"][0].footer->{
   tagline,
   socials[]{ _key, platform, href },
-  columns[]{ _key, heading, links[]{ _key, label, "pageSlug": page->slug.current } },
+  columns[]{ _key, heading, links[]{ _key, label, linkType, href, "pageSlug": page->slug.current } },
   legalText
 }`;
 

@@ -2,6 +2,8 @@ import Link from 'next/link';
 import FooterReveal from './footerReveal';
 import { resolveHref } from '@/lib/links';
 
+const isExternal = (href) => /^https?:\/\//i.test(href);
+
 export default function Footer({ tagline, socials, columns, legalText }) {
   if (!tagline && !socials?.length && !columns?.length && !legalText) return null;
   return (
@@ -31,11 +33,18 @@ export default function Footer({ tagline, socials, columns, legalText }) {
               <div className='flex flex-col gap-15 f-14' key={column._key}>
                 <p className='weight-700 uppercase'>{column.heading}</p>
                 <div className='flex flex-col gap-10'>
-                {column.links?.map((link) => (
-                  <Link className='footer-link text-silk-dim' key={link._key} href={resolveHref(link) || '#'}>
-                    {link.label}
-                  </Link>
-                ))}</div>
+                {column.links?.map((link) => {
+                  const href = resolveHref(link) || '#';
+                  return isExternal(href) ? (
+                    <a className='footer-link text-silk-dim' key={link._key} href={href} target='_blank' rel='noopener noreferrer'>
+                      {link.label}
+                    </a>
+                  ) : (
+                    <Link className='footer-link text-silk-dim' key={link._key} href={href}>
+                      {link.label}
+                    </Link>
+                  );
+                })}</div>
               </div>
             ))}
           </div>

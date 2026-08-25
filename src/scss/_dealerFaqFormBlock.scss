@@ -26,3 +26,24 @@ textarea.form-input {
   min-height: 96px;
   resize: vertical;
 }
+
+.form-input[aria-invalid='true'] {
+  border-color: var(--flame);
+}
+
+.form-error {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--flame);
+}
+
+.form-success {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--carbon);
+}
+
+button[type='submit']:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}

@@ -21,6 +21,8 @@ import AccountLoginBlock from './blocks/accountLoginBlock';
 import ApplyEstimatorBlock from './blocks/applyEstimatorBlock';
 import OpenRolesBlock from './blocks/openRolesBlock';
 import AvailabilityMapBlock from './blocks/availabilityMapBlock';
+import LegalBlock from './blocks/legalBlock';
+import BlogGrid from './blocks/blogGrid';
 
 export default function PageBuilder({ blocks }) {
   if (!Array.isArray(blocks)) return null;
@@ -72,6 +74,10 @@ export default function PageBuilder({ blocks }) {
         return <OpenRolesBlock key={block._key} {...block} />;
       case 'availabilityMapBlock':
         return <AvailabilityMapBlock key={block._key} {...block} />;
+      case 'legalBlock':
+        return <LegalBlock key={block._key} {...block} />;
+      case 'blogGridBlock':
+        return <BlogGrid key={block._key} {...block} />;
       default:
         return null;
     }

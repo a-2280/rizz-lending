@@ -28,5 +28,7 @@ export const pageBuilderType = defineType({
     defineArrayMember({type: 'applyEstimatorBlock'}),
     defineArrayMember({type: 'openRolesBlock'}),
     defineArrayMember({type: 'availabilityMapBlock'}),
+    defineArrayMember({type: 'legalBlock'}),
+    defineArrayMember({type: 'blogGridBlock'}),
   ],
 })

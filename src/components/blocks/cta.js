@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import AnchorLink from '../anchorLink';
 import ApplyNow from '../applyNow';
 import { resolveHref } from '@/lib/links';
 
@@ -14,9 +14,9 @@ export default function Cta({ heading, subText, buttons }) {
       </div>
       {button?._type === 'applyButton' && <ApplyNow className="button-2" />}
       {href && (
-        <Link className="button-2" href={href}>
+        <AnchorLink className="button-2" href={href}>
           {button.label || 'Learn more'}
-        </Link>
+        </AnchorLink>
       )}
     </section>
   );

@@ -25,6 +25,8 @@ import { accountLoginBlockType } from './blocks/accountLoginBlockType'
 import { applyEstimatorBlockType } from './blocks/applyEstimatorBlockType'
 import { openRolesBlockType } from './blocks/openRolesBlockType'
 import { availabilityMapBlockType } from './blocks/availabilityMapBlockType'
+import { legalBlockType } from './blocks/legalBlockType'
+import { blogGridBlockType } from './blocks/blogGridBlockType'
 import {pageBuilderType} from './pageBuilderType'
 import {pageType} from './pageType'
 
@@ -56,6 +58,8 @@ export const schemaTypes = [
   applyEstimatorBlockType,
   openRolesBlockType,
   availabilityMapBlockType,
+  legalBlockType,
+  blogGridBlockType,
   pageBuilderType,
   linkType,
 ]

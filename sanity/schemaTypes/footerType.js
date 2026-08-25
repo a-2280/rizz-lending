@@ -89,17 +89,36 @@ export const footerType = defineType({
                   fields: [
                     defineField({name: 'label', title: 'Link text', type: 'string'}),
                     defineField({
+                      name: 'linkType',
+                      type: 'string',
+                      options: {
+                        list: [
+                          {title: 'Page', value: 'page'},
+                          {title: 'Custom URL', value: 'external'},
+                        ],
+                        layout: 'radio',
+                      },
+                      initialValue: 'page',
+                    }),
+                    defineField({
                       name: 'page',
                       type: 'reference',
                       to: [{type: 'page'}],
+                      hidden: ({parent}) => parent?.linkType !== 'page',
+                    }),
+                    defineField({
+                      name: 'href',
+                      title: 'Custom URL',
+                      type: 'string',
+                      hidden: ({parent}) => parent?.linkType !== 'external',
                     }),
                   ],
                   preview: {
-                    select: {label: 'label', pageTitle: 'page.title'},
-                    prepare({label, pageTitle}) {
+                    select: {label: 'label', linkType: 'linkType', pageTitle: 'page.title', href: 'href'},
+                    prepare({label, linkType, pageTitle, href}) {
                       return {
                         title: label || 'Untitled link',
-                        subtitle: pageTitle,
+                        subtitle: linkType === 'external' ? href : pageTitle,
                       }
                     },
                   },

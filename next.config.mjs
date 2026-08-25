@@ -12,7 +12,8 @@ const nextConfig = {
     return [
       {
         source: '/map-and-office-locations',
-        destination: '/availability',
+        // Sanity slug is `check-availability`; `/availability` has no page and 404s.
+        destination: '/check-availability',
         permanent: true,
       },
     ];

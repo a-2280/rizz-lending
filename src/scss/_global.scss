@@ -148,6 +148,10 @@ a {
   mix-blend-mode: multiply;
 }
 
+.screen {
+  mix-blend-mode: screen;
+}
+
 /* ------------ Block Component Styles ------------ */
 
 .eyebrow {
@@ -465,6 +469,10 @@ div.bg-image,
 
 .contain {
   object-fit: contain;
+}
+
+.grayscale-invert {
+  filter: grayscale(1) invert(1);
 }
 
 /* ------------ Spacer Styles ------------ */

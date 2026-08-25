@@ -21,7 +21,7 @@ export default function LogoGridBlock({ eyebrow, heading, description, logos }) 
         <div className="grid-5">
           {logos.map((item) => (
             <div className="card p20 flex flex-col align-center gap-10 bg-carbon radius-10 overflow border-line" key={item._key}>
-              <div className="pos-rel ratio-2-1 multiply">{item.logo?.asset?.url && <Image className='bg-image contain' src={item.logo.asset.url} alt={item.brand || ''} fill />}</div>
+              <div className="pos-rel ratio-2-1 screen">{item.logo?.asset?.url && <Image className='bg-image contain grayscale-invert' src={item.logo.asset.url} alt={item.brand || ''} fill />}</div>
               {item.brand && <span className='f-14 weight-600 f-display text-silk'>{item.brand}</span>}
             </div>
           ))}

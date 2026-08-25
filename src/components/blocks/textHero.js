@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
-import Link from 'next/link';
+import AnchorLink from '../anchorLink';
 import { PortableText } from 'next-sanity';
 import Image from 'next/image';
 import gsap from 'gsap';
@@ -75,7 +75,7 @@ export default function TextHero({ eyebrow, heading, subText, buttons, disclaime
         <div className="flex flex-col gap-20">
           {buttons?.length > 0 && (
             <div className="flex gap-10">
-              {buttons.map((btn) => (btn._type === 'applyButton' ? <ApplyNow key={btn._key} /> : <Link key={btn._key} className={hasApplyButton ? 'button-2' : 'button-1'} href={resolveHref(btn)}>{btn.label}</Link>))}
+              {buttons.map((btn) => (btn._type === 'applyButton' ? <ApplyNow key={btn._key} /> : <AnchorLink key={btn._key} className={hasApplyButton ? 'button-2' : 'button-1'} href={resolveHref(btn)}>{btn.label}</AnchorLink>))}
             </div>
           )}
           {disclaimer && (
