@@ -1,11 +1,17 @@
 /*--------------------------------------------------------------
-## Logo Grid Block Styling
+## Logo Marquee Block Styling
 --------------------------------------------------------------*/
 
-.logo-grid .card {
-    transition: all 0.3s ease;
-    &:hover {
-        border-color: var(--flame);
-        transform: translateY(-5px);
+.logo-grid img {
+    width: auto;
+    height: auto;
+    max-width: 160px;
+    max-height: 100px;
+}
+
+@media (max-width: 768px) {
+    .logo-grid img {
+        max-width: 110px;
+        max-height: 56px;
     }
 }

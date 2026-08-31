@@ -68,7 +68,7 @@ export default function ApplyEstimatorBlock({ eyebrow, heading, subText, calcEye
               <p className="text-silk-dim f-14 weight-500">/mo</p>
             </div>
           </div>
-          <Link href="https://application.rizzlending.com/applications/start/b3088bdf-6922-4801-a6f8-aeb6e487322e?embed=true" className="button-1 w-100 text-center justify-center flex">
+          <Link href="https://application.rizzlending.com/applications/start/b3088bdf-6922-4801-a6f8-aeb6e487322e?embed=true" className="button-1 w-100 text-center justify-center flex" target="_blank" rel="noopener noreferrer">
             {continueLabel}
           </Link>
           {disclaimer && <p className="disclaimer">{disclaimer}</p>}

@@ -11,9 +11,9 @@ export default function Footer({ tagline, socials, columns, legalText }) {
       <div className='footer-content p30 py40 flex flex-col space-between'>
       <div className="flex space-between gap-20">
         <div className='flex flex-col gap-20'>
-          <div className="flex flex-col gap-10">
-            <Link className="f-display f-25 weight-700" href="/">
-              Rizz <span className="text-light-orange">Lending</span>
+          <div className="flex flex-col gap-20">
+            <Link href="/">
+              <div className='logo--main' />
             </Link>
             {tagline && <p className='max-250'>{tagline}</p>}
           </div>

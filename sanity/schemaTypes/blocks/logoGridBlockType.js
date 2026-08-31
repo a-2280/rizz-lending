@@ -3,7 +3,7 @@ import {ImageIcon} from '@sanity/icons/Image'
 
 export const logoGridBlockType = defineType({
   name: 'logoGridBlock',
-  title: 'Logo Grid',
+  title: 'Logo Marquee',
   type: 'object',
   icon: ImageIcon,
   groups: [
@@ -49,7 +49,7 @@ export const logoGridBlockType = defineType({
   preview: {
     select: {heading: 'heading'},
     prepare({heading}) {
-      return {title: heading || 'Untitled', subtitle: 'Logo Grid Block'}
+      return {title: heading || 'Untitled', subtitle: 'Logo Marquee'}
     },
   },
 })

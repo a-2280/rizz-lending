@@ -19,9 +19,7 @@ export default function Header() {
     <header className="masthead flex justify-center weight-500">
       <div className="flex space-between align-center w-100 max-1400">
         <div className="flex-1">
-          <Link className="f-display f-25 weight-700" href="/">
-            Rizz <span className="text-light-orange">Lending</span>
-          </Link>
+          <Link href="/"><div className='logo--main' /></Link>
         </div>
         <nav className="nav-links flex gap-30">
           <div className='modal-parent pos-rel'>
@@ -40,7 +38,7 @@ export default function Header() {
           <Link className={navClass('/about')} href="/about">About</Link>
         </nav>
         <div className="flex-1 flex justify-end align-center gap-20">
-          <Link className="account flex align-center gap-5" href="/my-account">
+          <Link className="account flex align-center gap-5" href="https://rizzlending.accountportalonline.com/" target="_blank" rel="noopener noreferrer">
             <Globe size={14} />
             My Account
           </Link>

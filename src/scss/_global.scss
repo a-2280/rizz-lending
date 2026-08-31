@@ -152,6 +152,15 @@ a {
   mix-blend-mode: screen;
 }
 
+.logo--main {
+    width: 200px;
+    aspect-ratio: 1620/150;
+    background-image: url("/logo.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+}
+
 /* ------------ Block Component Styles ------------ */
 
 .eyebrow {
@@ -330,6 +339,11 @@ a {
 
 .p90 {
   padding: 90px;
+}
+
+.px30 {
+  padding-left: 30px;
+  padding-right: 30px;
 }
 
 .py20 {

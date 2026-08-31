@@ -73,7 +73,7 @@ const PAGE_BUILDER_FIELDS = `pageBuilder[]{
   logos[]{
     _key,
     brand,
-    logo{ asset->{ url } }
+    logo{ asset->{ url, metadata{ dimensions{ width, height } } } }
   },
   states[]{ abbr, name, status, note }
 }`;
