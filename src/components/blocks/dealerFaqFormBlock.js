@@ -2,21 +2,20 @@
 
 import { useRef, useState } from 'react';
 import gsap from 'gsap';
-import { useHubspotForm } from '@/lib/useHubspotForm';
 
-// HubSpot field mapping — formKey 'dealers'.
+// HubSpot field mapping.
 //
-// CHECK THESE against the client's HubSpot form definition when the embed code
-// arrives. A name here that doesn't exist on the HubSpot form produces a
-// FIELD_NOT_IN_FORM_DEFINITION error (surfaced, not swallowed — see /api/hubspot).
+// CHECK THESE against the HubSpot form definition once it exists. A name here
+// that isn't on the form produces FIELD_NOT_IN_FORM_DEFINITION, surfaced rather
+// than swallowed — see /api/hubspot. See hubspot-form-fields.md.
 //
-//   UI label              -> field name             -> confidence
+//   UI label              -> field name             -> notes
 //   Dealership name       -> company                 HubSpot default property
-//   Your name             -> firstname               GUESS: single field, HubSpot usually splits firstname/lastname
+//   Your name             -> firstname               single field; HubSpot usually splits firstname/lastname
 //   Email                 -> email                   HubSpot default property
 //   Phone                 -> phone                   HubSpot default property
-//   Dealership type       -> dealership_type         GUESS: custom property; option values below must match HubSpot's internal values
-//   Monthly exotic volume -> monthly_exotic_volume   GUESS: custom property; option values below must match HubSpot's internal values
+//   Dealership type       -> dealership_type         custom property; option values below must match HubSpot's internal values
+//   Monthly exotic volume -> monthly_exotic_volume   custom property; option values below must match HubSpot's internal values
 //   Anything else?        -> message                 HubSpot default property
 //
 // Select option values currently use the visible label text. If HubSpot's
@@ -35,6 +34,20 @@ const EMPTY = {
   message: '',
 };
 
+/**
+ * Read the `hubspotutk` cookie set by HubSpot's tracking script (loaded in the
+ * root layout). It's what links this submission to the visitor's browsing
+ * history in the CRM — without it the contact looks like it came from nowhere.
+ * Not readable server-side, so it has to be picked up here and passed through.
+ *
+ * Returns undefined when the script hasn't set it yet (first paint, ad blocker).
+ */
+function getHutk() {
+  if (typeof document === 'undefined') return undefined;
+  const match = document.cookie.match(/(?:^|;\s*)hubspotutk=([^;]*)/);
+  return match ? decodeURIComponent(match[1]) : undefined;
+}
+
 function validate(values) {
   const errors = {};
   if (!values.company.trim()) errors.company = 'Required';
@@ -52,7 +65,12 @@ export default function DealerFaqFormBlock({ eyebrow, heading, description, item
 
   const [values, setValues] = useState(EMPTY);
   const [errors, setErrors] = useState({});
-  const { submit, status, error } = useHubspotForm('dealers');
+
+  // 'idle' | 'submitting' | 'success' | 'error'
+  const [status, setStatus] = useState('idle');
+  // Rejects re-entry while a request is open, so a rapid double-click can't
+  // create two contacts.
+  const inFlightRef = useRef(false);
 
   function toggle(key) {
     const isOpen = openKeys.has(key);
@@ -82,7 +100,39 @@ export default function DealerFaqFormBlock({ eyebrow, heading, description, item
     const nextErrors = validate(values);
     setErrors(nextErrors);
     if (Object.keys(nextErrors).length > 0) return;
-    await submit(values);
+
+    if (inFlightRef.current) return;
+    inFlightRef.current = true;
+    setStatus('submitting');
+
+    try {
+      const res = await fetch('/api/hubspot', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          fields: values,
+          hutk: getHutk(),
+          pageUri: typeof window === 'undefined' ? undefined : window.location.href,
+          pageName: typeof document === 'undefined' ? undefined : document.title,
+        }),
+      });
+
+      const data = await res.json().catch(() => null);
+
+      if (!res.ok) {
+        // Log HubSpot's body verbatim — it names the exact field that's wrong.
+        console.error('[hubspot] submission failed', res.status, data);
+        setStatus('error');
+        return;
+      }
+
+      setStatus('success');
+    } catch (err) {
+      console.error('[hubspot] could not reach /api/hubspot', err);
+      setStatus('error');
+    } finally {
+      inFlightRef.current = false;
+    }
   }
 
   const submitting = status === 'submitting';
@@ -205,7 +255,7 @@ export default function DealerFaqFormBlock({ eyebrow, heading, description, item
                   </label>
                   <textarea id="dealer-message" name="message" className="form-input" placeholder="Inventory mix, current lender pain points, etc." value={values.message} onChange={update('message')} />
                 </div>
-                {status === 'error' && <p className="form-error">{error?.error === 'not_configured' ? error.message : 'Something went wrong — please try again or email us directly.'}</p>}
+                {status === 'error' && <p className="form-error">Something went wrong — please try again or email us directly.</p>}
                 <button type="submit" className="button-1 w-100 text-center justify-center flex" disabled={submitting}>
                   {submitting ? 'Sending…' : submitLabel || 'Submit inquiry'}
                 </button>

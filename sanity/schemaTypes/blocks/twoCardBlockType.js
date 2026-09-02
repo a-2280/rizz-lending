@@ -1,11 +1,11 @@
 import {defineArrayMember, defineField, defineType} from 'sanity'
-import {CreditCardIcon} from '@sanity/icons/CreditCard'
+import {SplitVerticalIcon} from '@sanity/icons/SplitVertical'
 
 export const twoCardBlockType = defineType({
   name: 'twoCardBlock',
   title: 'Two Card Block (dark)',
   type: 'object',
-  icon: CreditCardIcon,
+  icon: SplitVerticalIcon,
   groups: [
     {name: 'content', title: 'Content', default: true},
     {name: 'cards', title: 'Cards'},

@@ -38,7 +38,7 @@ export default function Header() {
           <Link className={navClass('/about')} href="/about">About</Link>
         </nav>
         <div className="flex-1 flex justify-end align-center gap-20">
-          <Link className="account flex align-center gap-5" href="https://rizzlending.accountportalonline.com/" target="_blank" rel="noopener noreferrer">
+          <Link className="account flex align-center gap-5" href="https://rizzlending.accountportalonline.com/">
             <Globe size={14} />
             My Account
           </Link>

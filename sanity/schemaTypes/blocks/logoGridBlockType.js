@@ -1,11 +1,11 @@
 import {defineArrayMember, defineField, defineType} from 'sanity'
-import {ImageIcon} from '@sanity/icons/Image'
+import {TagsIcon} from '@sanity/icons/Tags'
 
 export const logoGridBlockType = defineType({
   name: 'logoGridBlock',
   title: 'Logo Marquee',
   type: 'object',
-  icon: ImageIcon,
+  icon: TagsIcon,
   groups: [
     {name: 'content', title: 'Content', default: true},
     {name: 'logos', title: 'Logos'},

@@ -1,11 +1,11 @@
 import { defineArrayMember, defineField, defineType} from 'sanity'
-import {RocketIcon} from '@sanity/icons/Rocket'
+import {TransferIcon} from '@sanity/icons/Transfer'
 
 export const imageMarqueeType = defineType({
   name: 'imageMarquee',
   title: 'Auto Scrolling Images',
   type: 'object',
-  icon: RocketIcon,
+  icon: TransferIcon,
   groups: [
     {name: 'content', title: 'Content', default: true},
     {name: 'media', title: 'Media'},

@@ -1,6 +1,7 @@
 import {defineArrayMember, defineField, defineType} from 'sanity'
 import {DocumentTextIcon} from '@sanity/icons/DocumentText'
 import {LinkIcon} from '@sanity/icons/Link'
+import {ThListIcon} from '@sanity/icons/ThList'
 
 export const legalBlockType = defineType({
   name: 'legalBlock',
@@ -25,6 +26,12 @@ export const legalBlockType = defineType({
       group: 'content',
     }),
     defineField({
+      name: 'lastUpdated',
+      title: 'Last modified',
+      type: 'string',
+      group: 'content',
+    }),
+    defineField({
       name: 'items',
       title: 'Sections',
       type: 'array',
@@ -42,7 +49,10 @@ export const legalBlockType = defineType({
               of: [
                 {
                   type: 'block',
-                  styles: [{title: 'Normal', value: 'normal'}],
+                  styles: [
+                    {title: 'Normal', value: 'normal'},
+                    {title: 'Subheading', value: 'h3'},
+                  ],
                   lists: [
                     {title: 'Bullet', value: 'bullet'},
                     {title: 'Numbered', value: 'number'},
@@ -63,6 +73,41 @@ export const legalBlockType = defineType({
                     ],
                   },
                 },
+                defineArrayMember({
+                  type: 'object',
+                  name: 'definitionTable',
+                  title: 'Definition list',
+                  icon: ThListIcon,
+                  fields: [
+                    defineField({name: 'caption', type: 'string'}),
+                    defineField({
+                      name: 'rows',
+                      type: 'array',
+                      of: [
+                        defineArrayMember({
+                          type: 'object',
+                          name: 'row',
+                          fields: [
+                            defineField({name: 'term', type: 'string'}),
+                            defineField({name: 'definition', type: 'text', rows: 4}),
+                          ],
+                          preview: {
+                            select: {title: 'term', subtitle: 'definition'},
+                          },
+                        }),
+                      ],
+                    }),
+                  ],
+                  preview: {
+                    select: {caption: 'caption', rows: 'rows'},
+                    prepare({caption, rows}) {
+                      return {
+                        title: caption || 'Definition list',
+                        subtitle: `${rows?.length || 0} rows`,
+                      }
+                    },
+                  },
+                }),
               ],
             }),
           ],

@@ -24,11 +24,54 @@ export const pageBuilderType = defineType({
     defineArrayMember({type: 'logoGridBlock'}),
     defineArrayMember({type: 'financedCarsBlock'}),
     defineArrayMember({type: 'photoLogoBlock'}),
-    defineArrayMember({type: 'accountLoginBlock'}),
-    defineArrayMember({type: 'applyEstimatorBlock'}),
     defineArrayMember({type: 'openRolesBlock'}),
     defineArrayMember({type: 'availabilityMapBlock'}),
     defineArrayMember({type: 'legalBlock'}),
     defineArrayMember({type: 'blogGridBlock'}),
   ],
+  options: {
+    insertMenu: {
+      groups: [
+        {name: 'heroes', title: 'Heroes', of: ['hero', 'textHero', 'imageHero', 'estimatorHero']},
+        {
+          name: 'content',
+          title: 'Content & Cards',
+          of: [
+            'threeCardBlock',
+            'twoCardBlock',
+            'iconCardsBlock',
+            'checklistBlock',
+            'highlightsBlock',
+            'leadershipStoryBlock',
+          ],
+        },
+        {name: 'calculators', title: 'Calculator', of: ['estimationBlock']},
+        {
+          name: 'proof',
+          title: 'Proof & Logos',
+          of: [
+            'testimonialsBlock',
+            'logoGridBlock',
+            'photoLogoBlock',
+            'imageMarquee',
+            'financedCarsBlock',
+          ],
+        },
+        {name: 'forms', title: 'FAQ & Forms', of: ['faqBlock', 'dealerFaqFormBlock']},
+        {
+          name: 'listings',
+          title: 'Listings',
+          of: ['blogGridBlock', 'openRolesBlock', 'availabilityMapBlock'],
+        },
+        {name: 'closers', title: 'Conversion & Legal', of: ['cta', 'legalBlock']},
+      ],
+      views: [
+        {
+          name: 'grid',
+          previewImageUrl: (schemaTypeName) => `/static/preview-${schemaTypeName}.png`,
+        },
+        {name: 'list'},
+      ],
+    },
+  },
 })

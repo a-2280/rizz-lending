@@ -1,11 +1,11 @@
 import {defineArrayMember, defineField, defineType} from 'sanity'
-import {RocketIcon} from '@sanity/icons/Rocket'
+import {ComponentIcon} from '@sanity/icons/Component'
 
 export const iconCardsBlockType = defineType({
   name: 'iconCardsBlock',
   title: 'Icon Cards',
   type: 'object',
-  icon: RocketIcon,
+  icon: ComponentIcon,
   groups: [
     {name: 'content', title: 'Content', default: true},
     {name: 'cards', title: 'Cards'},

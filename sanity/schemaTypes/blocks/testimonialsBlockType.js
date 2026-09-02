@@ -1,11 +1,11 @@
 import {defineArrayMember, defineField, defineType} from 'sanity'
-import {RocketIcon} from '@sanity/icons/Rocket'
+import {BlockquoteIcon} from '@sanity/icons/Blockquote'
 
 export const testimonialsBlockType = defineType({
   name: 'testimonialsBlock',
   title: 'Testimonials',
   type: 'object',
-  icon: RocketIcon,
+  icon: BlockquoteIcon,
   fields: [
     defineField({
       name: 'items',

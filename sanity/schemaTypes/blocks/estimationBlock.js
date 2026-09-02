@@ -1,11 +1,11 @@
 import { defineField, defineType} from 'sanity'
-import {RocketIcon} from '@sanity/icons/Rocket'
+import {BillIcon} from '@sanity/icons/Bill'
 
 export const estimationBlockType = defineType({
   name: 'estimationBlock',
   title: 'Price Estimator',
   type: 'object',
-  icon: RocketIcon,
+  icon: BillIcon,
   groups: [
     {name: 'content', title: 'Content', default: true},
     {name: 'estimator', title: 'Estimator'},

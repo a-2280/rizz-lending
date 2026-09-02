@@ -26,6 +26,15 @@ a {
   white-space: pre-line;
 }
 
+.break-anywhere {
+  overflow-wrap: anywhere;
+}
+
+.underline {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
 .overflow {
   overflow: hidden;
 }
@@ -373,8 +382,26 @@ a {
   padding-bottom: 20px;
 }
 
+.pl20 {
+  padding-left: 20px;
+}
+
 .pl50 {
   padding-left: 50px;
+}
+
+/* ------------ List Styles ------------ */
+
+.list-disc {
+  list-style: disc;
+}
+
+.list-circle {
+  list-style: circle;
+}
+
+.list-decimal {
+  list-style: decimal;
 }
 
 /* ------------ Position Styles ------------ */

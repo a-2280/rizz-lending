@@ -1,12 +1,12 @@
 import {defineField, defineType, defineArrayMember} from 'sanity'
-import {RocketIcon} from '@sanity/icons/Rocket'
+import {PresentationIcon} from '@sanity/icons/Presentation'
 import {ColorWheelIcon} from '@sanity/icons/ColorWheel'
 
 export const estimatorHeroType = defineType({
   name: 'estimatorHero',
   title: 'Hero (with estimator calculator)',
   type: 'object',
-  icon: RocketIcon,
+  icon: PresentationIcon,
   groups: [
     {name: 'content', title: 'Content', default: true},
     {name: 'media', title: 'Media'},

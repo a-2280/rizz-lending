@@ -1,5 +1,5 @@
 import {defineArrayMember, defineField, defineType} from 'sanity'
-import {RocketIcon} from '@sanity/icons/Rocket'
+import {EarthAmericasIcon} from '@sanity/icons/EarthAmericas'
 
 const INITIAL_STATES = [
   {abbr: 'ME', name: 'Maine', status: 'available'},
@@ -59,7 +59,7 @@ export const availabilityMapBlockType = defineType({
   name: 'availabilityMapBlock',
   title: 'Availability Map',
   type: 'object',
-  icon: RocketIcon,
+  icon: EarthAmericasIcon,
   groups: [
     {name: 'content', title: 'Content', default: true},
     {name: 'states', title: 'State availability'},

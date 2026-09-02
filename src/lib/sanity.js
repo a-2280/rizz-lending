@@ -12,6 +12,7 @@ const PAGE_BUILDER_FIELDS = `pageBuilder[]{
   _type,
   eyebrow,
   heading,
+  lastUpdated,
   description,
   quote,
   subText,

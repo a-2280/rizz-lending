@@ -36,7 +36,7 @@ export default function Footer({ tagline, socials, columns, legalText }) {
                 {column.links?.map((link) => {
                   const href = resolveHref(link) || '#';
                   return isExternal(href) ? (
-                    <a className='footer-link text-silk-dim' key={link._key} href={href} target='_blank' rel='noopener noreferrer'>
+                    <a className='footer-link text-silk-dim' key={link._key} href={href}>
                       {link.label}
                     </a>
                   ) : (

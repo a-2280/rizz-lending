@@ -1,11 +1,11 @@
 import {defineArrayMember, defineField, defineType} from 'sanity'
-import {RocketIcon} from '@sanity/icons/Rocket'
+import {ThLargeIcon} from '@sanity/icons/ThLarge'
 
 export const threeCardBlockType = defineType({
   name: 'threeCardBlock',
   title: 'Cards (up to three cards)',
   type: 'object',
-  icon: RocketIcon,
+  icon: ThLargeIcon,
   groups: [
     {name: 'content', title: 'Content', default: true},
     {name: 'cards', title: 'Cards'},

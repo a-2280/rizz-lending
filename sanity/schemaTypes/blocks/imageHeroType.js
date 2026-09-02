@@ -1,12 +1,12 @@
 import {defineField, defineType} from 'sanity'
-import {RocketIcon} from '@sanity/icons/Rocket'
+import {ImagesIcon} from '@sanity/icons/Images'
 import {ColorWheelIcon} from '@sanity/icons/ColorWheel'
 
 export const imageHeroType = defineType({
   name: 'imageHero',
   title: 'Hero (with image)',
   type: 'object',
-  icon: RocketIcon,
+  icon: ImagesIcon,
   groups: [
     {name: 'content', title: 'Content', default: true},
     {name: 'media', title: 'Media'},

@@ -2,9 +2,17 @@
 ## Photo & Logo Block Styling
 --------------------------------------------------------------*/
 
-.photo-logo-block .card {
-    transition: all 0.3s ease;
-    &:hover {
-        transform: translateY(-3px);
+.photo-logo-block .logo-track img {
+    width: auto;
+    height: auto;
+    max-width: 160px;
+    max-height: 100px;
+    filter: grayscale(1);
+}
+
+@media (max-width: 768px) {
+    .photo-logo-block .logo-track img {
+        max-width: 110px;
+        max-height: 56px;
     }
 }

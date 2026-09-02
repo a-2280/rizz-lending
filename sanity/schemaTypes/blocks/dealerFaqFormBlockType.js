@@ -1,11 +1,11 @@
 import {defineArrayMember, defineField, defineType} from 'sanity'
-import {UsersIcon} from '@sanity/icons/Users'
+import {EnvelopeIcon} from '@sanity/icons/Envelope'
 
 export const dealerFaqFormBlockType = defineType({
   name: 'dealerFaqFormBlock',
   title: 'Dealer FAQ + Partner Form',
   type: 'object',
-  icon: UsersIcon,
+  icon: EnvelopeIcon,
   groups: [
     {name: 'faq', title: 'FAQ', default: true},
     {name: 'form', title: 'Form'},
