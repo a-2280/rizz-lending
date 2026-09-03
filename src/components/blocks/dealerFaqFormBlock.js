@@ -13,7 +13,7 @@ import gsap from 'gsap';
 //   Dealership name       -> company                 HubSpot default property
 //   Your name             -> firstname               single field; HubSpot usually splits firstname/lastname
 //   Email                 -> email                   HubSpot default property
-//   Phone                 -> phone                   HubSpot default property
+//   Phone                 -> phone                   HubSpot default property; required on both sides
 //   Dealership type       -> dealership_type         custom property; option values below must match HubSpot's internal values
 //   Monthly exotic volume -> monthly_exotic_volume   custom property; option values below must match HubSpot's internal values
 //   Anything else?        -> message                 HubSpot default property
@@ -21,8 +21,9 @@ import gsap from 'gsap';
 // Select option values currently use the visible label text. If HubSpot's
 // dropdown uses slugged internal values, change the `value` attributes only.
 
-const DEALERSHIP_TYPES = ['Franchise exotic / luxury', 'Independent specialist', 'Pre-owned / consignment', 'Classic / collector', 'Marketplace / auction', 'Broker / finder'];
-const MONTHLY_VOLUMES = ['1–5 units', '6–15 units', '16–40 units', '40+ units'];
+const DEALERSHIP_TYPES = ['Franchise', 'Independent', 'Marketplace', 'Broker'];
+// Hyphens, not en dashes — HubSpot matches these byte-for-byte.
+const MONTHLY_VOLUMES = ['1-5 units', '6-15 units', '16-40 units', '40+ units'];
 
 const EMPTY = {
   company: '',
@@ -54,6 +55,7 @@ function validate(values) {
   if (!values.firstname.trim()) errors.firstname = 'Required';
   if (!values.email.trim()) errors.email = 'Required';
   else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(values.email.trim())) errors.email = 'Enter a valid email address';
+  if (!values.phone.trim()) errors.phone = 'Required';
   return errors;
 }
 
@@ -97,6 +99,8 @@ export default function DealerFaqFormBlock({ eyebrow, heading, description, item
 
   async function handleSubmit(e) {
     e.preventDefault();
+    if (status === 'success') return;
+
     const nextErrors = validate(values);
     setErrors(nextErrors);
     if (Object.keys(nextErrors).length > 0) return;
@@ -126,6 +130,7 @@ export default function DealerFaqFormBlock({ eyebrow, heading, description, item
         return;
       }
 
+      setValues(EMPTY);
       setStatus('success');
     } catch (err) {
       console.error('[hubspot] could not reach /api/hubspot', err);
@@ -136,6 +141,7 @@ export default function DealerFaqFormBlock({ eyebrow, heading, description, item
   }
 
   const submitting = status === 'submitting';
+  const succeeded = status === 'success';
 
   return (
     <section id="form" className="dealer-faq-form bg-silk text-ink-dim p30 py70 flex justify-center">
@@ -188,79 +194,82 @@ export default function DealerFaqFormBlock({ eyebrow, heading, description, item
               {formHeading && <h3 className="h5 text-midnight">{formHeading}</h3>}
               {formSubtext && <p className="f-14">{formSubtext}</p>}
             </div>
-            {status === 'success' ? (
-              <p className="form-success">Thanks — we&rsquo;ll be in touch.</p>
-            ) : (
-              <form className="flex flex-col gap-20" onSubmit={handleSubmit} noValidate>
-                <div className="flex gap-15 m-flex-col">
-                  <div className="flex-1 flex flex-col gap-5">
-                    <label className="form-label" htmlFor="dealer-company">
-                      Dealership name
-                    </label>
-                    <input id="dealer-company" name="company" className="form-input" type="text" placeholder="Rizz Motorsports" value={values.company} onChange={update('company')} aria-invalid={errors.company ? 'true' : undefined} />
-                    {errors.company && <span className="form-error">{errors.company}</span>}
-                  </div>
-                  <div className="flex-1 flex flex-col gap-5">
-                    <label className="form-label" htmlFor="dealer-firstname">
-                      Your name
-                    </label>
-                    <input id="dealer-firstname" name="firstname" className="form-input" type="text" placeholder="First & last" value={values.firstname} onChange={update('firstname')} aria-invalid={errors.firstname ? 'true' : undefined} />
-                    {errors.firstname && <span className="form-error">{errors.firstname}</span>}
-                  </div>
-                </div>
-                <div className="flex gap-15 m-flex-col">
-                  <div className="flex-1 flex flex-col gap-5">
-                    <label className="form-label" htmlFor="dealer-email">
-                      Email
-                    </label>
-                    <input id="dealer-email" name="email" className="form-input" type="email" placeholder="you@dealership.com" value={values.email} onChange={update('email')} aria-invalid={errors.email ? 'true' : undefined} />
-                    {errors.email && <span className="form-error">{errors.email}</span>}
-                  </div>
-                  <div className="flex-1 flex flex-col gap-5">
-                    <label className="form-label" htmlFor="dealer-phone">
-                      Phone
-                    </label>
-                    <input id="dealer-phone" name="phone" className="form-input" type="text" placeholder="(555) 000-0000" value={values.phone} onChange={update('phone')} />
-                  </div>
-                </div>
-                <div className="flex gap-15 m-flex-col">
-                  <div className="flex-1 flex flex-col gap-5">
-                    <label className="form-label" htmlFor="dealer-type">
-                      Dealership type
-                    </label>
-                    <select id="dealer-type" name="dealership_type" className="form-input" value={values.dealership_type} onChange={update('dealership_type')}>
-                      {DEALERSHIP_TYPES.map((option) => (
-                        <option key={option} value={option}>
-                          {option}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                  <div className="flex-1 flex flex-col gap-5">
-                    <label className="form-label" htmlFor="dealer-volume">
-                      Monthly exotic volume
-                    </label>
-                    <select id="dealer-volume" name="monthly_exotic_volume" className="form-input" value={values.monthly_exotic_volume} onChange={update('monthly_exotic_volume')}>
-                      {MONTHLY_VOLUMES.map((option) => (
-                        <option key={option} value={option}>
-                          {option}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                </div>
-                <div className="flex flex-col gap-10">
-                  <label className="form-label" htmlFor="dealer-message">
-                    Anything else?
+            <form className="flex flex-col gap-20" onSubmit={handleSubmit} noValidate>
+              <div className="flex gap-15 m-flex-col">
+                <div className="flex-1 flex flex-col gap-5">
+                  <label className="form-label" htmlFor="dealer-company">
+                    Dealership name
                   </label>
-                  <textarea id="dealer-message" name="message" className="form-input" placeholder="Inventory mix, current lender pain points, etc." value={values.message} onChange={update('message')} />
+                  <input id="dealer-company" name="company" className="form-input" type="text" placeholder="Rizz Motorsports" value={values.company} onChange={update('company')} aria-invalid={errors.company ? 'true' : undefined} />
+                  {errors.company && <span className="form-error">{errors.company}</span>}
                 </div>
-                {status === 'error' && <p className="form-error">Something went wrong — please try again or email us directly.</p>}
+                <div className="flex-1 flex flex-col gap-5">
+                  <label className="form-label" htmlFor="dealer-firstname">
+                    Your name
+                  </label>
+                  <input id="dealer-firstname" name="firstname" className="form-input" type="text" placeholder="First & last" value={values.firstname} onChange={update('firstname')} aria-invalid={errors.firstname ? 'true' : undefined} />
+                  {errors.firstname && <span className="form-error">{errors.firstname}</span>}
+                </div>
+              </div>
+              <div className="flex gap-15 m-flex-col">
+                <div className="flex-1 flex flex-col gap-5">
+                  <label className="form-label" htmlFor="dealer-email">
+                    Email
+                  </label>
+                  <input id="dealer-email" name="email" className="form-input" type="email" placeholder="you@dealership.com" value={values.email} onChange={update('email')} aria-invalid={errors.email ? 'true' : undefined} />
+                  {errors.email && <span className="form-error">{errors.email}</span>}
+                </div>
+                <div className="flex-1 flex flex-col gap-5">
+                  <label className="form-label" htmlFor="dealer-phone">
+                    Phone
+                  </label>
+                  <input id="dealer-phone" name="phone" className="form-input" type="text" placeholder="(555) 000-0000" value={values.phone} onChange={update('phone')} aria-invalid={errors.phone ? 'true' : undefined} />
+                  {errors.phone && <span className="form-error">{errors.phone}</span>}
+                </div>
+              </div>
+              <div className="flex gap-15 m-flex-col">
+                <div className="flex-1 flex flex-col gap-5">
+                  <label className="form-label" htmlFor="dealer-type">
+                    Dealership type
+                  </label>
+                  <select id="dealer-type" name="dealership_type" className="form-input" value={values.dealership_type} onChange={update('dealership_type')}>
+                    {DEALERSHIP_TYPES.map((option) => (
+                      <option key={option} value={option}>
+                        {option}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <div className="flex-1 flex flex-col gap-5">
+                  <label className="form-label" htmlFor="dealer-volume">
+                    Monthly exotic volume
+                  </label>
+                  <select id="dealer-volume" name="monthly_exotic_volume" className="form-input" value={values.monthly_exotic_volume} onChange={update('monthly_exotic_volume')}>
+                    {MONTHLY_VOLUMES.map((option) => (
+                      <option key={option} value={option}>
+                        {option}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+              <div className="flex flex-col gap-10">
+                <label className="form-label" htmlFor="dealer-message">
+                  Anything else?
+                </label>
+                <textarea id="dealer-message" name="message" className="form-input" placeholder="Inventory mix, current lender pain points, etc." value={values.message} onChange={update('message')} />
+              </div>
+              {status === 'error' && <p className="form-error">Something went wrong — please try again or email us directly.</p>}
+              {succeeded ? (
+                <p className="form-success" role="status">
+                  Thanks — we&rsquo;ll be in touch.
+                </p>
+              ) : (
                 <button type="submit" className="button-1 w-100 text-center justify-center flex" disabled={submitting}>
                   {submitting ? 'Sending…' : submitLabel || 'Submit inquiry'}
                 </button>
-              </form>
-            )}
+              )}
+            </form>
           </div>
         </div>
       </div>

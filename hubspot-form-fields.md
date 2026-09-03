@@ -6,8 +6,9 @@ HubSpot is just the database our contact form writes to. The form on the site is
 ours — our HTML, our CSS, our validation. When someone submits it, we send the
 data to HubSpot, and a contact shows up in the client's account.
 
-Everything is built. One value is missing: the **form GUID**. Paste it into
-`.env.local` and this is done.
+Everything is built, and `.env.local` now points at the client's real portal
+(`47162564`, region `na1`). What's left is verifying the client's form actually
+defines our seven field names — see **When it breaks** at the bottom.
 
 ## How it works
 
@@ -76,7 +77,7 @@ main way this goes wrong:
 | Dealership name | Company Name | Contact | `company` | **Yes** |
 | Your name | First Name | Contact | `firstname` | **Yes** |
 | Email | Email | Contact | `email` | **Yes** |
-| Phone | Phone Number | Contact | `phone` | No |
+| Phone | Phone Number | Contact | `phone` | **Yes** |
 | Dealership type | *(create it — dropdown)* | Contact | `dealership_type` | No |
 | Monthly exotic volume | *(create it — dropdown)* | Contact | `monthly_exotic_volume` | No |
 | Anything else? | Message | Contact | `message` | No |
@@ -108,14 +109,20 @@ Settings → Properties first.
 
 ### Required fields
 
-**Toggle *Required field* on exactly three: `company`, `firstname`, `email`.**
-Leave it off on the other four.
+**Toggle *Required field* on exactly four: `company`, `firstname`, `email`,
+`phone`.** Leave it off on the other three.
 
 This has to mirror our site's validation, and getting it wrong breaks
 submissions in a way that looks like our bug. HubSpot rejects any submission
-missing a field its form marks required. The four optional ones are dropped from
-the payload entirely when left blank — so if HubSpot marks `phone` required,
-every visitor who skips the phone box gets a failed submission.
+missing a field its form marks required. The three optional ones are dropped from
+the payload entirely when left blank — so if HubSpot marks `message` required,
+every visitor who skips that box gets a failed submission.
+
+`phone` moved from optional to required on 2026-09-02, after the client made it
+required on their form. Our site now validates it too, so a visitor never gets
+that far — see `validate()` in
+`src/components/blocks/dealerFaqFormBlock.js`. Presence only; we don't check the
+format.
 
 Going the other way is harmless: a field required on our site but optional in
 HubSpot just means our form catches it first.
@@ -135,26 +142,28 @@ Click the `</>` icon on an option row to reveal its internal value next to the
 label. HubSpot mirrors the label by default, which is what we want — verify it
 rather than assuming.
 
-**Paste these, don't retype them.** The volume options use an en dash (–), not a
-hyphen (-). They look nearly identical and are different characters, so a typed
-hyphen produces a silent mismatch.
+**Paste these, don't retype them.** A hyphen (-) and an en dash (–) look nearly
+identical and are different characters, so retyping one produces a silent
+mismatch. The prototype used en dashes; the client's options appear to use plain
+hyphens and our component was changed to match — but that was read off a photo,
+so confirm it against a real submission before trusting it.
 
-**`dealership_type`**
-- `Franchise exotic / luxury`
-- `Independent specialist`
-- `Pre-owned / consignment`
-- `Classic / collector`
-- `Marketplace / auction`
-- `Broker / finder`
+**`dealership_type`** — the client narrowed this to four on 2026-09-02, and our
+form was changed to match. The six longer options from the prototype are gone.
+- `Franchise`
+- `Independent`
+- `Marketplace`
+- `Broker`
 
-**`monthly_exotic_volume`**
-- `1–5 units`
-- `6–15 units`
-- `16–40 units`
+**`monthly_exotic_volume`** — same four options as the prototype, but with
+hyphens rather than en dashes (see the caveat above).
+- `1-5 units`
+- `6-15 units`
+- `16-40 units`
 - `40+ units`
 
-If HubSpot slugs them instead (`franchise_exotic_luxury`), don't hand-edit the
-ten values — send them over. Our component currently uses one string as both the
+If HubSpot slugs them instead (`franchise`, `1_5_units`), don't hand-edit the
+values — send them over. Our component currently uses one string as both the
 visible text and the submitted value, so those need splitting apart in
 `src/components/blocks/dealerFaqFormBlock.js` for the site to keep displaying the
 readable text while sending HubSpot's value.
@@ -162,14 +171,18 @@ readable text while sending HubSpot's value.
 ## Finishing it
 
 Publish the form, then **Get embed code**. Three values come out of that
-snippet — that's the whole handoff:
+snippet — that's the whole handoff. The client's real one, received 2026-09-02:
 
 ```html
-<script src="https://js-na2.hsforms.net/forms/embed/247251136.js" defer></script>
-<div class="hs-form-frame" data-region="na2"
-     data-form-id="2c232eee-649e-46af-91c3-2c3fa84d78af"
-     data-portal-id="247251136"></div>
+<script src="https://js.hsforms.net/forms/embed/47162564.js" defer></script>
+<div class="hs-form-frame" data-region="na1"
+     data-form-id="db4deb7f-f05f-443f-a9d7-606a3e770976"
+     data-portal-id="47162564"></div>
 ```
+
+Those three values are stable for the life of the form. Editing it — adding a
+field, requiring one, renaming a label — does not change them, so a new snippet
+is only needed if the form is deleted and rebuilt.
 
 | From the snippet | Into `.env.local` |
 | --- | --- |
@@ -196,7 +209,7 @@ read which field it names, fix that one field.
   Usually a wrong internal name, and most often the Company/Contact trap above:
   the form has Company `name` where it needs Contact `company`.
 - **`REQUIRED_FIELD`** — the form marks something required that we left blank.
-  Only `email`, `firstname`, and `company` should be required.
+  Only `email`, `firstname`, `company` and `phone` should be required.
 
 Submissions never fail silently.
 

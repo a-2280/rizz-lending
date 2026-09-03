@@ -19,37 +19,57 @@ account: our form → `/api/hubspot` → HubSpot Forms API → contact created.
 Verified working against an `na2`-region account, which confirmed the
 `api-na2.hsforms.com` / `js-na2.hs-scripts.com` host pattern.
 
-## Currently pointed at a test account
+## Now pointed at the client's account
 
-`.env.local` holds Calvin's **test** portal (`247251136`, region `na2`), not the
-client's. The client's real form was being created 2026-09-02.
+The client sent their form's embed code on 2026-09-02, and `.env.local` was
+switched over to it: portal `47162564`, region `na1`, form GUID
+`db4deb7f-f05f-443f-a9d7-606a3e770976`. Calvin's test portal (`247251136`, `na2`)
+is kept in a comment there in case a rollback is needed.
 
-## Next step
+`na1` means the bare hosts — `api.hsforms.com` and `js.hs-scripts.com` — which
+the region logic picks automatically. No code change was needed for the swap.
 
-Get the new form's embed code, then swap three values in `.env.local`:
+The client also made **Phone** required on their form after sending the snippet.
+Our form now requires it too (`validate()` in `dealerFaqFormBlock.js`), so a
+blank phone is caught inline rather than coming back as a `REQUIRED_FIELD` 400 —
+blank optional fields are dropped from the payload, which is what would have
+made it fail. `hubspot-form-fields.md` was updated to match: four required
+fields now, not three.
 
-| From the embed snippet | Into `.env.local` |
-| --- | --- |
-| `data-portal-id` | `NEXT_PUBLIC_HUBSPOT_PORTAL_ID` |
-| `data-region` | `NEXT_PUBLIC_HUBSPOT_REGION` (empty for `na1`) |
-| `data-form-id` | `HUBSPOT_FORM_GUID` |
+## Next step — verify against the real portal
 
-Restart the dev server. No code changes — that's the whole handoff.
+Nothing here has been submitted to the client's account yet. Restart the dev
+server, submit the form once, and read the console on failure.
 
-The two custom properties (`dealership_type`, `monthly_exotic_volume`) have to
-be recreated in the client's portal; they only exist in the test one. Re-check
-their dropdown internal values there, a fresh account may slug them differently.
+The two custom properties (`dealership_type`, `monthly_exotic_volume`) only ever
+existed in the test portal, so they have to be recreated in `47162564` under
+exactly those internal names.
+
+- `dealership_type` — the client was seen creating it on 2026-09-02 with the
+  right object type (Contact) and internal name, but with **four** options
+  (`Franchise`, `Independent`, `Marketplace`, `Broker`) instead of our six. Our
+  form was changed to match; the six longer options from the prototype are gone.
+  Their internal values still need confirming with the `</>` toggle — we're
+  assuming HubSpot mirrored the labels.
+- `monthly_exotic_volume` — seen 2026-09-02 with the same four options as the
+  prototype and Required off. Its CRM Values appear to use plain **hyphens**
+  where ours used en dashes, and our component was changed to match — but that
+  reading came from a photo, not from copied text, so a real submission is what
+  settles it.
+
+A mismatch shows up as `FIELD_NOT_IN_FORM_DEFINITION`, or as a contact created
+with those two fields blank — so check the contact record, not just the HTTP
+status.
 
 ## Open before launch
 
-- **Production env vars.** `.env.local` is local only. The same three variables
-  must be set wherever this deploys or the live form returns
+- **Production env vars.** `.env.local` is local only and gitignored. All three
+  variables must be set wherever this deploys — portal `47162564`, region `na1`
+  (or empty), and the form GUID — or the live form returns
   `500 HUBSPOT_FORM_GUID is not set`. Easy to miss because local works.
 - **Client decisions** — who gets notified on submission, whether any follow-up
   workflow fires, and whether first/last name should be split into two fields
   (currently both words go into `firstname`; splitting is a code change).
-- **Uncommitted work.** As of this writing the HubSpot work and a large amount of
-  prior Sanity/component work sit uncommitted on `main`.
 
 ## Deliberately not built
 
