@@ -2,17 +2,20 @@
 ## Photo & Logo Block Styling
 --------------------------------------------------------------*/
 
+/* --lw/--lh come from the block, which sizes every logo to an equal area so
+   shapes as different as a script wordmark and a round badge read the same
+   weight. Setting both dimensions also keeps the box reserved before the image
+   decodes — leaving either `auto` lets the slide resize on load, which trips
+   Embla's ResizeObserver into a reInit mid-scroll and makes the track stutter. */
 .photo-logo-block .logo-track img {
-    width: auto;
-    height: auto;
-    max-width: 160px;
-    max-height: 100px;
+    width: calc(var(--lw) * var(--logo-scale, 1));
+    height: calc(var(--lh) * var(--logo-scale, 1));
+    object-fit: contain;
     filter: grayscale(1);
 }
 
 @media (max-width: 768px) {
-    .photo-logo-block .logo-track img {
-        max-width: 110px;
-        max-height: 56px;
+    .photo-logo-block .logo-track {
+        --logo-scale: 0.7;
     }
 }
