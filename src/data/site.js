@@ -24,6 +24,7 @@ export const ROUTES = [
   { path: "/my-account", title: "My Account" },
   { path: "/check-availability", title: "Check Availability" },
   { path: "/careers", title: "Careers" },
+  { path: "/contact", title: "Contact" },
   { path: "/blog", title: "The Rizz Brief" },
   { path: "/privacy", title: "Privacy Policy" },
 ];

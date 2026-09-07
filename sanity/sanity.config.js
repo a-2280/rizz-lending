@@ -15,13 +15,19 @@ export default defineConfig({
 
   plugins: [
     structureTool({
-      structure: (S) =>
-        S.list()
+      structure: (S) => {
+        const contentItems = S.documentTypeListItems().filter(
+          (listItem) => !LAYOUT_TYPES.includes(listItem.getId()),
+        )
+        const pageItems = contentItems.filter((listItem) => listItem.getId() === 'page')
+        const blogItems = contentItems.filter((listItem) => listItem.getId() !== 'page')
+
+        return S.list()
           .title('Content')
           .items([
-            ...S.documentTypeListItems().filter(
-              (listItem) => !LAYOUT_TYPES.includes(listItem.getId()),
-            ),
+            ...pageItems,
+            S.divider(),
+            ...blogItems,
             S.divider(),
             S.listItem()
               .title('Layout')
@@ -38,7 +44,8 @@ export default defineConfig({
                     S.documentTypeListItem('footer'),
                   ]),
               ),
-          ]),
+          ])
+      },
     }),
     visionTool(),
   ],

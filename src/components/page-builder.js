@@ -2,6 +2,7 @@ import Hero from '@/components/blocks/hero';
 import TextHero from '@/components/blocks/textHero';
 import EstimationBlock from '@/components/blocks/estimationBlock';
 import EstimatorHero from '@/components/blocks/estimatorHero';
+import HeroFormBlock from '@/components/blocks/heroFormBlock';
 import ImageHero from '@/components/blocks/imageHero';
 import ImageMarquee from './blocks/imageMarquee';
 import ThreeCardBlock from './blocks/threeCardBlock';
@@ -13,6 +14,7 @@ import HighlightsBlock from './blocks/highlightsBlock';
 import TestimonialsBlock from './blocks/testimonialsBlock';
 import FaqBlock from './blocks/faqBlock';
 import DealerFaqFormBlock from './blocks/dealerFaqFormBlock';
+import ContactFormBlock from './blocks/contactFormBlock';
 import Cta from './blocks/cta';
 import LogoGridBlock from './blocks/logoGridBlock';
 import FinancedCarsBlock from './blocks/financedCarsBlock';
@@ -36,6 +38,8 @@ export default function PageBuilder({ blocks }) {
         return <EstimationBlock key={block._key} {...block} />;
       case 'estimatorHero':
         return <EstimatorHero key={block._key} {...block} />;
+      case 'heroFormBlock':
+        return <HeroFormBlock key={block._key} {...block} />;
       case 'imageHero':
         return <ImageHero key={block._key} {...block} />;
       case 'imageMarquee':
@@ -58,6 +62,8 @@ export default function PageBuilder({ blocks }) {
         return <FaqBlock key={block._key} {...block} />;
       case 'dealerFaqFormBlock':
         return <DealerFaqFormBlock key={block._key} {...block} />;
+      case 'contactFormBlock':
+        return <ContactFormBlock key={block._key} {...block} />;
       case 'cta':
         return <Cta key={block._key} {...block} />;
       case 'logoGridBlock':

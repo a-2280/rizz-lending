@@ -17,7 +17,25 @@
 // client's later). A wrong-but-plausible default would silently file leads in
 // someone else's CRM, so an unset value has to fail loudly instead.
 const PORTAL_ID = process.env.NEXT_PUBLIC_HUBSPOT_PORTAL_ID;
-const FORM_GUID = process.env.HUBSPOT_FORM_GUID;
+
+// One HubSpot portal, multiple forms — each page's form has its own GUID and
+// its own set of allowed fields. The browser only ever sends the short key
+// below (see formKey in useHubspotForm), never the GUID itself, which is what
+// keeps the GUID server-side. Add an entry here (and to ENV_VAR_NAMES below)
+// for every new HubSpot form.
+const FORM_GUIDS = {
+  // Dealers page, and the Partners page (same HubSpot form, relabeled copy).
+  dealer: process.env.HUBSPOT_FORM_GUID,
+  careers: process.env.HUBSPOT_FORM_GUID_CAREERS,
+  contact: process.env.HUBSPOT_FORM_GUID_CONTACT,
+};
+
+// Which env var to name in the "not configured" error below, per formKey.
+const ENV_VAR_NAMES = {
+  dealer: 'HUBSPOT_FORM_GUID',
+  careers: 'HUBSPOT_FORM_GUID_CAREERS',
+  contact: 'HUBSPOT_FORM_GUID_CONTACT',
+};
 
 // HubSpot shards accounts across regions ("hublets"): na1, na2, eu1, ... na1
 // uses the bare host; every other region needs its own, the way EU accounts
@@ -34,13 +52,18 @@ export async function POST(request) {
     return Response.json({ error: 'bad_request', message: 'Request body must be JSON.' }, { status: 400 });
   }
 
-  const { fields, hutk, pageUri, pageName } = payload ?? {};
+  const { formKey = 'dealer', fields, hutk, pageUri, pageName } = payload ?? {};
 
-  const formGuid = FORM_GUID?.trim();
+  if (!Object.prototype.hasOwnProperty.call(FORM_GUIDS, formKey)) {
+    return Response.json({ error: 'bad_request', message: `Unknown formKey "${formKey}".` }, { status: 400 });
+  }
+
+  const formGuid = FORM_GUIDS[formKey]?.trim();
   if (!formGuid) {
     // Waiting on the client for this GUID. Say so plainly rather than firing a
     // request at a URL we know is wrong.
-    return Response.json({ error: 'not_configured', message: 'HUBSPOT_FORM_GUID is not set' }, { status: 500 });
+    const envVar = ENV_VAR_NAMES[formKey];
+    return Response.json({ error: 'not_configured', message: `${envVar} is not set` }, { status: 500 });
   }
 
   const portalId = PORTAL_ID?.trim();

@@ -1,0 +1,32 @@
+.blog-post-body {
+  line-height: 1.6;
+  color: var(--silk-dim);
+
+  h2,
+  h3,
+  h5 {
+    color: var(--silk);
+  }
+
+  a {
+    color: var(--flame-bright);
+    text-decoration: underline;
+  }
+
+  ul,
+  ol {
+    padding-left: 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  blockquote {
+    border-left: 2px solid var(--flame-bright);
+    padding-left: 20px;
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 20px;
+    color: var(--silk);
+  }
+}

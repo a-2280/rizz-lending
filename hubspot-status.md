@@ -71,6 +71,76 @@ status.
   workflow fires, and whether first/last name should be split into two fields
   (currently both words go into `firstname`; splitting is a code change).
 
+## 2026-09-07 — second HubSpot form, for Careers
+
+`/api/hubspot` now takes an optional `formKey` in the POST body (`'dealer'` |
+`'careers'`, defaults to `'dealer'` so the existing Dealers-page form needs no
+changes) and looks up the GUID from a `FORM_GUIDS` map instead of a single env
+var. New env var: `HUBSPOT_FORM_GUID_CAREERS`, empty until the client's Careers
+form exists — until then that form's submissions 500 with
+`HUBSPOT_FORM_GUID_CAREERS is not set`, same pattern as the original var.
+
+New block, `heroFormBlock` (`src/components/blocks/heroFormBlock.js` +
+`sanity/schemaTypes/blocks/heroFormBlockType.js`) — a hero with the contact
+form embedded as the right-hand card, modeled on `estimatorHero`'s layout
+rather than the two-column `dealerFaqFormBlock`. It's configurable per page:
+
+- `hubspotForm` picks which GUID it posts to (`dealer` or `careers`).
+- `entityLabel` swaps the word "Dealership" for "Business" etc. in the two
+  field labels ("[Entity] name" / "[Entity] type") without touching what's
+  actually sent to HubSpot — the property names stay `company` /
+  `dealership_type` either way.
+- `showEntityType` / `showVolume` toggle the two dropdowns off, since the
+  Careers form doesn't define those properties (client hasn't finalized its
+  field list beyond "drop those two").
+
+The shared submit logic (validate, `hubspotutk` cookie read, fetch to
+`/api/hubspot`, status states) was pulled out of `dealerFaqFormBlock.js` into
+`src/lib/useHubspotForm.js` so `heroFormBlock` doesn't duplicate it.
+`dealerFaqFormBlock.js` itself is untouched — still its own inline copy of the
+same logic, since it's the one already verified end-to-end against the real
+portal and there was no reason to risk it.
+
+Partners page: reuses `heroFormBlock` with `hubspotForm: 'dealer'` and
+`entityLabel: 'Business'` — same HubSpot form as Dealers, no new GUID needed.
+Careers page: `hubspotForm: 'careers'`, `showEntityType`/`showVolume` off.
+Both are Sanity content changes (add the block to each page in Studio), not
+code changes — nothing in `src/app` names these pages, routing is fully
+content-driven off `[...slug]`.
+
+Still open: the real Careers HubSpot form doesn't exist yet, so
+`HUBSPOT_FORM_GUID_CAREERS` is unset and that form 500s until the client
+builds it and the GUID is added to `.env.local` — same as when
+`HUBSPOT_FORM_GUID` was first added for Dealers. Whatever the client decides
+for the Careers field list beyond dropping the two dropdowns (e.g. renaming
+"Anything else?", adding a field) will need `heroFormBlock` revisited.
+
+## 2026-09-07 — third HubSpot form, for a new Contact page
+
+Same pattern again: `FORM_GUIDS` in `/api/hubspot` gained a `contact` key
+(`HUBSPOT_FORM_GUID_CONTACT`, empty until the client's Contact form exists).
+The inline ternary that named the missing env var in the "not configured"
+error only handled two keys, so it's now a small `ENV_VAR_NAMES` map instead
+— a third key would have needed another nested ternary.
+
+New block, `contactFormBlock` (`src/components/blocks/contactFormBlock.js` +
+`sanity/schemaTypes/blocks/contactFormBlockType.js`) — unlike `heroFormBlock`,
+this isn't a relabeled reuse of an existing form. It's a plain centered
+form card (no hero image/video, no FAQ accordion, no dealership-specific
+fields) for a standalone Contact page the client asked for. Fields are
+generic: name (`firstname`), email, phone, message — `firstname`/`email`
+required, phone/message optional. `formKey` is hardcoded to `'contact'` in
+the component rather than editor-configurable, since it exists for exactly
+one HubSpot form.
+
+Still open, same shape as the Careers form: the client hasn't built the real
+Contact HubSpot form yet, so `HUBSPOT_FORM_GUID_CONTACT` is unset and
+submissions 500 until it's added to `.env.local`. The field list above
+(name/email/phone/message) is provisional — reconcile it against the client's
+actual form once it exists, the way `dealership_type`/`monthly_exotic_volume`
+had to be reconciled for Dealers (see above). The Contact page itself and its
+footer link are Sanity content changes, not code — same as Partners/Careers.
+
 ## Deliberately not built
 
 Google Ads conversion tracking and GA4. An earlier commit had them

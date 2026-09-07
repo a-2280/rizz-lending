@@ -17,6 +17,8 @@ import { highlightsBlockType } from './blocks/highlightsBlockType'
 import { testimonialsBlockType } from './blocks/testimonialsBlockType'
 import { faqBlockType } from './blocks/faqBlockType'
 import { dealerFaqFormBlockType } from './blocks/dealerFaqFormBlockType'
+import { heroFormBlockType } from './blocks/heroFormBlockType'
+import { contactFormBlockType } from './blocks/contactFormBlockType'
 import { ctaType } from './blocks/ctaType'
 import { logoGridBlockType } from './blocks/logoGridBlockType'
 import { financedCarsBlockType } from './blocks/financedCarsBlockType'
@@ -27,11 +29,15 @@ import { openRolesBlockType } from './blocks/openRolesBlockType'
 import { availabilityMapBlockType } from './blocks/availabilityMapBlockType'
 import { legalBlockType } from './blocks/legalBlockType'
 import { blogGridBlockType } from './blocks/blogGridBlockType'
+import {blogCategoryType} from './blogCategoryType'
+import {postType} from './postType'
 import {pageBuilderType} from './pageBuilderType'
 import {pageType} from './pageType'
 
 export const schemaTypes = [
   pageType,
+  postType,
+  blogCategoryType,
   heroType,
   textHeroType,
   footerType,
@@ -50,6 +56,8 @@ export const schemaTypes = [
   testimonialsBlockType,
   faqBlockType,
   dealerFaqFormBlockType,
+  heroFormBlockType,
+  contactFormBlockType,
   ctaType,
   logoGridBlockType,
   financedCarsBlockType,

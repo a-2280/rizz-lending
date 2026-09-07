@@ -9,6 +9,7 @@ export const pageBuilderType = defineType({
     defineArrayMember({type: 'textHero'}),
     defineArrayMember({type: 'estimationBlock'}),
     defineArrayMember({type: 'estimatorHero'}),
+    defineArrayMember({type: 'heroFormBlock'}),
     defineArrayMember({type: 'imageHero'}),
     defineArrayMember({type: 'imageMarquee'}),
     defineArrayMember({type: 'threeCardBlock'}),
@@ -20,6 +21,7 @@ export const pageBuilderType = defineType({
     defineArrayMember({type: 'testimonialsBlock'}),
     defineArrayMember({type: 'faqBlock'}),
     defineArrayMember({type: 'dealerFaqFormBlock'}),
+    defineArrayMember({type: 'contactFormBlock'}),
     defineArrayMember({type: 'cta'}),
     defineArrayMember({type: 'logoGridBlock'}),
     defineArrayMember({type: 'financedCarsBlock'}),
@@ -32,7 +34,7 @@ export const pageBuilderType = defineType({
   options: {
     insertMenu: {
       groups: [
-        {name: 'heroes', title: 'Heroes', of: ['hero', 'textHero', 'imageHero', 'estimatorHero']},
+        {name: 'heroes', title: 'Heroes', of: ['hero', 'textHero', 'imageHero', 'estimatorHero', 'heroFormBlock']},
         {
           name: 'content',
           title: 'Content & Cards',
@@ -57,7 +59,7 @@ export const pageBuilderType = defineType({
             'financedCarsBlock',
           ],
         },
-        {name: 'forms', title: 'FAQ & Forms', of: ['faqBlock', 'dealerFaqFormBlock']},
+        {name: 'forms', title: 'FAQ & Forms', of: ['faqBlock', 'dealerFaqFormBlock', 'contactFormBlock']},
         {
           name: 'listings',
           title: 'Listings',

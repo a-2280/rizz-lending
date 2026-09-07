@@ -37,6 +37,10 @@ const PAGE_BUILDER_FIELDS = `pageBuilder[]{
   formHeading,
   formSubtext,
   submitLabel,
+  hubspotForm,
+  entityLabel,
+  showEntityType,
+  showVolume,
   loginHeading,
   loginSubtext,
   emailLabel,
@@ -85,6 +89,28 @@ const PAGE_QUERY = groq`*[_type == "page" && slug.current == $slug][0]{
   ${PAGE_BUILDER_FIELDS}
 }`;
 
+const POST_LIST_QUERY = groq`*[_type == "post" && showOnBlog == true] | order(publishedAt desc) {
+  title,
+  "slug": slug.current,
+  excerpt,
+  mainImage{ asset->{ url } },
+  "category": category->title,
+  publishedAt
+}`;
+
+const POST_QUERY = groq`*[_type == "post" && showOnBlog == true && slug.current == $slug][0]{
+  title,
+  excerpt,
+  mainImage{ asset->{ url } },
+  "category": category->title,
+  author,
+  publishedAt,
+  body[]{
+    ...,
+    _type == "image" => { "asset": asset->{ url } }
+  }
+}`;
+
 const FOOTER_QUERY = groq`*[_id == "siteLayout"][0].footer->{
   tagline,
   socials[]{ _key, platform, href },
@@ -98,4 +124,12 @@ export function getPage(slug) {
 
 export function getFooter() {
   return client.fetch(FOOTER_QUERY, {}, { next: { revalidate: 60 } });
+}
+
+export function getBlogPosts() {
+  return client.fetch(POST_LIST_QUERY, {}, { next: { revalidate: 60 } });
+}
+
+export function getBlogPost(slug) {
+  return client.fetch(POST_QUERY, { slug }, { next: { revalidate: 60 } });
 }
