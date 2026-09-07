@@ -36,7 +36,7 @@ function monthlyPayment(principal, months, apr) {
 const usd = new Intl.NumberFormat('en-US');
 const fmtUSD = (n) => '$' + usd.format(Math.round(n));
 
-export default function EstimatorHero({ eyebrow, heading, subText, buttons, disclaimer, showIcon, image, video, calcEyebrow, calcHeading, minFinanced, maxFinanced, apr, terms, calcDisclaimer }) {
+export default function EstimatorHero({ eyebrow, eyebrowColor, heading, subText, buttons, disclaimer, showIcon, image, video, calcEyebrow, calcHeading, minFinanced, maxFinanced, apr, terms, calcDisclaimer }) {
   const imageUrl = image?.asset?.url;
   const videoUrl = video?.asset?.url;
   const sectionRef = useRef(null);
@@ -81,7 +81,7 @@ export default function EstimatorHero({ eyebrow, heading, subText, buttons, disc
       </div>
       {(imageUrl || videoUrl) && <div className="hero-scrim" />}
       <div className="flex p30 py70 gap-50 z-3 pos-rel fade--in" data-sal>
-        <Content eyebrow={eyebrow} heading={heading} subText={subText} buttons={buttons} disclaimer={disclaimer} showIcon={showIcon} />
+        <Content eyebrow={eyebrow} eyebrowColor={eyebrowColor} heading={heading} subText={subText} buttons={buttons} disclaimer={disclaimer} showIcon={showIcon} />
         <div className='flex-1 flex justify-center'>
         <Calculator calcEyebrow={calcEyebrow} calcHeading={calcHeading} minFinanced={minFinanced} maxFinanced={maxFinanced} financed={financed} setFinanced={setFinanced} terms={terms} months={months} setMonths={setMonths} monthly={monthly} calcDisclaimer={calcDisclaimer} /></div>
       </div>
@@ -89,12 +89,12 @@ export default function EstimatorHero({ eyebrow, heading, subText, buttons, disc
   );
 }
 
-function Content({ eyebrow, heading, subText, buttons, disclaimer, showIcon }) {
+function Content({ eyebrow, eyebrowColor, heading, subText, buttons, disclaimer, showIcon }) {
   return (
     <div className="flex flex-col gap-40 max-700">
       <div className="flex flex-col gap-15">
         <div>
-          {eyebrow && <p className="eyebrow">{eyebrow}</p>}
+          {eyebrow && <p className={eyebrowColor === 'light' ? 'eyebrow eyebrow-light' : 'eyebrow eyebrow-orange'}>{eyebrow}</p>}
           <h1 className="h1">{heading && <PortableText value={heading} components={headingComponents} />}</h1>
         </div>
         {subText && <p className="max-500 text-balanced">{subText}</p>}

@@ -65,15 +65,13 @@ body {
   font-smooth: always;
   text-rendering: optimizeLegibility;
   ::selection {
-    background: var(--flame);
+    background: var(--flame-bright);
     color: var(--silk);
   }
 }
 
 :root {
-  --flame: rgb(181, 64, 36);
   --flame-bright: rgb(210, 78, 46);
-  --adventure: rgb(158, 94, 49);
   --silk: rgb(249, 243, 237);
   --carbon: rgb(38, 38, 38);
   --midnight: rgb(14, 14, 14);

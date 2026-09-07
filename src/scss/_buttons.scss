@@ -6,7 +6,7 @@
     padding: 15px;
     border-radius: 5px;
     height: fit-content;
-    background-color: var(--flame);
+    background-color: var(--flame-bright);
     transition: all .3s ease;
     color: var(--silk);
     font-weight: 600;
@@ -15,7 +15,6 @@
     }
     &:hover {
         transform: translateY(-3px);
-        background-color: var(--flame-bright);
     }
 }
 

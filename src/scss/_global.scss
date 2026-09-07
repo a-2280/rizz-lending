@@ -48,7 +48,7 @@ a {
 }
 
 .text-flame {
-  color: var(--flame);
+  color: var(--flame-bright);
 }
 
 .text-light-orange {
@@ -130,7 +130,7 @@ a {
 }
 
 .line-flame {
-  border-bottom: 2px solid var(--flame);
+  border-bottom: 2px solid var(--flame-bright);
 }
 
 .radius-5 {
@@ -176,14 +176,22 @@ a {
   font-size: 17px;
   font-style: italic;
   font-family: var(--serif);
-  color: var(--adventure);
+  color: var(--flame-bright);
   font-weight: 500;
+}
+
+.eyebrow.eyebrow-orange {
+  color: var(--flame-bright);
+}
+
+.eyebrow.eyebrow-light {
+  color: lightgray;
 }
 
 .marker {
   font-size: 25px;
   font-family: var(--display);
-  color: var(--flame);
+  color: var(--flame-bright);
   font-weight: 700;
 }
 
@@ -468,7 +476,7 @@ a {
 }
 
 .bg-flame {
-  background-color: var(--flame);
+  background-color: var(--flame-bright);
 }
 
 .scrim-b {
@@ -479,7 +487,7 @@ a {
 }
 
 .bg-glow {
-  background: radial-gradient(1300px 760px at 74% 8%, color-mix(in srgb, var(--flame) 16%, transparent), transparent 60%), radial-gradient(1000px 640px at 3% 100%, color-mix(in srgb, var(--adventure) 10%, transparent), transparent 55%), linear-gradient(180deg, rgba(14, 14, 14, 0.5), rgba(14, 14, 14, 0.28) 42%, rgba(14, 14, 14, 0.82)), linear-gradient(120deg, #1c0e08, var(--midnight) 42%, #170d07 72%, var(--midnight));
+  background: radial-gradient(1300px 760px at 74% 8%, color-mix(in srgb, var(--flame-bright) 16%, transparent), transparent 60%), radial-gradient(1000px 640px at 3% 100%, color-mix(in srgb, var(--flame-bright) 10%, transparent), transparent 55%), linear-gradient(180deg, rgba(14, 14, 14, 0.5), rgba(14, 14, 14, 0.28) 42%, rgba(14, 14, 14, 0.82)), linear-gradient(120deg, #1c0e08, var(--midnight) 42%, #170d07 72%, var(--midnight));
   background-size: auto, auto, auto, 220% 220%;
   animation: drift 20s ease-in-out infinite;
 }

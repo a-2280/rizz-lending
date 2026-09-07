@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next dev",
     "lint": "eslint",
-    "clean": "rm -rf .next"
+    "clean": "rm -rf .next",
+    "check:tracking": "node scripts/check-tracking.mjs"
   },
   "dependencies": {
     "embla-carousel-auto-scroll": "^8.6.0",

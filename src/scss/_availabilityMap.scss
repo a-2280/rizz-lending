@@ -10,7 +10,7 @@
     display: inline-block;
 
     &--available {
-      background-color: var(--flame);
+      background-color: var(--flame-bright);
     }
     &--soon {
       background-color: var(--soon-fill);
@@ -41,7 +41,7 @@
     outline: none;
 
     &--available {
-      fill: var(--flame);
+      fill: var(--flame-bright);
     }
     &--soon {
       fill: var(--soon-fill);

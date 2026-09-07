@@ -2,7 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { resolveHref } from '@/lib/links';
 
-const PLACEHOLDER = { background: 'linear-gradient(135deg, var(--adventure), var(--flame))', opacity: 0.85 };
+const PLACEHOLDER = { background: 'var(--flame-bright)', opacity: 0.85 };
 
 export default function BlogGrid({ eyebrow, heading, description, items }) {
   const hasItems = items?.length > 0;

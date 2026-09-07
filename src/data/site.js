@@ -1,5 +1,7 @@
+// Apex, not www — www 301s to the apex, so a www fallback would make every
+// canonical tag and every sitemap entry point at a redirect.
 export const SITE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.rizzlending.com";
+  process.env.NEXT_PUBLIC_SITE_URL ?? "https://rizzlending.com";
 
 // Consumed by sitemap.js and robots.js only.
 //

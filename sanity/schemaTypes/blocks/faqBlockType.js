@@ -1,5 +1,6 @@
 import {defineArrayMember, defineField, defineType} from 'sanity'
 import {HelpCircleIcon} from '@sanity/icons/HelpCircle'
+import {LinkIcon} from '@sanity/icons/Link'
 
 export const faqBlockType = defineType({
   name: 'faqBlock',
@@ -19,10 +20,43 @@ export const faqBlockType = defineType({
           name: 'faqItem',
           fields: [
             defineField({name: 'question', type: 'string', validation: (Rule) => Rule.required()}),
-            defineField({name: 'answer', type: 'text', rows: 3, validation: (Rule) => Rule.required()}),
+            defineField({
+              name: 'answer',
+              type: 'array',
+              of: [
+                {
+                  type: 'block',
+                  styles: [{title: 'Normal', value: 'normal'}],
+                  lists: [],
+                  marks: {
+                    decorators: [
+                      {title: 'Bold', value: 'strong'},
+                      {title: 'Italic', value: 'em'},
+                    ],
+                    annotations: [
+                      {
+                        name: 'faqLink',
+                        type: 'object',
+                        title: 'Link',
+                        icon: LinkIcon,
+                        fields: [{name: 'href', title: 'URL', type: 'string'}],
+                      },
+                    ],
+                  },
+                },
+              ],
+              validation: (Rule) => Rule.required(),
+            }),
           ],
           preview: {
-            select: {title: 'question', subtitle: 'answer'},
+            select: {title: 'question', answer: 'answer'},
+            prepare({title, answer}) {
+              const subtitle = (answer || [])
+                .filter((block) => block._type === 'block')
+                .map((block) => (block.children || []).map((child) => child.text).join(''))
+                .join(' ')
+              return {title, subtitle}
+            },
           },
         }),
       ],

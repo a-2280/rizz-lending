@@ -5,7 +5,7 @@
 .three-card .card {
     transition: all 0.3s ease;
     &:hover {
-        border-color: var(--flame);
+        border-color: var(--flame-bright);
         transform: translateY(-5px);
     }
 }

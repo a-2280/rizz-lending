@@ -1,7 +1,7 @@
 'use client';
 
-import Link from 'next/link';
 import { useState } from 'react';
+import ApplyNow from '../applyNow';
 
 function monthlyPayment(principal, months, apr) {
   const i = apr / 12;
@@ -68,9 +68,7 @@ export default function ApplyEstimatorBlock({ eyebrow, heading, subText, calcEye
               <p className="text-silk-dim f-14 weight-500">/mo</p>
             </div>
           </div>
-          <Link href="https://application.rizzlending.com/applications/start/b3088bdf-6922-4801-a6f8-aeb6e487322e?embed=true" className="button-1 w-100 text-center justify-center flex">
-            {continueLabel}
-          </Link>
+          <ApplyNow className="button-1 w-100 text-center justify-center flex" label={continueLabel} />
           {disclaimer && <p className="disclaimer">{disclaimer}</p>}
         </div>
       </div>

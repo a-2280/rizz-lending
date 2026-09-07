@@ -2,6 +2,20 @@
 
 import { useRef, useState } from 'react';
 import gsap from 'gsap';
+import { PortableText } from 'next-sanity';
+
+const answerComponents = {
+  block: {
+    normal: ({ children }) => <p className="pb20">{children}</p>,
+  },
+  marks: {
+    faqLink: ({ children, value }) => (
+      <a className="underline" href={value?.href || '#'}>
+        {children}
+      </a>
+    ),
+  },
+};
 
 export default function FaqBlock({ eyebrow, heading, items }) {
   const [openKeys, setOpenKeys] = useState(() => new Set());
@@ -56,7 +70,7 @@ export default function FaqBlock({ eyebrow, heading, items }) {
                     if (el) answerRefs.current.set(item._key, el);
                   }}
                 >
-                  <p className="pb20">{item.answer}</p>
+                  {typeof item.answer === 'string' ? <p className="pb20">{item.answer}</p> : <PortableText value={item.answer} components={answerComponents} />}
                 </div>
               </div>
             );

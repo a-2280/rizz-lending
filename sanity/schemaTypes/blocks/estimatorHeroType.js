@@ -34,6 +34,21 @@ export const estimatorHeroType = defineType({
       group: 'content',
     }),
     defineField({
+      name: 'eyebrowColor',
+      title: 'Eyebrow color',
+      type: 'string',
+      group: 'content',
+      options: {
+        list: [
+          {title: 'Orange', value: 'orange'},
+          {title: 'Light grey', value: 'light'},
+        ],
+        layout: 'radio',
+        direction: 'horizontal',
+      },
+      initialValue: 'orange',
+    }),
+    defineField({
       name: 'heading',
       type: 'array',
       group: 'content',

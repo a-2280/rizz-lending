@@ -8,7 +8,7 @@
     appearance: auto;
     border: 1px solid rgb(144, 144, 144);
     background-color: var(--silk-dim);
-    accent-color: var(--flame);
+    accent-color: var(--flame-bright);
     height: 10px;
     cursor: pointer;
 
@@ -28,7 +28,7 @@
     text-align: center;
     transition: all 0.65s ease;
     &:hover {
-        border-color: var(--flame);
+        border-color: var(--flame-bright);
     }
     &.on {
         background: var(--carbon);

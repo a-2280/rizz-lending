@@ -11,6 +11,7 @@ const PAGE_BUILDER_FIELDS = `pageBuilder[]{
   _key,
   _type,
   eyebrow,
+  eyebrowColor,
   heading,
   lastUpdated,
   description,

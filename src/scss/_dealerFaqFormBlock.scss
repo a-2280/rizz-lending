@@ -18,7 +18,7 @@
   color: var(--carbon);
   transition: border-color 0.3s ease;
   &:focus {
-    border-color: var(--flame);
+    border-color: var(--flame-bright);
   }
 }
 
@@ -28,13 +28,13 @@ textarea.form-input {
 }
 
 .form-input[aria-invalid='true'] {
-  border-color: var(--flame);
+  border-color: var(--flame-bright);
 }
 
 .form-error {
   font-size: 13px;
   font-weight: 500;
-  color: var(--flame);
+  color: var(--flame-bright);
 }
 
 .form-success {

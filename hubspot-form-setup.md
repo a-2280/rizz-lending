@@ -88,7 +88,9 @@ It should:
 ## 5. Constraints
 
 - No new npm packages. Use `fetch`.
-- Do not add a Google Tag Manager container.
+- ~~Do not add a Google Tag Manager container.~~ Superseded: this was a scope
+  fence for the form task. The container is now installed deliberately as part
+  of the Google migration — see `google-migration-guide.md`.
 - Keep the change to as few files as possible.
 
 ## 6. When you're done, tell me

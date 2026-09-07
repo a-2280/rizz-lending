@@ -10,7 +10,7 @@ const headingComponents = {
   },
 };
 
-export default function ImageHero({ eyebrow, heading, subText, image, video }) {
+export default function ImageHero({ eyebrow, eyebrowColor, heading, subText, image, video }) {
   const imageUrl = image?.asset?.url;
   const videoUrl = video?.asset?.url;
 
@@ -19,7 +19,7 @@ export default function ImageHero({ eyebrow, heading, subText, image, video }) {
       <div className="pos-rel pt70 flex flex-col gap-40 w-100 max-1400 ma">
         <div className="flex flex-col gap-20 z-3 pos-rel fade--in" data-sal>
           <div className='flex flex-col gap-5'>
-          {eyebrow && <p className="eyebrow">{eyebrow}</p>}
+          {eyebrow && <p className={eyebrowColor === 'light' ? 'eyebrow eyebrow-light' : 'eyebrow eyebrow-orange'}>{eyebrow}</p>}
           <h1 className="h1">{heading && <PortableText value={heading} components={headingComponents} />}</h1></div>
           {subText && <p className="f-18 text-silk-dim max-500 text-balanced">{subText}</p>}
         </div>
