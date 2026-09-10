@@ -49,17 +49,17 @@ export default function Header() {
         </div>
       </div>
       <div className={`mobile-menu flex flex-col${menuOpen ? ' open' : ''}`}>
-        <Link href="#" onClick={closeMenu}>Borrow Smart</Link>
-        <Link href="#" onClick={closeMenu}>— Cash-Out Refinance</Link>
-        <Link href="#" onClick={closeMenu}>— Lease Buyout</Link>
-        <Link href="#" onClick={closeMenu}>Vehicles</Link>
-        <Link href="#" onClick={closeMenu}>Hypercar</Link>
-        <Link href="#" onClick={closeMenu}>Eligibility</Link>
-        <Link href="#" onClick={closeMenu}>Dealers</Link>
-        <Link href="#" onClick={closeMenu}>Partners</Link>
-        <Link href="#" onClick={closeMenu}>About</Link>
-        <Link href="#" onClick={closeMenu}>My Account</Link>
-        <Link href="#" onClick={closeMenu}>Apply Now</Link>
+        <Link href="/overview" onClick={closeMenu}>Borrow Smart</Link>
+        <Link href="/cash-out-refinance" onClick={closeMenu}>— Cash-Out Refinance</Link>
+        <Link href="/lease-buyout" onClick={closeMenu}>— Lease Buyout</Link>
+        <Link href="/vehicles" onClick={closeMenu}>Vehicles</Link>
+        <Link href="/hypercar" onClick={closeMenu}>Hypercar</Link>
+        <Link href="/eligibility" onClick={closeMenu}>Eligibility</Link>
+        <Link href="/dealers" onClick={closeMenu}>Dealers</Link>
+        <Link href="/partners" onClick={closeMenu}>Partners</Link>
+        <Link href="/about" onClick={closeMenu}>About</Link>
+        <Link href="https://rizzlending.accountportalonline.com/" onClick={closeMenu}>My Account</Link>
+        <ApplyNow className="button-1 w-100" onClick={closeMenu} />
       </div>
     </header>
   );

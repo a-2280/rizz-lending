@@ -81,8 +81,10 @@ function Content({ eyebrow, eyebrowColor, heading, subText }) {
 }
 
 function Form({ formHeading, formSubtext, submitLabel, entityLabel, showEntityType, showVolume, hubspotForm }) {
+  // The Careers form doesn't define a company property — see hubspot-form-fields.md.
+  const showCompany = hubspotForm === 'dealer';
   const initialValues = {
-    company: '',
+    ...(showCompany ? { company: '' } : {}),
     firstname: '',
     email: '',
     phone: '',
@@ -93,7 +95,7 @@ function Form({ formHeading, formSubtext, submitLabel, entityLabel, showEntityTy
 
   const { values, errors, status, update, handleSubmit } = useHubspotForm({
     initialValues,
-    requiredFields: ['company', 'firstname', 'email', 'phone'],
+    requiredFields: showCompany ? ['company', 'firstname', 'email', 'phone'] : ['firstname', 'email', 'phone'],
     formKey: hubspotForm,
   });
 
@@ -112,13 +114,15 @@ function Form({ formHeading, formSubtext, submitLabel, entityLabel, showEntityTy
       )}
       <form className="flex flex-col gap-20" onSubmit={handleSubmit} noValidate>
         <div className="flex gap-15 m-flex-col">
-          <div className="flex-1 flex flex-col gap-5">
-            <label className="form-label" htmlFor={`${idPrefix}-company`}>
-              {entityLabel} name
-            </label>
-            <input id={`${idPrefix}-company`} name="company" className="form-input" type="text" placeholder="Rizz Motorsports" value={values.company} onChange={update('company')} aria-invalid={errors.company ? 'true' : undefined} />
-            {errors.company && <span className="form-error">{errors.company}</span>}
-          </div>
+          {showCompany && (
+            <div className="flex-1 flex flex-col gap-5">
+              <label className="form-label" htmlFor={`${idPrefix}-company`}>
+                {entityLabel} name
+              </label>
+              <input id={`${idPrefix}-company`} name="company" className="form-input" type="text" placeholder="Rizz Motorsports" value={values.company} onChange={update('company')} aria-invalid={errors.company ? 'true' : undefined} />
+              {errors.company && <span className="form-error">{errors.company}</span>}
+            </div>
+          )}
           <div className="flex-1 flex flex-col gap-5">
             <label className="form-label" htmlFor={`${idPrefix}-firstname`}>
               Your name

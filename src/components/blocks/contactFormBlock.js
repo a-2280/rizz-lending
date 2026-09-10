@@ -12,7 +12,7 @@ const INITIAL_VALUES = {
 export default function ContactFormBlock({ formHeading, formSubtext, submitLabel }) {
   const { values, errors, status, update, handleSubmit } = useHubspotForm({
     initialValues: INITIAL_VALUES,
-    requiredFields: ['firstname', 'email'],
+    requiredFields: ['firstname', 'email', 'phone'],
     formKey: 'contact',
   });
 
