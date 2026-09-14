@@ -4,21 +4,30 @@
 
 .h1 {
   font-size: 62px;
-  font-weight: 700px;
+  font-weight: 700;
   font-family: var(--display);
   line-height: 100%;
+  @media (max-width: 768px) {
+    font-size: 42px;
+  }
 }
 
 .h2 {
   font-size: 44px;
   font-family: var(--display);
   font-weight: 700;
+  @media (max-width: 768px) {
+    font-size: 32px;
+  }
 }
 
 .h3 {
   font-size: 33px;
   font-family: var(--display);
   font-weight: 700;
+  @media (max-width: 768px) {
+    font-size: 26px;
+  }
 }
 
 .h5 {
