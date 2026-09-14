@@ -146,7 +146,7 @@ function Calculator({ calcEyebrow, calcHeading, minFinanced, maxFinanced, financ
         </div>
       </div>
       <div className="flex flex-col gap-15">
-        <div className="p20 bg-midnight flex space-between align-center radius-5">
+        <div className="p20 bg-midnight flex space-between align-center radius-5 m-flex-col m-gap-20">
           <div className="flex flex-col gap-10">
             <div className="f-12 text-silk-dim uppercase weight-600">Estimated Monthly</div>
             <div className="flex align-baseline gap-10">

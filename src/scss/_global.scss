@@ -687,6 +687,12 @@ div.bg-image,
   }
 }
 
+.m-gap-20 {
+  @media (max-width: 768px) {
+    gap: 20px;
+  }
+}
+
 .m-gap-40 {
   @media (max-width: 768px) {
     gap: 40px;
