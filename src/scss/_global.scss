@@ -663,6 +663,12 @@ div.bg-image,
   }
 }
 
+.m-flex {
+  @media (max-width: 768px) {
+    display: flex;
+  }
+}
+
 .m-flex-col {
   @media (max-width: 768px) {
     flex-direction: column;
@@ -672,5 +678,17 @@ div.bg-image,
 .m-max-unset {
   @media (max-width: 768px) {
     max-width: unset;
+  }
+}
+
+.m-pl0 {
+  @media (max-width: 768px) {
+    padding-left: 0px;
+  }
+}
+
+.m-gap-40 {
+  @media (max-width: 768px) {
+    gap: 40px;
   }
 }

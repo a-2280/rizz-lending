@@ -39,9 +39,9 @@ export default function IconCardsBlock({ eyebrow, heading, description, quote, t
   if (isSplit) {
     return (
       <section className={`icon-cards icon-cards--split p30 py70 flex justify-center${isDark ? '' : ' bg-silk text-ink-dim'}`}>
-        <div className="flex align-center space-between m-flex-col max-1400 ma">
+        <div className="flex align-center space-between m-flex-col m-gap-40 max-1400 ma">
           <div className="flex-1">{content}</div>
-          <div className="flex-1 pl50">{cardList}</div>
+          <div className="flex-1 pl50 m-pl0">{cardList}</div>
         </div>
       </section>
     );

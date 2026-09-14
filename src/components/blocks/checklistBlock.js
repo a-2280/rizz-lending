@@ -10,7 +10,7 @@ export default function ChecklistBlock({ items, buttons }) {
     <section className='bg-silk text-ink-dim p30 py70 flex justify-center'>
       <div className='max-1400 flex flex-col gap-30'>
         {hasItems && (
-          <div className='grid-2'>
+          <div className='grid-2 m-flex m-flex-col'>
             {items.map((item) => (
               <div className='p20 bg-white border-line-d radius-10 flex gap-15' key={item._key}>
                 <div className='checklist-icon'>

@@ -3,7 +3,7 @@ export default function LeadershipStoryBlock({ eyebrow, heading, description, ca
 
   return (
     <section className="leadership-story p30 py70 flex justify-center bg-silk text-ink-dim">
-      <div className="flex align-start space-between m-flex-col max-1400 ma">
+      <div className="flex align-start space-between m-flex-col m-gap-40 max-1400 ma">
         <div className="flex-1 flex flex-col gap-15">
           <div className="flex flex-col gap-10 fade--in" data-sal>
             {eyebrow && <span className="eyebrow">{eyebrow}</span>}
@@ -12,7 +12,7 @@ export default function LeadershipStoryBlock({ eyebrow, heading, description, ca
           {description && <p className={`pre-line fade--in${hasCard ? '' : ' max-600'}`} data-sal>{description}</p>}
         </div>
         {hasCard && (
-          <div className="flex-1 pl50">
+          <div className="flex-1 pl50 m-pl0">
             <div className="card p30 radius-5 flex flex-col gap-10 bg-carbon border-line m-max-unset">
               {card.eyebrow && <span className="eyebrow">{card.eyebrow}</span>}
               {card.name && <p className="h3 text-silk">{card.name}</p>}

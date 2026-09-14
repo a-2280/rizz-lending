@@ -80,10 +80,11 @@ export default function EstimatorHero({ eyebrow, eyebrowColor, heading, subText,
         )}
       </div>
       {(imageUrl || videoUrl) && <div className="hero-scrim" />}
-      <div className="flex p30 py70 gap-50 z-3 pos-rel fade--in" data-sal>
+      <div className="flex p30 py70 gap-50 z-3 pos-rel fade--in m-flex-col" data-sal>
         <Content eyebrow={eyebrow} eyebrowColor={eyebrowColor} heading={heading} subText={subText} buttons={buttons} disclaimer={disclaimer} showIcon={showIcon} />
-        <div className='flex-1 flex justify-center'>
-        <Calculator calcEyebrow={calcEyebrow} calcHeading={calcHeading} minFinanced={minFinanced} maxFinanced={maxFinanced} financed={financed} setFinanced={setFinanced} terms={terms} months={months} setMonths={setMonths} monthly={monthly} calcDisclaimer={calcDisclaimer} /></div>
+        <div className="flex-1 flex justify-center">
+          <Calculator calcEyebrow={calcEyebrow} calcHeading={calcHeading} minFinanced={minFinanced} maxFinanced={maxFinanced} financed={financed} setFinanced={setFinanced} terms={terms} months={months} setMonths={setMonths} monthly={monthly} calcDisclaimer={calcDisclaimer} />
+        </div>
       </div>
     </section>
   );

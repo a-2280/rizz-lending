@@ -49,7 +49,7 @@ export default function FinancedCarsBlock({ eyebrow, heading, description, items
         )}
         <div className='flex flex-col gap-30'>
         {hasItems && (
-          <div className="flex gap-15">
+          <div className="flex gap-15 m-flex-col">
             {photoItems.length > 3
               ? [0, 1, 2].map((slot) => (
                   <div className="pos-rel ratio-4-3 radius-10 overflow flex-1 financed-cars-slot" key={slot}>

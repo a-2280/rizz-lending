@@ -58,7 +58,7 @@ export default function HeroFormBlock({ eyebrow, eyebrowColor, heading, subText,
         )}
       </div>
       {(imageUrl || videoUrl) && <div className="hero-scrim" />}
-      <div className="flex align-center p30 py70 gap-50 z-3 pos-rel fade--in" data-sal>
+      <div className="flex align-center p30 py70 gap-50 z-3 pos-rel fade--in m-flex-col" data-sal>
         <Content eyebrow={eyebrow} eyebrowColor={eyebrowColor} heading={heading} subText={subText} />
         <div className="flex-1 flex justify-center">
           <Form formHeading={formHeading} formSubtext={formSubtext} submitLabel={submitLabel} entityLabel={entityLabel || 'Dealership'} showEntityType={showEntityType} showVolume={showVolume} hubspotForm={hubspotForm || 'dealer'} />
