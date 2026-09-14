@@ -93,7 +93,7 @@ export const availabilityMapBlockType = defineType({
       title: 'State availability',
       type: 'array',
       group: 'states',
-      description: 'Status per state/territory. Verify against the licensing sheet — compliance sign-off is required before launch.',
+      description: 'Status per state/territory. Verify against the licensing sheet. Compliance sign-off is required before launch.',
       validation: (rule) => rule.max(51),
       initialValue: INITIAL_STATES,
       of: [

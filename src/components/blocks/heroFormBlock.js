@@ -102,7 +102,7 @@ function Form({ formHeading, formSubtext, submitLabel, entityLabel, showEntityTy
   const submitting = status === 'submitting';
   const succeeded = status === 'success';
   const idPrefix = `${hubspotForm}-hero`;
-  const entityPlaceholder = `you@${entityLabel.toLowerCase()}.com`;
+  const entityPlaceholder = showCompany ? `you@${entityLabel.toLowerCase()}.com` : 'you@email.com';
 
   return (
     <div className="radius-10 bg-silk p30 flex flex-col gap-20 max-600 w-100">
@@ -185,10 +185,10 @@ function Form({ formHeading, formSubtext, submitLabel, entityLabel, showEntityTy
           </label>
           <textarea id={`${idPrefix}-message`} name="message" className="form-input" placeholder="Tell us a bit more." value={values.message} onChange={update('message')} />
         </div>
-        {status === 'error' && <p className="form-error">Something went wrong — please try again or email us directly.</p>}
+        {status === 'error' && <p className="form-error">Something went wrong. Please try again or email us directly.</p>}
         {succeeded ? (
           <p className="form-success" role="status">
-            Thanks — we&rsquo;ll be in touch.
+            Thanks, we&rsquo;ll be in touch.
           </p>
         ) : (
           <button type="submit" className="button-1 w-100 text-center justify-center flex" disabled={submitting}>

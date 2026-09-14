@@ -259,10 +259,10 @@ export default function DealerFaqFormBlock({ eyebrow, heading, description, item
                 </label>
                 <textarea id="dealer-message" name="message" className="form-input" placeholder="Inventory mix, current lender pain points, etc." value={values.message} onChange={update('message')} />
               </div>
-              {status === 'error' && <p className="form-error">Something went wrong — please try again or email us directly.</p>}
+              {status === 'error' && <p className="form-error">Something went wrong. Please try again or email us directly.</p>}
               {succeeded ? (
                 <p className="form-success" role="status">
-                  Thanks — we&rsquo;ll be in touch.
+                  Thanks, we&rsquo;ll be in touch.
                 </p>
               ) : (
                 <button type="submit" className="button-1 w-100 text-center justify-center flex" disabled={submitting}>

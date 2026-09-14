@@ -29,8 +29,8 @@ export default function ThankYouPage() {
               <Check size={14} strokeWidth={3} color="#7fc98a" />
               Application received
             </p>
-            <h1 className="h1">Thanks — we&rsquo;ve got it.</h1>
-            <p className="text-silk-dim max-500 text-balanced">An advisor is reviewing your application now. Expect to hear from us shortly — usually the same business day.</p>
+            <h1 className="h1">Thanks, we&rsquo;ve got it.</h1>
+            <p className="text-silk-dim max-500 text-balanced">An advisor is reviewing your application now. Expect to hear from us shortly, usually the same business day.</p>
           </div>
           <div className="flex gap-10">
             <Link className="button-1" href="/">

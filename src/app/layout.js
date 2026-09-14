@@ -10,7 +10,7 @@ import SalInit from '@/components/salInit';
 export const metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? 'https://rizzlending.com'),
   title: {
-    default: 'Rizz Lending — More car. Less monthly.',
+    default: 'Rizz Lending | More car. Less monthly.',
     template: '%s | Rizz Lending',
   },
   description: "Exotic, luxury & collector car financing built by car people, for car people. Fast, private approvals on the cars your bank won't touch.",

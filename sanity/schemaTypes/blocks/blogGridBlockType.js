@@ -23,7 +23,7 @@ export const blogGridBlockType = defineType({
   preview: {
     select: {heading: 'heading'},
     prepare({heading}) {
-      return {title: heading || 'Untitled', subtitle: 'Blog Grid — lists live Blog Posts automatically'}
+      return {title: heading || 'Untitled', subtitle: 'Blog Grid: lists live Blog Posts automatically'}
     },
   },
 })
