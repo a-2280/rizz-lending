@@ -38,11 +38,11 @@ export default function Header() {
           <Link className={navClass('/about')} href="/about">About</Link>
         </nav>
         <div className="flex-1 flex justify-end align-center gap-20">
-          <Link className="account flex align-center gap-5 m-hide" href="https://rizzlending.accountportalonline.com/">
+          <Link className="account flex align-center gap-5" href="https://rizzlending.accountportalonline.com/">
             <Globe size={14} />
             My Account
           </Link>
-          <ApplyNow />
+          <ApplyNow className='m-hide' />
           <button type="button" className="burger" aria-label="Toggle menu" aria-expanded={menuOpen} onClick={() => setMenuOpen((open) => !open)}>
             {menuOpen ? <X size={22} /> : <Menu size={22} />}
           </button>
