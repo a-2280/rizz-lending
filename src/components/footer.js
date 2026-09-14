@@ -9,7 +9,7 @@ export default function Footer({ tagline, socials, columns, legalText }) {
   return (
     <FooterReveal>
       <div className='footer-content p30 py40 flex flex-col space-between'>
-      <div className="flex space-between gap-20">
+      <div className="flex space-between gap-20 m-flex-col">
         <div className='flex flex-col gap-20'>
           <div className="flex flex-col gap-20">
             <Link href="/">

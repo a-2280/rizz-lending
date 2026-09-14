@@ -6,6 +6,9 @@
     height: 400px;
     position: relative;
     clip-path: polygon(0% 0, 100% 0%, 100% 100%, 0 100%);
+    @media (max-width: 768px) {
+    height: 650px;
+  }
 }
 
 .footer-content {
@@ -15,6 +18,9 @@
     bottom: 0;
     opacity: 0;
     transition: opacity 0.25s ease;
+    @media (max-width: 768px) {
+    height: 650px;
+  }
 }
 
 .footer.sal-animate .footer-content {
