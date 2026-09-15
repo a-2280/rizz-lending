@@ -10,7 +10,7 @@ const INITIAL_VALUES = {
 };
 
 export default function ContactFormBlock({ formHeading, formSubtext, submitLabel }) {
-  const { values, errors, status, update, handleSubmit } = useHubspotForm({
+  const { values, errors, status, update, handleSubmit, honeypotProps } = useHubspotForm({
     initialValues: INITIAL_VALUES,
     requiredFields: ['firstname', 'email', 'phone'],
     formKey: 'contact',
@@ -50,9 +50,10 @@ export default function ContactFormBlock({ formHeading, formSubtext, submitLabel
               <label className="form-label" htmlFor="contact-phone">
                 Phone
               </label>
-              <input id="contact-phone" name="phone" className="form-input" type="text" placeholder="(555) 000-0000" value={values.phone} onChange={update('phone')} aria-invalid={errors.phone ? 'true' : undefined} />
+              <input id="contact-phone" name="phone" className="form-input" type="tel" placeholder="(555) 000-0000" value={values.phone} onChange={update('phone')} aria-invalid={errors.phone ? 'true' : undefined} />
               {errors.phone && <span className="form-error">{errors.phone}</span>}
             </div>
+            <input {...honeypotProps} />
             <div className="flex flex-col gap-10">
               <label className="form-label" htmlFor="contact-message">
                 Message

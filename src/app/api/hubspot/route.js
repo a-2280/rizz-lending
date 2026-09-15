@@ -52,7 +52,10 @@ export async function POST(request) {
     return Response.json({ error: 'bad_request', message: 'Request body must be JSON.' }, { status: 400 });
   }
 
-  const { formKey = 'dealer', fields, hutk, pageUri, pageName } = payload ?? {};
+  const { formKey = 'dealer', fields, hutk, pageUri, pageName, hp } = payload ?? {};
+
+  // Only bots fill the hidden honeypot field; report success so they don't retry.
+  if (hp) return Response.json({ ok: true });
 
   if (!Object.prototype.hasOwnProperty.call(FORM_GUIDS, formKey)) {
     return Response.json({ error: 'bad_request', message: `Unknown formKey "${formKey}".` }, { status: 400 });

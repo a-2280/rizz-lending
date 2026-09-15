@@ -21,12 +21,11 @@ export const ROUTES = [
   { path: "/partners", title: "For Platforms & Partners" },
   { path: "/about", title: "About" },
   { path: "/apply-now", title: "Apply Now" },
-  { path: "/my-account", title: "My Account" },
   { path: "/check-availability", title: "Check Availability" },
   { path: "/careers", title: "Careers" },
   { path: "/contact", title: "Contact" },
   { path: "/blog", title: "The Rizz Brief" },
-  { path: "/privacy", title: "Privacy Policy" },
+  { path: "/privacy-policy", title: "Privacy Policy" },
 ];
 
 // NOTE: nothing imports NAV/NAV_CTAS — src/components/header.js hardcodes its own
@@ -51,6 +50,6 @@ export const NAV = [
 ];
 
 export const NAV_CTAS = [
-  { label: "My Account", href: "/my-account" },
+  { label: "My Account", href: "https://rizzlending.accountportalonline.com/" },
   { label: "Apply Now", href: "/apply-now" },
 ];

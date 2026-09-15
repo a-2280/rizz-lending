@@ -2,6 +2,7 @@
 
 import { useRef, useState } from 'react';
 import gsap from 'gsap';
+import { useHubspotForm } from '@/lib/useHubspotForm';
 
 // HubSpot field mapping.
 //
@@ -35,44 +36,17 @@ const EMPTY = {
   message: '',
 };
 
-/**
- * Read the `hubspotutk` cookie set by HubSpot's tracking script (loaded in the
- * root layout). It's what links this submission to the visitor's browsing
- * history in the CRM — without it the contact looks like it came from nowhere.
- * Not readable server-side, so it has to be picked up here and passed through.
- *
- * Returns undefined when the script hasn't set it yet (first paint, ad blocker).
- */
-function getHutk() {
-  if (typeof document === 'undefined') return undefined;
-  const match = document.cookie.match(/(?:^|;\s*)hubspotutk=([^;]*)/);
-  return match ? decodeURIComponent(match[1]) : undefined;
-}
-
-function validate(values) {
-  const errors = {};
-  if (!values.company.trim()) errors.company = 'Required';
-  if (!values.firstname.trim()) errors.firstname = 'Required';
-  if (!values.email.trim()) errors.email = 'Required';
-  else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(values.email.trim())) errors.email = 'Enter a valid email address';
-  if (!values.phone.trim()) errors.phone = 'Required';
-  return errors;
-}
-
 export default function DealerFaqFormBlock({ eyebrow, heading, description, items, formHeading, formSubtext, submitLabel }) {
   const [openKeys, setOpenKeys] = useState(() => new Set());
   const hasItems = items?.length > 0;
   const answerRefs = useRef(new Map());
   const iconRefs = useRef(new Map());
 
-  const [values, setValues] = useState(EMPTY);
-  const [errors, setErrors] = useState({});
-
-  // 'idle' | 'submitting' | 'success' | 'error'
-  const [status, setStatus] = useState('idle');
-  // Rejects re-entry while a request is open, so a rapid double-click can't
-  // create two contacts.
-  const inFlightRef = useRef(false);
+  const { values, errors, status, update, handleSubmit, honeypotProps } = useHubspotForm({
+    initialValues: EMPTY,
+    requiredFields: ['company', 'firstname', 'email', 'phone'],
+    formKey: 'dealer',
+  });
 
   function toggle(key) {
     const isOpen = openKeys.has(key);
@@ -87,57 +61,6 @@ export default function DealerFaqFormBlock({ eyebrow, heading, description, item
       next.has(key) ? next.delete(key) : next.add(key);
       return next;
     });
-  }
-
-  function update(name) {
-    return (e) => {
-      const { value } = e.target;
-      setValues((prev) => ({ ...prev, [name]: value }));
-      setErrors((prev) => (prev[name] ? { ...prev, [name]: undefined } : prev));
-    };
-  }
-
-  async function handleSubmit(e) {
-    e.preventDefault();
-    if (status === 'success') return;
-
-    const nextErrors = validate(values);
-    setErrors(nextErrors);
-    if (Object.keys(nextErrors).length > 0) return;
-
-    if (inFlightRef.current) return;
-    inFlightRef.current = true;
-    setStatus('submitting');
-
-    try {
-      const res = await fetch('/api/hubspot', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          fields: values,
-          hutk: getHutk(),
-          pageUri: typeof window === 'undefined' ? undefined : window.location.href,
-          pageName: typeof document === 'undefined' ? undefined : document.title,
-        }),
-      });
-
-      const data = await res.json().catch(() => null);
-
-      if (!res.ok) {
-        // Log HubSpot's body verbatim — it names the exact field that's wrong.
-        console.error('[hubspot] submission failed', res.status, data);
-        setStatus('error');
-        return;
-      }
-
-      setValues(EMPTY);
-      setStatus('success');
-    } catch (err) {
-      console.error('[hubspot] could not reach /api/hubspot', err);
-      setStatus('error');
-    } finally {
-      inFlightRef.current = false;
-    }
   }
 
   const submitting = status === 'submitting';
@@ -223,10 +146,11 @@ export default function DealerFaqFormBlock({ eyebrow, heading, description, item
                   <label className="form-label" htmlFor="dealer-phone">
                     Phone
                   </label>
-                  <input id="dealer-phone" name="phone" className="form-input" type="text" placeholder="(555) 000-0000" value={values.phone} onChange={update('phone')} aria-invalid={errors.phone ? 'true' : undefined} />
+                  <input id="dealer-phone" name="phone" className="form-input" type="tel" placeholder="(555) 000-0000" value={values.phone} onChange={update('phone')} aria-invalid={errors.phone ? 'true' : undefined} />
                   {errors.phone && <span className="form-error">{errors.phone}</span>}
                 </div>
               </div>
+              <input {...honeypotProps} />
               <div className="flex gap-15 m-flex-col">
                 <div className="flex-1 flex flex-col gap-5">
                   <label className="form-label" htmlFor="dealer-type">

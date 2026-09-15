@@ -16,15 +16,11 @@ const LEGACY_PAGES = {
   '/vehicle-we-finance': '/vehicles',
   '/company': '/about',
   '/eligibility-requirements': '/eligibility',
-  '/privacy-policy': '/privacy',
   // Sanity slug is `check-availability`; `/availability` has no page and 404s.
   '/map-and-office-locations': '/check-availability',
 };
 
-// Old blog posts, from rizzlending.com/post-sitemap.xml. Sanity has no post
-// schema yet, so there is nowhere specific to send these — /blog preserves some
-// link equity but loses the per-post rankings. Recreating the content is the
-// real fix and is tracked separately.
+// Old blog posts, from rizzlending.com/post-sitemap.xml, migrated to Sanity under the same slugs.
 const LEGACY_POSTS = [
   'porsche-gt3-rs-street-legal-track-car',
   'how-long-should-you-own-a-supercar-before-upgrading',
@@ -57,6 +53,14 @@ const LEGACY_POSTS = [
   'financing-supercars-jumbo-auto-loans-explained',
 ];
 
+const LEGACY_ARCHIVES = ['/category/:path*', '/tag/:path*', '/author/:path*'];
+
+const SECURITY_HEADERS = [
+  { key: 'X-Frame-Options', value: 'SAMEORIGIN' },
+  { key: 'X-Content-Type-Options', value: 'nosniff' },
+  { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
+];
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
@@ -67,8 +71,17 @@ const nextConfig = {
       },
     ],
   },
+  async headers() {
+    return [{ source: '/(.*)', headers: SECURITY_HEADERS }];
+  },
   async redirects() {
-    return [...Object.entries(LEGACY_PAGES).map(([source, destination]) => ({ source, destination, permanent: true })), ...LEGACY_POSTS.map((slug) => ({ source: `/${slug}`, destination: '/blog', permanent: true }))];
+    return [
+      ...Object.entries(LEGACY_PAGES).map(([source, destination]) => ({ source, destination, permanent: true })),
+      ...LEGACY_POSTS.map((slug) => ({ source: `/${slug}`, destination: `/blog/${slug}`, permanent: true })),
+      ...LEGACY_ARCHIVES.map((source) => ({ source, destination: '/blog', permanent: true })),
+      { source: '/home', destination: '/', permanent: true },
+      { source: '/my-account', destination: 'https://rizzlending.accountportalonline.com/', permanent: false },
+    ];
   },
 };
 

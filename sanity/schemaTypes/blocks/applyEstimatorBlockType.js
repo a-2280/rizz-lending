@@ -34,7 +34,7 @@ export const applyEstimatorBlockType = defineType({
       validation: (Rule) => Rule.required().positive().greaterThan(Rule.valueOfField('minFinanced')),
       group: 'calculator',
     }),
-    defineField({name: 'apr', title: 'APR (%)', type: 'number', initialValue: 9.9, group: 'calculator'}),
+    defineField({name: 'apr', title: 'APR (%)', type: 'number', initialValue: 9.99, group: 'calculator'}),
     defineField({
       name: 'terms',
       title: 'Term options',

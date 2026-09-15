@@ -4,6 +4,8 @@ import { useRef, useState } from 'react';
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
+const HONEYPOT_STYLE = { position: 'absolute', left: '-9999px', width: 1, height: 1, opacity: 0 };
+
 /**
  * Read the `hubspotutk` cookie set by HubSpot's tracking script (loaded in the
  * root layout). It's what links this submission to the visitor's browsing
@@ -29,6 +31,7 @@ export function useHubspotForm({ initialValues, requiredFields = [], formKey }) 
   const [errors, setErrors] = useState({});
   // 'idle' | 'submitting' | 'success' | 'error'
   const [status, setStatus] = useState('idle');
+  const [hp, setHp] = useState('');
   // Rejects re-entry while a request is open, so a rapid double-click can't
   // create two contacts.
   const inFlightRef = useRef(false);
@@ -70,6 +73,7 @@ export function useHubspotForm({ initialValues, requiredFields = [], formKey }) 
         body: JSON.stringify({
           formKey,
           fields: values,
+          hp,
           hutk: getHutk(),
           pageUri: typeof window === 'undefined' ? undefined : window.location.href,
           pageName: typeof document === 'undefined' ? undefined : document.title,
@@ -95,5 +99,7 @@ export function useHubspotForm({ initialValues, requiredFields = [], formKey }) 
     }
   }
 
-  return { values, errors, status, update, handleSubmit };
+  const honeypotProps = { name: 'rizz_hp', type: 'text', value: hp, onChange: (e) => setHp(e.target.value), tabIndex: -1, autoComplete: 'off', 'aria-hidden': true, style: HONEYPOT_STYLE };
+
+  return { values, errors, status, update, handleSubmit, honeypotProps };
 }

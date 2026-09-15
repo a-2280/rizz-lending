@@ -31,7 +31,7 @@ const PAGE_BUILDER_FIELDS = `pageBuilder[]{
   calcHeading,
   minFinanced,
   maxFinanced,
-  apr,
+  "apr": coalesce(apr, 9.99),
   terms[]{ months },
   calcDisclaimer,
   formHeading,
@@ -98,7 +98,7 @@ const POST_LIST_QUERY = groq`*[_type == "post" && showOnBlog == true] | order(pu
   publishedAt
 }`;
 
-const POST_QUERY = groq`*[_type == "post" && showOnBlog == true && slug.current == $slug][0]{
+const POST_QUERY = groq`*[_type == "post" && slug.current == $slug][0]{
   title,
   excerpt,
   mainImage{ asset->{ url } },

@@ -77,8 +77,8 @@ if (ty.ok) {
 const redirects = [
   ['/company', '/about'],
   ['/loan-application', '/apply-now'],
-  ['/privacy-policy', '/privacy'],
-  ['/ferrari-488-financing-guide-rizz-lending', '/blog'],
+  ['/eligibility-requirements', '/eligibility'],
+  ['/ferrari-488-financing-guide-rizz-lending', '/blog/ferrari-488-financing-guide-rizz-lending'],
 ];
 let redirOk = 0;
 for (const [from, to] of redirects) {

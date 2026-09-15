@@ -93,7 +93,7 @@ function Form({ formHeading, formSubtext, submitLabel, entityLabel, showEntityTy
     message: '',
   };
 
-  const { values, errors, status, update, handleSubmit } = useHubspotForm({
+  const { values, errors, status, update, handleSubmit, honeypotProps } = useHubspotForm({
     initialValues,
     requiredFields: showCompany ? ['company', 'firstname', 'email', 'phone'] : ['firstname', 'email', 'phone'],
     formKey: hubspotForm,
@@ -143,10 +143,11 @@ function Form({ formHeading, formSubtext, submitLabel, entityLabel, showEntityTy
             <label className="form-label" htmlFor={`${idPrefix}-phone`}>
               Phone
             </label>
-            <input id={`${idPrefix}-phone`} name="phone" className="form-input" type="text" placeholder="(555) 000-0000" value={values.phone} onChange={update('phone')} aria-invalid={errors.phone ? 'true' : undefined} />
+            <input id={`${idPrefix}-phone`} name="phone" className="form-input" type="tel" placeholder="(555) 000-0000" value={values.phone} onChange={update('phone')} aria-invalid={errors.phone ? 'true' : undefined} />
             {errors.phone && <span className="form-error">{errors.phone}</span>}
           </div>
         </div>
+        <input {...honeypotProps} />
         {(showEntityType || showVolume) && (
           <div className="flex gap-15 m-flex-col">
             {showEntityType && (

@@ -79,7 +79,7 @@ export const estimationBlockType = defineType({
       name: 'apr',
       title: 'APR (%)',
       type: 'number',
-      initialValue: 9.9,
+      initialValue: 9.99,
       group: 'estimator',
     }),
     defineField({
