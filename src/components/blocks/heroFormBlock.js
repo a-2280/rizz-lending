@@ -21,7 +21,7 @@ const headingComponents = {
 // is the only one that defines these two properties. See hubspot-form-fields.md.
 const ENTITY_TYPES = ['Franchise', 'Independent', 'Marketplace', 'Broker'];
 // Hyphens, not en dashes — HubSpot matches these byte-for-byte.
-const VOLUMES = ['1-5 units', '6-15 units', '16-40 units', '40+ units'];
+const VOLUMES = [{ value: '1-5 units', label: '1-5 units' }, { value: '6-15 units', label: '6-15 units' }, { value: '16-40 units', label: '16-39 units' }, { value: '40+ units', label: '40+ units' }];
 
 export default function HeroFormBlock({ eyebrow, eyebrowColor, heading, subText, image, video, formHeading, formSubtext, submitLabel, entityLabel, showEntityType, showVolume, hubspotForm }) {
   const imageUrl = image?.asset?.url;
@@ -89,7 +89,7 @@ function Form({ formHeading, formSubtext, submitLabel, entityLabel, showEntityTy
     email: '',
     phone: '',
     ...(showEntityType ? { dealership_type: ENTITY_TYPES[0] } : {}),
-    ...(showVolume ? { monthly_exotic_volume: VOLUMES[0] } : {}),
+    ...(showVolume ? { monthly_exotic_volume: VOLUMES[0].value } : {}),
     message: '',
   };
 
@@ -170,8 +170,8 @@ function Form({ formHeading, formSubtext, submitLabel, entityLabel, showEntityTy
                 </label>
                 <select id={`${idPrefix}-volume`} name="monthly_exotic_volume" className="form-input" value={values.monthly_exotic_volume} onChange={update('monthly_exotic_volume')}>
                   {VOLUMES.map((option) => (
-                    <option key={option} value={option}>
-                      {option}
+                    <option key={option.value} value={option.value}>
+                      {option.label}
                     </option>
                   ))}
                 </select>

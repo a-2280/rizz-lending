@@ -23,7 +23,7 @@ import gsap from 'gsap';
 
 const DEALERSHIP_TYPES = ['Franchise', 'Independent', 'Marketplace', 'Broker'];
 // Hyphens, not en dashes — HubSpot matches these byte-for-byte.
-const MONTHLY_VOLUMES = ['1-5 units', '6-15 units', '16-40 units', '40+ units'];
+const MONTHLY_VOLUMES = [{ value: '1-5 units', label: '1-5 units' }, { value: '6-15 units', label: '6-15 units' }, { value: '16-40 units', label: '16-39 units' }, { value: '40+ units', label: '40+ units' }];
 
 const EMPTY = {
   company: '',
@@ -31,7 +31,7 @@ const EMPTY = {
   email: '',
   phone: '',
   dealership_type: DEALERSHIP_TYPES[0],
-  monthly_exotic_volume: MONTHLY_VOLUMES[0],
+  monthly_exotic_volume: MONTHLY_VOLUMES[0].value,
   message: '',
 };
 
@@ -246,8 +246,8 @@ export default function DealerFaqFormBlock({ eyebrow, heading, description, item
                   </label>
                   <select id="dealer-volume" name="monthly_exotic_volume" className="form-input" value={values.monthly_exotic_volume} onChange={update('monthly_exotic_volume')}>
                     {MONTHLY_VOLUMES.map((option) => (
-                      <option key={option} value={option}>
-                        {option}
+                      <option key={option.value} value={option.value}>
+                        {option.label}
                       </option>
                     ))}
                   </select>
