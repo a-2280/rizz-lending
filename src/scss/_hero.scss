@@ -9,6 +9,13 @@
     overflow: hidden;
 }
 
+/* Full-bleed media covers the section, so the bg-glow drift behind it is never
+   seen — but animating background-position still repaints the whole hero every
+   frame on top of decoding the video. */
+.hero:has(> .background-media > .bg-image) {
+    animation: none;
+}
+
 .hero .hero-scrim {
     position: absolute;
     inset: 0;
