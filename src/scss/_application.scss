@@ -1,0 +1,22 @@
+/*--------------------------------------------------------------
+## Embedded Application Styling
+--------------------------------------------------------------*/
+
+// Fills the viewport under the fixed header (.pth). The application scrolls
+// inside its frame, so the page itself never does.
+.application-page {
+    display: flex;
+    // CreditAppCenter's own page background, so the area around the frame matches the form.
+    background-color: #f5f6fa;
+    height: 100vh;
+    height: 100dvh;
+}
+
+.application-frame {
+    flex: 1;
+    display: flex;
+    iframe {
+        flex: 1;
+        border: 0;
+    }
+}
