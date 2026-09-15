@@ -6,7 +6,11 @@ import useEmblaCarousel from 'embla-carousel-react';
 import AutoScroll from 'embla-carousel-auto-scroll';
 import { WheelGesturesPlugin } from 'embla-carousel-wheel-gestures';
 
-const LOGO_HEIGHT = 80;
+// Every logo is sized to the same area rather than the same height, so a wide
+// wordmark and a compact badge carry equal visual weight. Raise to scale them all.
+const LOGO_BASE = 84;
+const LOGO_MAX_W = 260;
+const LOGO_MAX_H = 104;
 const LOGO_GAP = 50;
 
 export default function LogoGridBlock({ eyebrow, heading, description, logos }) {
@@ -49,7 +53,11 @@ export default function LogoGridBlock({ eyebrow, heading, description, logos }) 
             {track.map((item, i) => {
               const { width, height } = item.logo.asset.metadata?.dimensions || {};
               const ratio = width && height ? width / height : 2;
-              return <Image className="shrink-0 grayscale-invert" key={`${item._key}-${i}`} src={item.logo.asset.url} alt={item.brand || ''} width={Math.round(LOGO_HEIGHT * ratio)} height={LOGO_HEIGHT} style={i === track.length - 1 ? { marginRight: LOGO_GAP } : undefined} />;
+              const scale = Math.sqrt(ratio);
+              const fit = Math.min(1, LOGO_MAX_W / (LOGO_BASE * scale), (LOGO_MAX_H * scale) / LOGO_BASE);
+              const w = Math.round(LOGO_BASE * scale * fit);
+              const h = Math.round((LOGO_BASE / scale) * fit);
+              return <Image className="shrink-0 grayscale-invert" key={`${item._key}-${i}`} src={item.logo.asset.url} alt={item.brand || ''} width={w} height={h} loading="eager" style={{ '--lw': `${w}px`, '--lh': `${h}px`, marginRight: i === track.length - 1 ? LOGO_GAP : undefined }} />;
             })}
           </div>
         </div>

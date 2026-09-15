@@ -2,16 +2,17 @@
 ## Logo Marquee Block Styling
 --------------------------------------------------------------*/
 
+/* Fixed box from the block's --lw/--lh so a slide never resizes when its image
+   loads — that trips Embla's ResizeObserver into a reInit and stutters the track
+   (same fix as _photoLogoBlock.scss). */
 .logo-grid img {
-    width: auto;
-    height: auto;
-    max-width: 160px;
-    max-height: 100px;
+    width: calc(var(--lw) * var(--logo-scale, 1));
+    height: calc(var(--lh) * var(--logo-scale, 1));
+    object-fit: contain;
 }
 
 @media (max-width: 768px) {
-    .logo-grid img {
-        max-width: 110px;
-        max-height: 56px;
+    .logo-grid {
+        --logo-scale: 0.7;
     }
 }
