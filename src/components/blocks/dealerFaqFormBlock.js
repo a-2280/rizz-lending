@@ -15,7 +15,8 @@ import { useHubspotForm } from '@/lib/useHubspotForm';
 //   Your name             -> firstname               single field; HubSpot usually splits firstname/lastname
 //   Email                 -> email                   HubSpot default property
 //   Phone                 -> phone                   HubSpot default property; required on both sides
-//   Dealership type       -> dealership_type         custom property; option values below must match HubSpot's internal values
+//   Dealership website    -> website                 HubSpot default property; optional
+//   Dealership type      -> dealership_type         custom property; option values below must match HubSpot's internal values
 //   Monthly exotic volume -> monthly_exotic_volume   custom property; option values below must match HubSpot's internal values
 //   Anything else?        -> message                 HubSpot default property
 //
@@ -31,6 +32,7 @@ const EMPTY = {
   firstname: '',
   email: '',
   phone: '',
+  website: '',
   dealership_type: DEALERSHIP_TYPES[0],
   monthly_exotic_volume: MONTHLY_VOLUMES[0].value,
   message: '',
@@ -149,6 +151,12 @@ export default function DealerFaqFormBlock({ eyebrow, heading, description, item
                   <input id="dealer-phone" name="phone" className="form-input" type="tel" placeholder="(555) 000-0000" value={values.phone} onChange={update('phone')} aria-invalid={errors.phone ? 'true' : undefined} />
                   {errors.phone && <span className="form-error">{errors.phone}</span>}
                 </div>
+              </div>
+              <div className="flex flex-col gap-5">
+                <label className="form-label" htmlFor="dealer-website">
+                  Dealership website
+                </label>
+                <input id="dealer-website" name="website" className="form-input" type="url" autoComplete="url" placeholder="www.rizzmotorsports.com" value={values.website} onChange={update('website')} />
               </div>
               <input {...honeypotProps} />
               <div className="flex gap-15 m-flex-col">
