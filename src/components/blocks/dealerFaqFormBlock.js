@@ -156,7 +156,7 @@ export default function DealerFaqFormBlock({ eyebrow, heading, description, item
                 <label className="form-label" htmlFor="dealer-website">
                   Dealership website
                 </label>
-                <input id="dealer-website" name="website" className="form-input" type="url" autoComplete="url" placeholder="www.rizzmotorsports.com" value={values.website} onChange={update('website')} />
+                <input id="dealer-website" name="website" className="form-input" type="url" autoComplete="url" placeholder="www.yourwebsite.com" value={values.website} onChange={update('website')} />
               </div>
               <input {...honeypotProps} />
               <div className="flex gap-15 m-flex-col">
