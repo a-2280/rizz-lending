@@ -2,6 +2,7 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
+import { sanityImage } from '@/lib/image';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { EffectFade, Autoplay } from 'swiper/modules';
 import ApplyNow from '../applyNow';
@@ -13,7 +14,8 @@ import 'swiper/css/effect-fade';
 function CarPhoto({ item }) {
   return (
     <>
-      <Image className="bg-image" src={item.photo.asset.url} alt={item.photoCaption || ''} fill />
+      {/* 3-up inside max-1400 with p30 gutters — about 427 CSS px each. */}
+      <Image className="bg-image" src={sanityImage(item.photo, 900)} alt={item.photoCaption || ''} fill sizes="(max-width: 768px) 100vw, 33vw" />
       {(item.photoCaption || item.photoSubcaption) && (
         <>
           <div className="scrim-b" />

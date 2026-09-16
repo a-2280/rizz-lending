@@ -1,5 +1,5 @@
 import { PortableText } from 'next-sanity';
-import Image from 'next/image';
+import HeroMedia, { hasHeroMedia } from '../heroMedia';
 
 const headingComponents = {
   block: {
@@ -11,8 +11,7 @@ const headingComponents = {
 };
 
 export default function ImageHero({ eyebrow, eyebrowColor, heading, subText, image, video }) {
-  const imageUrl = image?.asset?.url;
-  const videoUrl = video?.asset?.url;
+  const hasMedia = hasHeroMedia({ image, video });
 
   return (
     <section className='hero p30 pth bg-glow'>
@@ -23,10 +22,10 @@ export default function ImageHero({ eyebrow, eyebrowColor, heading, subText, ima
           <h1 className="h1">{heading && <PortableText value={heading} components={headingComponents} />}</h1></div>
           {subText && <p className="f-18 text-silk-dim max-500 text-balanced">{subText}</p>}
         </div>
-        {(imageUrl || videoUrl) && (
+        {hasMedia && (
           <div className="pos-rel ratio-22-9 radius-10 overflow fade--in" data-sal>
-            {imageUrl ? <Image className="bg-image" src={imageUrl} alt="" fill></Image> : ''}
-            {videoUrl ? <video className="bg-image" src={videoUrl} autoPlay muted loop playsInline /> : ''}
+            {/* Boxed, max-1400 inside p30 gutters — never wider than 1340 CSS px. */}
+            <HeroMedia image={image} video={video} width={1600} sizes="(max-width: 1400px) 100vw, 1400px" />
           </div>
         )}
       </div>

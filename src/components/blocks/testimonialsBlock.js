@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import { sanityImage } from '@/lib/image';
 
 export default function TestimonialsBlock({ items }) {
   const hasItems = items?.length > 0;
@@ -16,7 +17,8 @@ export default function TestimonialsBlock({ items }) {
             </div>
             {item.photo?.asset && (
               <div className="pos-rel ratio-16-10 radius-10 overflow">
-                <Image className="" src={item.photo.asset.url} alt="" fill />
+                {/* bg-image supplies object-fit: cover — without it these stretch to 16:10. */}
+                <Image className="bg-image" src={sanityImage(item.photo, 1200)} alt="" fill sizes="(max-width: 768px) 100vw, 600px" />
                 {(item.photoCaption || item.photoSubcaption) && (
                   <>
                     <div className="scrim-b" />

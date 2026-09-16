@@ -1,9 +1,10 @@
 import { createClient, groq } from 'next-sanity';
+import { projectId, dataset, apiVersion } from './sanity-config';
 
 export const client = createClient({
-  projectId: 'gx0bybp7',
-  dataset: 'production',
-  apiVersion: '2026-07-17',
+  projectId,
+  dataset,
+  apiVersion,
   useCdn: true,
 });
 

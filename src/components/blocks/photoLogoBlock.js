@@ -7,6 +7,7 @@ import useEmblaCarousel from 'embla-carousel-react';
 import AutoScroll from 'embla-carousel-auto-scroll';
 import { WheelGesturesPlugin } from 'embla-carousel-wheel-gestures';
 import ApplyNow from '../applyNow';
+import { sanityImage } from '@/lib/image';
 import { resolveHref } from '@/lib/links';
 
 // Every logo is sized to the same area rather than the same height, so a wide
@@ -19,7 +20,8 @@ const LOGO_GAP = 50;
 function GridPhoto({ item }) {
   return (
     <>
-      <Image className="bg-image" src={item.photo.asset.url} alt={item.photoCaption || ''} fill />
+      {/* 3-up inside max-1400 with p30 gutters — about 427 CSS px each. */}
+      <Image className="bg-image" src={sanityImage(item.photo, 900)} alt={item.photoCaption || ''} fill sizes="(max-width: 768px) 100vw, 33vw" />
       {item.photoCaption && (
         <>
           <div className="scrim-b" />
@@ -90,7 +92,7 @@ export default function PhotoLogoBlock({ eyebrow, heading, description, items, l
               const fit = Math.min(1, LOGO_MAX_W / (LOGO_BASE * scale), (LOGO_MAX_H * scale) / LOGO_BASE);
               const w = Math.round(LOGO_BASE * scale * fit);
               const h = Math.round((LOGO_BASE / scale) * fit);
-              return <Image className="shrink-0" key={`${item._key}-${i}`} src={item.logo.asset.url} alt={item.brand || ''} width={w} height={h} loading="eager" style={{ '--lw': `${w}px`, '--lh': `${h}px`, marginRight: i === track.length - 1 ? LOGO_GAP : undefined }} />;
+              return <Image className="shrink-0" key={`${item._key}-${i}`} src={sanityImage(item.logo, w * 2)} alt={item.brand || ''} width={w} height={h} loading="eager" style={{ '--lw': `${w}px`, '--lh': `${h}px`, marginRight: i === track.length - 1 ? LOGO_GAP : undefined }} />;
             })}
           </div>
         </div>

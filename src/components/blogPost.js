@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import { PortableText } from 'next-sanity';
+import { sanityImage } from '@/lib/image';
 
 const bodyComponents = {
   block: {
@@ -23,7 +24,8 @@ const bodyComponents = {
     image: ({ value }) =>
       value?.asset?.url ? (
         <span className="blog-post-image pos-rel ratio-16-10 radius-5 overflow">
-          <Image src={value.asset.url} alt={value.alt || ''} fill className="bg-image" />
+          {/* Body column is max-800. */}
+          <Image src={sanityImage(value, 1600)} alt={value.alt || ''} fill className="bg-image" sizes="(max-width: 800px) 100vw, 800px" />
         </span>
       ) : null,
   },
@@ -57,7 +59,8 @@ export default function BlogPost({ title, excerpt, mainImage, category, author, 
       {imageUrl && (
         <div className="flex justify-center p30">
           <div className="blog-post-hero pos-rel ratio-16-10 radius-5 overflow max-1400 fade--in" data-sal>
-            <Image src={imageUrl} alt="" fill className="bg-image" />
+            {/* max-1400 inside p30 gutters — never wider than 1340 CSS px. */}
+            <Image src={sanityImage(mainImage, 1600)} alt="" fill className="bg-image" sizes="(max-width: 1400px) 100vw, 1400px" priority />
           </div>
         </div>
       )}

@@ -5,6 +5,7 @@ import Image from 'next/image';
 import useEmblaCarousel from 'embla-carousel-react';
 import AutoScroll from 'embla-carousel-auto-scroll';
 import { WheelGesturesPlugin } from 'embla-carousel-wheel-gestures';
+import { sanityImage } from '@/lib/image';
 
 // Every logo is sized to the same area rather than the same height, so a wide
 // wordmark and a compact badge carry equal visual weight. Raise to scale them all.
@@ -57,7 +58,7 @@ export default function LogoGridBlock({ eyebrow, heading, description, logos }) 
               const fit = Math.min(1, LOGO_MAX_W / (LOGO_BASE * scale), (LOGO_MAX_H * scale) / LOGO_BASE);
               const w = Math.round(LOGO_BASE * scale * fit);
               const h = Math.round((LOGO_BASE / scale) * fit);
-              return <Image className="shrink-0 grayscale-invert" key={`${item._key}-${i}`} src={item.logo.asset.url} alt={item.brand || ''} width={w} height={h} loading="eager" style={{ '--lw': `${w}px`, '--lh': `${h}px`, marginRight: i === track.length - 1 ? LOGO_GAP : undefined }} />;
+              return <Image className="shrink-0 grayscale-invert" key={`${item._key}-${i}`} src={sanityImage(item.logo, w * 2)} alt={item.brand || ''} width={w} height={h} loading="eager" style={{ '--lw': `${w}px`, '--lh': `${h}px`, marginRight: i === track.length - 1 ? LOGO_GAP : undefined }} />;
             })}
           </div>
         </div>

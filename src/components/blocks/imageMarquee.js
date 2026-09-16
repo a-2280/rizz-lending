@@ -2,6 +2,7 @@
 
 import { useEffect } from 'react';
 import Image from 'next/image';
+import { sanityImage } from '@/lib/image';
 import useEmblaCarousel from 'embla-carousel-react';
 import AutoScroll from 'embla-carousel-auto-scroll';
 import { WheelGesturesPlugin } from 'embla-carousel-wheel-gestures';
@@ -38,7 +39,8 @@ export default function ImageMarquee({ eyebrow, heading, images }) {
             <div className="flex nowrap gap-15">
               {track.map((image, i) => (
                 <div key={`${image._key}-${i}`} className="pos-rel ratio-16-10 max-400 w-100 shrink-0 radius-10 overflow" style={i === track.length - 1 ? { marginRight: 15 } : undefined}>
-                  <Image className="bg-image" src={image.asset.url} alt="" fill sizes="(max-width: 400px) 100vw, 400px" />
+                  {/* Tile is max-400; request 2x for retina. */}
+                  <Image className="bg-image" src={sanityImage(image, 800)} alt="" fill sizes="(max-width: 400px) 100vw, 400px" />
                 </div>
               ))}
             </div>

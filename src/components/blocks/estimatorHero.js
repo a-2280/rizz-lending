@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { PortableText } from 'next-sanity';
-import Image from 'next/image';
+import HeroMedia, { hasHeroMedia } from '../heroMedia';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import ApplyNow from '../applyNow';
@@ -37,8 +37,7 @@ const usd = new Intl.NumberFormat('en-US');
 const fmtUSD = (n) => '$' + usd.format(Math.round(n));
 
 export default function EstimatorHero({ eyebrow, eyebrowColor, heading, subText, buttons, disclaimer, showIcon, image, video, calcEyebrow, calcHeading, minFinanced, maxFinanced, apr, terms, calcDisclaimer }) {
-  const imageUrl = image?.asset?.url;
-  const videoUrl = video?.asset?.url;
+  const hasMedia = hasHeroMedia({ image, video });
   const sectionRef = useRef(null);
   const mediaRef = useRef(null);
 
@@ -72,14 +71,13 @@ export default function EstimatorHero({ eyebrow, eyebrowColor, heading, subText,
   return (
     <section className="hero estimator pos-rel pth bg-glow" ref={sectionRef}>
       <div className="background-media pos-rel">
-        {(imageUrl || videoUrl) && (
+        {hasMedia && (
           <div className="bg-image" style={{ top: '-15%', height: '115%' }} ref={mediaRef}>
-            {imageUrl ? <Image className="bg-image" src={imageUrl} alt="" fill></Image> : ''}
-            {videoUrl ? <video className="bg-image" src={videoUrl} autoPlay muted loop playsInline /> : ''}
+            <HeroMedia image={image} video={video} priority />
           </div>
         )}
       </div>
-      {(imageUrl || videoUrl) && <div className="hero-scrim" />}
+      {hasMedia && <div className="hero-scrim" />}
       <div className="flex p30 py70 gap-50 z-3 pos-rel fade--in m-flex-col" data-sal>
         <Content eyebrow={eyebrow} eyebrowColor={eyebrowColor} heading={heading} subText={subText} buttons={buttons} disclaimer={disclaimer} showIcon={showIcon} />
         <div className="flex-1 flex justify-center">

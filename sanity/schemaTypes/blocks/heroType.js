@@ -15,13 +15,15 @@ export const heroType = defineType({
   fields: [
     defineField({
       name: 'image',
-      Title: 'Image (Fallback for video)',
+      title: 'Image (Fallback for video)',
       type: 'image',
       group: 'media',
     }),
     defineField({
       name: 'video',
       type: 'file',
+      description:
+        'Videos are currently managed by the developer — uploads here won’t appear on the site yet. Set the fallback image above; that is what visitors will see.',
       options: {
         accept: 'video/*',
       },

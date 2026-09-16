@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
-import Image from 'next/image';
+import HeroMedia, { hasHeroMedia } from '../heroMedia';
 import { PortableText } from 'next-sanity';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -24,8 +24,7 @@ const ENTITY_TYPES = ['Franchise', 'Independent', 'Marketplace', 'Broker'];
 const VOLUMES = [{ value: '1-5 units', label: '1-5 units' }, { value: '6-15 units', label: '6-15 units' }, { value: '16-40 units', label: '16-39 units' }, { value: '40+ units', label: '40+ units' }];
 
 export default function HeroFormBlock({ eyebrow, eyebrowColor, heading, subText, image, video, formHeading, formSubtext, submitLabel, entityLabel, showEntityType, showVolume, hubspotForm }) {
-  const imageUrl = image?.asset?.url;
-  const videoUrl = video?.asset?.url;
+  const hasMedia = hasHeroMedia({ image, video });
   const sectionRef = useRef(null);
   const mediaRef = useRef(null);
 
@@ -50,14 +49,13 @@ export default function HeroFormBlock({ eyebrow, eyebrowColor, heading, subText,
   return (
     <section className="hero pos-rel pth bg-glow" ref={sectionRef}>
       <div className="background-media pos-rel">
-        {(imageUrl || videoUrl) && (
+        {hasMedia && (
           <div className="bg-image" style={{ top: '-15%', height: '115%' }} ref={mediaRef}>
-            {imageUrl ? <Image className="bg-image" src={imageUrl} alt="" fill></Image> : ''}
-            {videoUrl ? <video className="bg-image" src={videoUrl} autoPlay muted loop playsInline /> : ''}
+            <HeroMedia image={image} video={video} priority />
           </div>
         )}
       </div>
-      {(imageUrl || videoUrl) && <div className="hero-scrim" />}
+      {hasMedia && <div className="hero-scrim" />}
       <div className="flex align-center p30 py70 gap-50 z-3 pos-rel fade--in m-flex-col" data-sal>
         <Content eyebrow={eyebrow} eyebrowColor={eyebrowColor} heading={heading} subText={subText} />
         <div className="flex-1 flex justify-center">

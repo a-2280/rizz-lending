@@ -23,6 +23,8 @@ export const estimatorHeroType = defineType({
     defineField({
       name: 'video',
       type: 'file',
+      description:
+        'Videos are currently managed by the developer — uploads here won’t appear on the site yet. Set the fallback image above; that is what visitors will see.',
       options: {
         accept: 'video/*',
       },

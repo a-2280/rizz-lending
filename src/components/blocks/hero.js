@@ -3,7 +3,7 @@
 import { useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { PortableText } from 'next-sanity';
-import Image from 'next/image';
+import HeroMedia, { hasHeroMedia } from '../heroMedia';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import ApplyNow from '../applyNow';
@@ -30,8 +30,7 @@ const disclaimerComponents = {
 };
 
 export default function Hero({ eyebrow, eyebrowColor, heading, subText, buttons, disclaimer, showIcon, image, video }) {
-  const imageUrl = image?.asset?.url;
-  const videoUrl = video?.asset?.url;
+  const hasMedia = hasHeroMedia({ image, video });
   const sectionRef = useRef(null);
   const mediaRef = useRef(null);
 
@@ -56,14 +55,13 @@ export default function Hero({ eyebrow, eyebrowColor, heading, subText, buttons,
   return (
     <section className="hero h-100vh pos-rel pth bg-glow" ref={sectionRef}>
       <div className="background-media pos-rel">
-        {(imageUrl || videoUrl) && (
+        {hasMedia && (
           <div className="bg-image" style={{ top: '-15%', height: '115%' }} ref={mediaRef}>
-            {imageUrl ? <Image className="bg-image" src={imageUrl} alt="" fill></Image> : ''}
-            {videoUrl ? <video className="bg-image" src={videoUrl} autoPlay muted loop playsInline /> : ''}
+            <HeroMedia image={image} video={video} priority />
           </div>
         )}
       </div>
-      {(imageUrl || videoUrl) && <div className="hero-scrim" />}
+      {hasMedia && <div className="hero-scrim" />}
       <div className="h-100 flex flex-col justify-center p30 z-3 pos-rel gap-30 fade--in" data-sal>
         <div className='flex flex-col gap-20'>
           <div>
