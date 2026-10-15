@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { withGclid } from '@/lib/tracking';
+import { getFirstTouchUtms, readCookie, withGclid } from '@/lib/tracking';
 
 // `embed=true` makes CreditAppCenter drop its own logo bar and footer, leaving
 // just the form for the site header to sit above.
@@ -12,7 +12,11 @@ export default function ApplicationFrame() {
   // already in its src. Server-rendering a src and swapping it afterwards would
   // load the application twice.
   const [src, setSrc] = useState(null);
-  useEffect(() => setSrc(withGclid(APPLICATION_URL)), []);
+  useEffect(() => {
+    const url = new URL(withGclid(APPLICATION_URL));
+    Object.entries({ ...getFirstTouchUtms(), hubspotutk: readCookie('hubspotutk') }).forEach(([key, value]) => value && url.searchParams.set(key, value));
+    setSrc(url.toString());
+  }, []);
 
   return <div className="application-frame">{src && <iframe src={src} title="Rizz Lending loan application" />}</div>;
 }

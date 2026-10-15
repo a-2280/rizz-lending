@@ -6,6 +6,7 @@ import Footer from '@/components/footer';
 import { getFooter } from '@/lib/sanity';
 import SmoothScroll from '@/components/smoothScroll';
 import SalInit from '@/components/salInit';
+import UtmCapture from '@/components/utmCapture';
 
 export const metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? 'https://rizzlending.com'),
@@ -55,6 +56,7 @@ export default async function RootLayout({ children }) {
       <html lang="en" className={`${clash.variable} ${gambetta.variable} ${archivo.variable}`}>
         <body>
           <SalInit />
+          <UtmCapture />
           {GOOGLE_ADS_ID && (
             <>
               <Script id="gtag-loader" src={`https://www.googletagmanager.com/gtag/js?id=${GOOGLE_ADS_ID}`} strategy="afterInteractive" />

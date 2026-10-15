@@ -54,6 +54,23 @@ export function withGclid(href) {
   }
 }
 
+const UTM_KEYS = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content'];
+const UTM_STORAGE_KEY = 'first_touch_utms';
+
+/** The UTMs from the first visit that had any. Saved once, never overwritten. */
+export function getFirstTouchUtms() {
+  try {
+    const stored = localStorage.getItem(UTM_STORAGE_KEY);
+    if (stored) return JSON.parse(stored);
+    const params = new URLSearchParams(window.location.search);
+    const utms = Object.fromEntries(UTM_KEYS.map((key) => [key, params.get(key)]).filter(([, value]) => value));
+    if (Object.keys(utms).length) localStorage.setItem(UTM_STORAGE_KEY, JSON.stringify(utms));
+    return utms;
+  } catch {
+    return {};
+  }
+}
+
 export const GOOGLE_ADS_ID = process.env.NEXT_PUBLIC_GOOGLE_ADS_ID;
 export const CONVERSION_LABEL = process.env.NEXT_PUBLIC_GOOGLE_ADS_CONVERSION_LABEL;
 
