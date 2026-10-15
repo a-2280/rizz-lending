@@ -46,6 +46,7 @@ const HUBSPOT_SCRIPT_HOST = HUBSPOT_REGION === 'na1' ? 'js.hs-scripts.com' : `js
 // _gcl_* cookies that carry the ad click ID to application.rizzlending.com; the
 // conversion itself is fired from src/app/thank-you/page.js.
 const GOOGLE_ADS_ID = process.env.NEXT_PUBLIC_GOOGLE_ADS_ID;
+const GA4_ID = process.env.NEXT_PUBLIC_GA4_ID;
 
 export default async function RootLayout({ children }) {
   const footer = await getFooter();
@@ -57,7 +58,7 @@ export default async function RootLayout({ children }) {
           {GOOGLE_ADS_ID && (
             <>
               <Script id="gtag-loader" src={`https://www.googletagmanager.com/gtag/js?id=${GOOGLE_ADS_ID}`} strategy="afterInteractive" />
-              <Script id="gtag-init" strategy="afterInteractive">{`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${GOOGLE_ADS_ID}');`}</Script>
+              <Script id="gtag-init" strategy="afterInteractive">{`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${GOOGLE_ADS_ID}');${GA4_ID ? `gtag('config','${GA4_ID}');` : ''}`}</Script>
             </>
           )}
           {/* HubSpot tracking script. Its only job here is setting the `hubspotutk`
