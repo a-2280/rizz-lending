@@ -23,7 +23,7 @@ export default function ContactFormBlock({ formHeading, formSubtext, submitLabel
   return (
     <section id="contact-form" className="contact-form-block h-100vh pth bg-midnight text-silk">
       <div className="h-100 p30 flex justify-center align-center">
-        <div className="radius-10 bg-silk bg-shadow p30 flex flex-col gap-20 max-600 w-100 fade--in" data-sal>
+        <div className="radius-10 bg-silk bg-shadow p30 flex flex-col gap-20 max-600 w-100">
           {(formHeading || formSubtext) && (
             <div className="flex flex-col gap-5">
               {formHeading && <h1 className="h5 text-midnight">{formHeading}</h1>}

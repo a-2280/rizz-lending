@@ -26,6 +26,7 @@ export const ROUTES = [
   { path: "/contact", title: "Contact" },
   { path: "/blog", title: "The Rizz Brief" },
   { path: "/privacy-policy", title: "Privacy Policy" },
+  { path: "/licenses", title: "Licenses & Disclosures" },
 ];
 
 // NOTE: nothing imports NAV/NAV_CTAS — src/components/header.js hardcodes its own

@@ -4,6 +4,8 @@ import { resolveHref, linkifyContact } from '@/lib/links';
 
 const isExternal = (href) => /^https?:\/\//i.test(href);
 
+const SOCIAL_LABELS = { instagram: 'Instagram', youtube: 'YouTube', tiktok: 'TikTok', x: 'X', linkedin: 'LinkedIn' };
+
 export default function Footer({ tagline, socials, columns, legalText }) {
   if (!tagline && !socials?.length && !columns?.length && !legalText) return null;
   return (
@@ -20,7 +22,7 @@ export default function Footer({ tagline, socials, columns, legalText }) {
           {socials?.length > 0 && (
             <div className="flex gap-15">
               {socials.map((social) => (
-                <a className='icon p10 radius-circle border-line' key={social._key} href={social.href || '#'} title={social.platform}>
+                <a className='icon p10 radius-circle border-line' key={social._key} href={social.href || '#'} title={SOCIAL_LABELS[social.platform] || social.platform} aria-label={SOCIAL_LABELS[social.platform] || social.platform}>
                   <span className={`icon--${social.platform}`} />
                 </a>
               ))}

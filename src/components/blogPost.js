@@ -43,7 +43,7 @@ export default function BlogPost({ title, excerpt, mainImage, category, author, 
   return (
     <article className="blog-post bg-midnight text-silk pth">
       <div className="p30 py70 flex justify-center">
-        <div className="flex flex-col gap-15 max-800 fade--in" data-sal>
+        <div className="flex flex-col gap-15 max-800">
           {category && category !== 'Uncategorized' && <span className="text-flame f-12 weight-700">{category.toUpperCase()}</span>}
           <h1 className="h1">{title}</h1>
           {excerpt && <p className="text-silk-dim">{excerpt}</p>}

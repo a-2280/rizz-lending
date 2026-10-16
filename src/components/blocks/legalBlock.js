@@ -53,7 +53,7 @@ export default function LegalBlock({ eyebrow, heading, lastUpdated, items }) {
   return (
     <section className="bg-midnight pth p30 py70 flex justify-center">
       <div className="pth max-700 flex flex-col gap-30">
-        <div className="flex flex-col gap-10 fade--in" data-sal>
+        <div className="flex flex-col gap-10">
           {eyebrow && <p className="eyebrow">{eyebrow}</p>}
           {heading && <h1 className="h1">{heading}</h1>}
           {lastUpdated && <p className="f-14 text-silk-dim">Last modified: {lastUpdated}</p>}
