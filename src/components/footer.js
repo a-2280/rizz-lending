@@ -12,7 +12,7 @@ export default function Footer({ tagline, socials, columns, legalText }) {
       <div className="flex space-between gap-20 m-flex-col">
         <div className='flex flex-col gap-20'>
           <div className="flex flex-col gap-20">
-            <Link href="/">
+            <Link href="/" aria-label="Rizz Lending home">
               <div className='logo--main' />
             </Link>
             {tagline && <p className='max-250'>{tagline}</p>}

@@ -23,12 +23,12 @@ export default function AccountLoginBlock({ eyebrow, heading, subText, loginHead
             )}
             <form className="flex flex-col align-start gap-20">
               <div className="flex flex-col gap-5">
-                <label className="form-label">{emailLabel}</label>
-                <input className="form-input" type="email" placeholder={emailPlaceholder} />
+                <label className="form-label" htmlFor="account-email">{emailLabel}</label>
+                <input id="account-email" className="form-input" type="email" placeholder={emailPlaceholder} />
               </div>
               <div className="flex flex-col gap-5">
-                <label className="form-label">{passwordLabel}</label>
-                <input className="form-input" type="password" placeholder="••••••••" />
+                <label className="form-label" htmlFor="account-password">{passwordLabel}</label>
+                <input id="account-password" className="form-input" type="password" placeholder="••••••••" />
               </div>
               <button type="button" className="button-1 w-100 text-center justify-center flex">
                 {loginButtonLabel}

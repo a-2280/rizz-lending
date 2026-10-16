@@ -61,7 +61,7 @@ export const postType = defineType({
       group: 'content',
       of: [
         defineArrayMember({type: 'block'}),
-        defineArrayMember({type: 'image', name: 'image'}),
+        defineArrayMember({type: 'image', name: 'image', fields: [defineField({name: 'alt', title: 'Alt text', type: 'string'})]}),
       ],
     }),
     defineField({

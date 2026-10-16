@@ -41,8 +41,8 @@ export default function ApplyEstimatorBlock({ eyebrow, heading, subText, calcEye
             </div>
           )}
           <div className="flex flex-col gap-5">
-            <label className="form-label">{vehicleLabel}</label>
-            <input className="form-input" type="text" placeholder={vehiclePlaceholder} />
+            <label className="form-label" htmlFor="apply-estimator-vehicle">{vehicleLabel}</label>
+            <input id="apply-estimator-vehicle" className="form-input" type="text" placeholder={vehiclePlaceholder} />
           </div>
           <div className="flex flex-col gap-5">
             <label className="flex space-between" htmlFor="apply-estimator-amount">

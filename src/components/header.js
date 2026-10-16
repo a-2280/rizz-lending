@@ -19,7 +19,7 @@ export default function Header() {
     <header className="masthead flex justify-center weight-500">
       <div className="flex space-between align-center w-100 max-1400">
         <div className="flex-1">
-          <Link href="/"><div className='logo--main' /></Link>
+          <Link href="/" aria-label="Rizz Lending home"><div className='logo--main' /></Link>
         </div>
         <nav className="nav-links flex gap-30">
           <div className='modal-parent pos-rel'>
