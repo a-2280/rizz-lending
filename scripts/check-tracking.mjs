@@ -76,7 +76,8 @@ if (ty.ok) {
 // --- 5. old URLs still work ------------------------------------------------
 const redirects = [
   ['/company', '/about'],
-  ['/loan-application', '/apply-now'],
+  ['/loan-application', '/apply'],
+  ['/loan-services/carsbids/', '/partners'],
   ['/eligibility-requirements', '/eligibility'],
   ['/ferrari-488-financing-guide-rizz-lending', '/blog/ferrari-488-financing-guide-rizz-lending'],
 ];

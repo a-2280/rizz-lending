@@ -1,6 +1,7 @@
 'use client';
 
 import { useHubspotForm } from '@/lib/useHubspotForm';
+import { linkifyContact } from '@/lib/links';
 
 const INITIAL_VALUES = {
   firstname: '',
@@ -25,8 +26,8 @@ export default function ContactFormBlock({ formHeading, formSubtext, submitLabel
         <div className="radius-10 bg-silk bg-shadow p30 flex flex-col gap-20 max-600 w-100 fade--in" data-sal>
           {(formHeading || formSubtext) && (
             <div className="flex flex-col gap-5">
-              {formHeading && <h3 className="h5 text-midnight">{formHeading}</h3>}
-              {formSubtext && <p className="f-14 text-ink-dim">{formSubtext}</p>}
+              {formHeading && <h1 className="h5 text-midnight">{formHeading}</h1>}
+              {formSubtext && <p className="f-14 text-ink-dim">{linkifyContact(formSubtext)}</p>}
             </div>
           )}
           <form className="flex flex-col gap-20" onSubmit={handleSubmit} noValidate>
@@ -50,7 +51,7 @@ export default function ContactFormBlock({ formHeading, formSubtext, submitLabel
               <label className="form-label" htmlFor="contact-phone">
                 Phone
               </label>
-              <input id="contact-phone" name="phone" className="form-input" type="tel" placeholder="(555) 000-0000" value={values.phone} onChange={update('phone')} aria-invalid={errors.phone ? 'true' : undefined} />
+              <input id="contact-phone" name="phone" className="form-input" type="tel" placeholder="Phone number" value={values.phone} onChange={update('phone')} aria-invalid={errors.phone ? 'true' : undefined} />
               {errors.phone && <span className="form-error">{errors.phone}</span>}
             </div>
             <input {...honeypotProps} />

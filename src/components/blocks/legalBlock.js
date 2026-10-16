@@ -34,8 +34,9 @@ const legalComponents = {
     em: ({ children }) => <em className="italic">{children}</em>,
     policyLink: ({ children, value }) => {
       const href = value?.href || '#';
+      const external = /^https?:\/\//i.test(href);
       return (
-        <a className="underline break-anywhere" href={href}>
+        <a className="underline break-anywhere" href={href} target={external ? '_blank' : undefined} rel={external ? 'noopener noreferrer' : undefined}>
           {children}
         </a>
       );

@@ -1,18 +1,20 @@
 // Pages that existed on the old WordPress site, mapped to their closest match
 // here. These URLs are indexed by Google and used as final URLs by live ads, so
-// they have to keep resolving. Trailing slashes need no entry — Next normalises
-// `/dealers/` to `/dealers` on its own.
+// they have to keep resolving. Sources match with or without the WordPress
+// trailing slash, so each one redirects in a single hop.
 //
 // `/thank-you/` is deliberately absent — it is a real page again
 // (src/app/thank-you/page.js), which is what lets the existing Google Ads
 // conversion keep firing untouched. Redirecting it would silently kill that.
 const LEGACY_PAGES = {
-  '/loan-application': '/apply-now',
-  '/quick-quote': '/apply-now',
-  '/loan-services/calculator': '/apply-now',
+  '/loan-application': '/apply',
+  '/quick-quote': '/apply',
+  '/loan-services/calculator': '/apply',
+  '/apply-now': '/apply',
   '/loan-services': '/overview',
-  '/loan-services/exotic': '/hypercar',
+  '/loan-services/exotic': '/vehicles',
   '/loan-services/collector': '/vehicles',
+  '/loan-services/carsbids': '/partners',
   '/vehicle-we-finance': '/vehicles',
   '/company': '/about',
   '/eligibility-requirements': '/eligibility',
@@ -63,6 +65,7 @@ const SECURITY_HEADERS = [
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  skipTrailingSlashRedirect: true,
   images: {
     remotePatterns: [
       {
@@ -76,11 +79,13 @@ const nextConfig = {
   },
   async redirects() {
     return [
-      ...Object.entries(LEGACY_PAGES).map(([source, destination]) => ({ source, destination, permanent: true })),
-      ...LEGACY_POSTS.map((slug) => ({ source: `/${slug}`, destination: `/blog/${slug}`, permanent: true })),
-      ...LEGACY_ARCHIVES.map((source) => ({ source, destination: '/blog', permanent: true })),
-      { source: '/home', destination: '/', permanent: true },
-      { source: '/my-account', destination: 'https://rizzlending.accountportalonline.com/', permanent: false },
+      ...Object.entries(LEGACY_PAGES).map(([source, destination]) => ({ source: `${source}{/}?`, destination, permanent: true })),
+      ...LEGACY_POSTS.map((slug) => ({ source: `/${slug}{/}?`, destination: `/blog/${slug}`, permanent: true })),
+      ...LEGACY_ARCHIVES.map((source) => ({ source: `${source}{/}?`, destination: '/blog', permanent: true })),
+      { source: '/home{/}?', destination: '/', permanent: true },
+      { source: '/my-account{/}?', destination: 'https://rizzlending.accountportalonline.com/', permanent: false },
+      // Stands in for Next's built-in slash redirect (off via skipTrailingSlashRedirect); must stay last.
+      { source: '/:path+/', destination: '/:path+', permanent: true },
     ];
   },
 };

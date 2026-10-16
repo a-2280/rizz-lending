@@ -96,7 +96,13 @@ const POST_LIST_QUERY = groq`*[_type == "post" && showOnBlog == true] | order(pu
   excerpt,
   mainImage{ asset->{ url } },
   "category": category->title,
-  publishedAt
+  publishedAt,
+  _updatedAt
+}`;
+
+const PAGE_DATES_QUERY = groq`*[_type == "page" && defined(slug.current)]{
+  "slug": slug.current,
+  _updatedAt
 }`;
 
 const POST_QUERY = groq`*[_type == "post" && slug.current == $slug][0]{
@@ -121,6 +127,10 @@ const FOOTER_QUERY = groq`*[_id == "siteLayout"][0].footer->{
 
 export function getPage(slug) {
   return client.fetch(PAGE_QUERY, { slug }, { next: { revalidate: 60 } });
+}
+
+export function getPageDates() {
+  return client.fetch(PAGE_DATES_QUERY, {}, { next: { revalidate: 60 } });
 }
 
 export function getFooter() {

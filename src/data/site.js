@@ -20,7 +20,7 @@ export const ROUTES = [
   { path: "/dealers", title: "For Dealers" },
   { path: "/partners", title: "For Platforms & Partners" },
   { path: "/about", title: "About" },
-  { path: "/apply-now", title: "Apply Now" },
+  { path: "/apply", title: "Apply" },
   { path: "/check-availability", title: "Check Availability" },
   { path: "/careers", title: "Careers" },
   { path: "/contact", title: "Contact" },
@@ -51,5 +51,5 @@ export const NAV = [
 
 export const NAV_CTAS = [
   { label: "My Account", href: "https://rizzlending.accountportalonline.com/" },
-  { label: "Apply Now", href: "/apply-now" },
+  { label: "Apply Now", href: "/apply" },
 ];

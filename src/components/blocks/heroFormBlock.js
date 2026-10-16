@@ -141,7 +141,7 @@ function Form({ formHeading, formSubtext, submitLabel, entityLabel, showEntityTy
             <label className="form-label" htmlFor={`${idPrefix}-phone`}>
               Phone
             </label>
-            <input id={`${idPrefix}-phone`} name="phone" className="form-input" type="tel" placeholder="(555) 000-0000" value={values.phone} onChange={update('phone')} aria-invalid={errors.phone ? 'true' : undefined} />
+            <input id={`${idPrefix}-phone`} name="phone" className="form-input" type="tel" placeholder="Phone number" value={values.phone} onChange={update('phone')} aria-invalid={errors.phone ? 'true' : undefined} />
             {errors.phone && <span className="form-error">{errors.phone}</span>}
           </div>
         </div>

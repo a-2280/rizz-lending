@@ -148,7 +148,7 @@ export default function DealerFaqFormBlock({ eyebrow, heading, description, item
                   <label className="form-label" htmlFor="dealer-phone">
                     Phone
                   </label>
-                  <input id="dealer-phone" name="phone" className="form-input" type="tel" placeholder="(555) 000-0000" value={values.phone} onChange={update('phone')} aria-invalid={errors.phone ? 'true' : undefined} />
+                  <input id="dealer-phone" name="phone" className="form-input" type="tel" placeholder="Phone number" value={values.phone} onChange={update('phone')} aria-invalid={errors.phone ? 'true' : undefined} />
                   {errors.phone && <span className="form-error">{errors.phone}</span>}
                 </div>
               </div>

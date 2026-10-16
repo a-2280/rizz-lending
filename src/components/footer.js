@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import FooterReveal from './footerReveal';
-import { resolveHref } from '@/lib/links';
+import { resolveHref, linkifyContact } from '@/lib/links';
 
 const isExternal = (href) => /^https?:\/\//i.test(href);
 
@@ -52,7 +52,7 @@ export default function Footer({ tagline, socials, columns, legalText }) {
       </div>
       <div className='flex flex-col gap-20'>
         <div className='line' data-sal />
-      {legalText && <p className="f-14 text-silk-dim">{legalText}</p>}</div>
+      {legalText && <p className="f-14 text-silk-dim">{linkifyContact(legalText)}</p>}</div>
       </div>
     </FooterReveal>
   );
