@@ -39,7 +39,7 @@
 // with scripts/compress-videos.sh and setting the path here.
 
 const HOME_HERO = {
-  mp4: '/videos/home-hero.mp4', // 7.5MB, down from 63.3MB
+  mp4: '/videos/home-hero.mp4', // 3.9MB (720p, CRF 32), down from 63.3MB
   webm: null,
   poster: '/videos/home-hero-poster.jpg',
 };
