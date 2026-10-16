@@ -112,6 +112,7 @@ const POST_QUERY = groq`*[_type == "post" && slug.current == $slug][0]{
   "category": category->title,
   author,
   publishedAt,
+  _updatedAt,
   body[]{
     ...,
     _type == "image" => { "asset": asset->{ url } }

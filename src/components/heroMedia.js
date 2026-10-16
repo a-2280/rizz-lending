@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import { sanityImage } from '@/lib/image';
 import { resolveHeroVideo } from '@/lib/video-sources';
+import HeroVideo from './heroVideo';
 
 /**
  * The background media for a hero block: a local compressed video when the
@@ -18,14 +19,7 @@ import { resolveHeroVideo } from '@/lib/video-sources';
 export default function HeroMedia({ image, video, sizes = '100vw', width = 1920, priority = false }) {
   const local = resolveHeroVideo(video?.asset?.url);
 
-  if (local) {
-    return (
-      <video className="bg-image" poster={local.poster} preload="metadata" autoPlay muted loop playsInline>
-        {local.webm && <source src={local.webm} type="video/webm" />}
-        <source src={local.mp4} type="video/mp4" />
-      </video>
-    );
-  }
+  if (local) return <HeroVideo {...local} />;
 
   // No local mapping — fall back to the image rather than the Sanity video URL.
   // A video-only block with an unmapped upload renders nothing at all, which is

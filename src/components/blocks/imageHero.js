@@ -16,7 +16,7 @@ export default function ImageHero({ eyebrow, eyebrowColor, heading, subText, ima
   return (
     <section className='hero p30 pth bg-glow'>
       <div className="pos-rel pt70 flex flex-col gap-40 w-100 max-1400 ma">
-        <div className="flex flex-col gap-20 z-3 pos-rel fade--in" data-sal>
+        <div className="flex flex-col gap-20 z-3 pos-rel">
           <div className='flex flex-col gap-5'>
           {eyebrow && <p className={eyebrowColor === 'light' ? 'eyebrow eyebrow-light' : 'eyebrow eyebrow-orange'}>{eyebrow}</p>}
           <h1 className="h1">{heading && <PortableText value={heading} components={headingComponents} />}</h1></div>

@@ -62,7 +62,7 @@ export default function Hero({ eyebrow, eyebrowColor, heading, subText, buttons,
         )}
       </div>
       {hasMedia && <div className="hero-scrim" />}
-      <div className="h-100 flex flex-col justify-center p30 z-3 pos-rel gap-30 fade--in" data-sal>
+      <div className="h-100 flex flex-col justify-center p30 z-3 pos-rel gap-30">
         <div className='flex flex-col gap-20'>
           <div>
             {eyebrow && <p className={eyebrowColor === 'light' ? 'eyebrow eyebrow-light' : 'eyebrow eyebrow-orange'}>{eyebrow}</p>}

@@ -7,6 +7,7 @@ import { getFooter } from '@/lib/sanity';
 import SmoothScroll from '@/components/smoothScroll';
 import SalInit from '@/components/salInit';
 import UtmCapture from '@/components/utmCapture';
+import { SITE_URL } from '@/data/site';
 
 export const metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? 'https://rizzlending.com'),
@@ -49,12 +50,44 @@ const HUBSPOT_SCRIPT_HOST = HUBSPOT_REGION === 'na1' ? 'js.hs-scripts.com' : `js
 const GOOGLE_ADS_ID = process.env.NEXT_PUBLIC_GOOGLE_ADS_ID;
 const GA4_ID = process.env.NEXT_PUBLIC_GA4_ID;
 
+const JSON_LD = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'FinancialService',
+      '@id': `${SITE_URL}/#organization`,
+      name: 'Rizz Lending',
+      url: SITE_URL,
+      logo: `${SITE_URL}/logo.png`,
+      image: `${SITE_URL}/logo.png`,
+      telephone: '+1-801-880-9955',
+      address: {
+        '@type': 'PostalAddress',
+        streetAddress: '13222 Tree Sparrow Dr., Suite R-327',
+        addressLocality: 'Riverton',
+        addressRegion: 'UT',
+        postalCode: '84096',
+        addressCountry: 'US',
+      },
+      identifier: { '@type': 'PropertyValue', propertyID: 'NMLS', value: '2682279' },
+    },
+    {
+      '@type': 'WebSite',
+      '@id': `${SITE_URL}/#website`,
+      name: 'Rizz Lending',
+      url: SITE_URL,
+      publisher: { '@id': `${SITE_URL}/#organization` },
+    },
+  ],
+};
+
 export default async function RootLayout({ children }) {
   const footer = await getFooter();
   return (
     <SmoothScroll>
       <html lang="en" className={`${clash.variable} ${gambetta.variable} ${archivo.variable}`}>
         <body>
+          <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(JSON_LD).replace(/</g, '\\u003c') }} />
           <SalInit />
           <UtmCapture />
           {GOOGLE_ADS_ID && (
@@ -67,7 +100,7 @@ export default async function RootLayout({ children }) {
               cookie, which the forms read and pass to /api/hubspot so HubSpot can
               tie a submission to that visitor's browsing history. Skipped entirely
               when no portal is configured, rather than loading a bogus URL. */}
-          {HUBSPOT_PORTAL_ID && <Script id="hs-script-loader" src={`https://${HUBSPOT_SCRIPT_HOST}/${HUBSPOT_PORTAL_ID}.js`} strategy="afterInteractive" async defer />}
+          {HUBSPOT_PORTAL_ID && <Script id="hs-script-loader" src={`https://${HUBSPOT_SCRIPT_HOST}/${HUBSPOT_PORTAL_ID}.js`} strategy="lazyOnload" async defer />}
           <Header />
           {children}
           <Footer {...footer} />

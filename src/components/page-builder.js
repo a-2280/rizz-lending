@@ -25,10 +25,24 @@ import OpenRolesBlock from './blocks/openRolesBlock';
 import AvailabilityMapBlock from './blocks/availabilityMapBlock';
 import LegalBlock from './blocks/legalBlock';
 import BlogGrid from './blocks/blogGrid';
+import { toPlainText } from 'next-sanity';
 
 export default function PageBuilder({ blocks }) {
   if (!Array.isArray(blocks)) return null;
-  return blocks.map((block) => {
+  const faqs = blocks
+    .filter((block) => block._type === 'faqBlock' || block._type === 'dealerFaqFormBlock')
+    .flatMap((block) => block.items ?? [])
+    .filter((item) => item.question && item.answer);
+  const faqJsonLd = faqs.length > 0 && {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map((item) => ({
+      '@type': 'Question',
+      name: item.question,
+      acceptedAnswer: { '@type': 'Answer', text: typeof item.answer === 'string' ? item.answer : toPlainText(item.answer) },
+    })),
+  };
+  const content = blocks.map((block) => {
     switch (block._type) {
       case 'hero':
         return <Hero key={block._key} {...block} />;
@@ -88,4 +102,10 @@ export default function PageBuilder({ blocks }) {
         return null;
     }
   });
+  return (
+    <>
+      {faqJsonLd && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd).replace(/</g, '\\u003c') }} />}
+      {content}
+    </>
+  );
 }
