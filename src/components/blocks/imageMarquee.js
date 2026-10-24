@@ -37,12 +37,16 @@ export default function ImageMarquee({ eyebrow, heading, images }) {
         {hasImages && (
           <div className="pos-rel overflow" ref={emblaRef} data-lenis-prevent-horizontal>
             <div className="flex nowrap gap-15">
-              {track.map((image, i) => (
-                <div key={`${image._key}-${i}`} className="pos-rel ratio-16-10 max-400 w-100 shrink-0 radius-10 overflow" style={i === track.length - 1 ? { marginRight: 15 } : undefined}>
-                  {/* Tile is max-400; request 2x for retina. */}
-                  <Image className="bg-image" src={sanityImage(image, 800)} alt="" fill sizes="(max-width: 400px) 100vw, 400px" />
-                </div>
-              ))}
+              {track.map((image, i) => {
+                // Copies 2 and 3 only exist for the loop — hide them so screen readers announce each car once.
+                const isClone = i >= images.length;
+                return (
+                  <div key={`${image._key}-${i}`} className="pos-rel ratio-16-10 max-400 w-100 shrink-0 radius-10 overflow" style={i === track.length - 1 ? { marginRight: 15 } : undefined} aria-hidden={isClone || undefined}>
+                    {/* Tile is max-400; request 2x for retina. */}
+                    <Image className="bg-image" src={sanityImage(image, 800)} alt={isClone ? '' : image.alt || ''} fill sizes="(max-width: 400px) 100vw, 400px" />
+                  </div>
+                );
+              })}
             </div>
           </div>
         )}

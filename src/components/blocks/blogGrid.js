@@ -16,7 +16,7 @@ export default async function BlogGrid({ eyebrow, heading, description }) {
           <div className="flex flex-col gap-15">
             <div className="flex flex-col gap-10 fade--in" data-sal>
               {eyebrow && <span className="eyebrow">{eyebrow}</span>}
-              {heading && <h2 className="h2 text-silk">{heading}</h2>}
+              {heading && <h1 className="h2 text-silk">{heading}</h1>}
             </div>
             {description && <p className="max-600 fade--in" data-sal>{description}</p>}
           </div>

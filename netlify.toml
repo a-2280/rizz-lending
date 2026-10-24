@@ -1,0 +1,11 @@
+# Headers only — build settings stay in the Netlify UI.
+#
+# Hero videos/posters carry a content hash in their filename (see
+# scripts/compress-videos.sh), so they can be cached forever. Never put an
+# unhashed file under /videos/. HTML is untouched and keeps max-age=0.
+# Fonts and SVGs are emitted to /_next/static/ with hashed names, which
+# Next.js already serves as immutable.
+[[headers]]
+  for = "/videos/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"

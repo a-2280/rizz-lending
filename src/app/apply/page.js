@@ -17,6 +17,7 @@ export const metadata = {
 export default function ApplyPage() {
   return (
     <main className="application-page pth">
+      <h1 className="sr-only">Apply for Exotic Car Financing</h1>
       <ApplicationFrame />
     </main>
   );

@@ -48,11 +48,11 @@ a {
 }
 
 .text-flame {
-  color: var(--flame-bright);
+  color: var(--flame-text);
 }
 
 .text-light-orange {
-  color: var(--flame-bright);
+  color: var(--flame-text);
 }
 
 .text-silk {
@@ -164,7 +164,7 @@ a {
 .logo--main {
     width: 250px;
     aspect-ratio: 1620/150;
-    background-image: url("/logo.svg");
+    background-image: url("../assets/logo.svg");
     background-repeat: no-repeat;
     background-position: center;
     background-size: contain;
@@ -176,12 +176,12 @@ a {
   font-size: 17px;
   font-style: italic;
   font-family: var(--serif);
-  color: var(--flame-bright);
+  color: var(--flame-text);
   font-weight: 500;
 }
 
 .eyebrow.eyebrow-orange {
-  color: var(--flame-bright);
+  color: var(--flame-text);
 }
 
 .eyebrow.eyebrow-light {
@@ -439,6 +439,18 @@ a {
   left: 15px;
 }
 
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 /* ------------ Z-Index Styles ------------ */
 
 .z-2 {
@@ -465,22 +477,27 @@ a {
 
 .bg-white {
   background-color: white;
+  --flame-text: var(--flame-deep);
 }
 
 .bg-silk {
   background-color: var(--silk);
+  --flame-text: var(--flame-deep);
 }
 
 .bg-carbon {
   background-color: var(--carbon);
+  --flame-text: var(--flame-light);
 }
 
 .bg-midnight {
   background-color: var(--midnight);
+  --flame-text: var(--flame-light);
 }
 
+// Deep shade so silk text on it (CTA subtext) clears 4.5:1.
 .bg-flame {
-  background-color: var(--flame-bright);
+  background-color: var(--flame-deep);
 }
 
 .scrim-b {

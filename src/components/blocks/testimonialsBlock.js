@@ -18,7 +18,7 @@ export default function TestimonialsBlock({ items }) {
             {item.photo?.asset && (
               <div className="pos-rel ratio-16-10 radius-10 overflow">
                 {/* bg-image supplies object-fit: cover — without it these stretch to 16:10. */}
-                <Image className="bg-image" src={sanityImage(item.photo, 1200)} alt={item.photoCaption || ''} fill sizes="(max-width: 768px) 100vw, 600px" />
+                <Image className="bg-image" src={sanityImage(item.photo, 1200)} alt={item.photo.alt || ''} fill sizes="(max-width: 768px) 100vw, 600px" />
                 {(item.photoCaption || item.photoSubcaption) && (
                   <>
                     <div className="scrim-b" />

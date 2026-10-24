@@ -81,6 +81,11 @@ body {
 
 :root {
   --flame-bright: rgb(210, 78, 46);
+  // Contrast-safe flame shades for small text (WCAG AA 4.5:1). --flame-bright stays for
+  // large headings, borders and fills. --flame-text switches shade by background (see _global.scss).
+  --flame-deep: rgb(189, 70, 41); // on silk/white, and behind silk text
+  --flame-light: rgb(244, 91, 53); // on midnight/carbon (4.6:1 on carbon, 5.9:1 on midnight)
+  --flame-text: var(--flame-light);
   --silk: rgb(249, 243, 237);
   --carbon: rgb(38, 38, 38);
   --midnight: rgb(14, 14, 14);

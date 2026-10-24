@@ -31,6 +31,11 @@
  *   integration would swap <video> for an HLS player in heroMedia.js.)
  *
  * Regenerate the files here with `scripts/compress-videos.sh`.
+ *
+ * Filenames carry a content hash (`home-hero.<sha256:8>.mp4`) because
+ * netlify.toml serves /videos/* as `immutable` for a year. A replaced video
+ * must get a new name — the script does this — or returning visitors keep the
+ * old one. Paste the paths it prints into the table below.
  */
 
 // `webm` is null by design: VP9 saved only ~14% per view but doubled the binary
@@ -39,15 +44,15 @@
 // with scripts/compress-videos.sh and setting the path here.
 
 const HOME_HERO = {
-  mp4: '/videos/home-hero.mp4', // 3.9MB (720p, CRF 32), down from 63.3MB
+  mp4: '/videos/home-hero.8d3e0c92.mp4', // 3.9MB (720p, CRF 32), down from 63.3MB
   webm: null,
-  poster: '/videos/home-hero-poster.jpg',
+  poster: '/videos/home-hero-poster.71544529.jpg',
 };
 
 const HYPERCAR_HERO = {
-  mp4: '/videos/hypercar-hero.mp4', // 3.5MB, down from 52.9MB
+  mp4: '/videos/hypercar-hero.efc44e4c.mp4', // 3.5MB, down from 52.9MB
   webm: null,
-  poster: '/videos/hypercar-hero-poster.jpg',
+  poster: '/videos/hypercar-hero-poster.bbba3e2a.jpg',
 };
 
 export const LOCAL_VIDEOS = {

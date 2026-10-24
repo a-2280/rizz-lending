@@ -30,6 +30,7 @@ ASSETS=(
 
 command -v ffmpeg >/dev/null || { echo "ffmpeg not found. sudo apt install ffmpeg" >&2; exit 1; }
 mkdir -p "$WORK" "$OUT"
+PATHS=()
 
 for entry in "${ASSETS[@]}"; do
   asset="${entry%%:*}"
@@ -57,14 +58,24 @@ for entry in "${ASSETS[@]}"; do
   ffmpeg -y -loglevel error -stats -i "$src" \
     -vf "scale='min(1920,iw)':-2:flags=lanczos" \
     -c:v libx264 -crf 32 -preset slow -profile:v high -pix_fmt yuv420p \
-    -movflags +faststart -an "$OUT/$name.mp4"
+    -movflags +faststart -an "$WORK/$name.mp4"
 
-  mp4_size=$(stat -c%s "$OUT/$name.mp4")
+  mp4_size=$(stat -c%s "$WORK/$name.mp4")
 
   # Poster: frame one of the ENCODED mp4, so it matches what plays exactly.
   # This is what the <video poster> attribute shows while the video loads.
   echo "==> poster $name-poster.jpg"
-  ffmpeg -y -loglevel error -i "$OUT/$name.mp4" -frames:v 1 -q:v 6 "$OUT/$name-poster.jpg"
+  ffmpeg -y -loglevel error -i "$WORK/$name.mp4" -frames:v 1 -q:v 6 "$WORK/$name-poster.jpg"
+
+  # netlify.toml caches /videos/* as immutable for a year, so a new encode must
+  # land at a new URL. Name each file by its content hash and drop the old cut.
+  rm -f "$OUT/$name".*.mp4 "$OUT/$name-poster".*.jpg
+  for f in "$name.mp4" "$name-poster.jpg"; do
+    hash=$(sha256sum "$WORK/$f" | cut -c1-8)
+    hashed="${f%.*}.$hash.${f##*.}"
+    mv "$WORK/$f" "$OUT/$hashed"
+    PATHS+=("$name -> /videos/$hashed")
+  done
 
   echo "    source: $(numfmt --to=iec "$(stat -c%s "$src")")  ->  mp4: $(numfmt --to=iec "$mp4_size")"
 done
@@ -72,3 +83,7 @@ done
 echo
 echo "=== public/videos ==="
 ls -la "$OUT"
+
+echo
+echo "=== paste into src/lib/video-sources.js ==="
+printf '%s\n' "${PATHS[@]}"

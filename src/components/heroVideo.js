@@ -16,7 +16,7 @@ export default function HeroVideo({ mp4, webm, poster }) {
   }, []);
 
   return (
-    <video className="bg-image" ref={videoRef} poster={poster} preload="none" muted loop playsInline>
+    <video className="bg-image" ref={videoRef} poster={poster} preload="none" muted loop playsInline aria-hidden="true">
       {webm && <source src={webm} type="video/webm" media={DESKTOP} />}
       <source src={mp4} type="video/mp4" media={DESKTOP} />
     </video>

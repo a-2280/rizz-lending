@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { getFirstTouchUtms, readCookie, withGclid } from '@/lib/tracking';
 
 // `embed=true` makes CreditAppCenter drop its own logo bar and footer, leaving
@@ -8,15 +8,19 @@ import { getFirstTouchUtms, readCookie, withGclid } from '@/lib/tracking';
 const APPLICATION_URL = 'https://application.rizzlending.com/applications/start/b3088bdf-6922-4801-a6f8-aeb6e487322e?embed=true';
 
 export default function ApplicationFrame() {
-  // Left empty until hydration so the iframe loads once, with the click ID
-  // already in its src. Server-rendering a src and swapping it afterwards would
-  // load the application twice.
-  const [src, setSrc] = useState(null);
+  // The src is set once, after hydration, with the click ID already in it.
+  // Server-rendering a src and swapping it afterwards would load the
+  // application twice, so the iframe renders without one and the effect fills it in.
+  const frameRef = useRef(null);
   useEffect(() => {
     const url = new URL(withGclid(APPLICATION_URL));
     Object.entries({ ...getFirstTouchUtms(), hubspotutk: readCookie('hubspotutk') }).forEach(([key, value]) => value && url.searchParams.set(key, value));
-    setSrc(url.toString());
+    frameRef.current.src = url.toString();
   }, []);
 
-  return <div className="application-frame">{src && <iframe src={src} title="Rizz Lending loan application" />}</div>;
+  return (
+    <div className="application-frame">
+      <iframe ref={frameRef} title="Rizz Lending loan application" />
+    </div>
+  );
 }

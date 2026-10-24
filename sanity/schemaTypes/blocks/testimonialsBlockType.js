@@ -19,7 +19,18 @@ export const testimonialsBlockType = defineType({
             defineField({name: 'eyebrow', type: 'string'}),
             defineField({name: 'quote', type: 'text'}),
             defineField({name: 'attribution', type: 'string'}),
-            defineField({name: 'photo', type: 'image'}),
+            defineField({
+              name: 'photo',
+              type: 'image',
+              fields: [
+                defineField({
+                  name: 'alt',
+                  title: 'Alt text',
+                  type: 'string',
+                  description: 'Describe the photo. Don’t repeat the caption — it is already shown on the image.',
+                }),
+              ],
+            }),
             defineField({name: 'photoCaption', type: 'string'}),
             defineField({name: 'photoSubcaption', type: 'string'}),
           ],

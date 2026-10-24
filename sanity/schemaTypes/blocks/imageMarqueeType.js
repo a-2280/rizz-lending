@@ -24,7 +24,19 @@ export const imageMarqueeType = defineType({
     defineField({
       name: 'images',
       type: 'array',
-      of: [defineArrayMember({ type: 'image' })],
+      of: [
+        defineArrayMember({
+          type: 'image',
+          fields: [
+            defineField({
+              name: 'alt',
+              title: 'Alt text',
+              type: 'string',
+              description: 'Describe the car (make, model, color, setting). Leave blank only if purely decorative.',
+            }),
+          ],
+        }),
+      ],
       group: 'media',
     }),
   ],

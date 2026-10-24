@@ -1,7 +1,8 @@
 // Pages that existed on the old WordPress site, mapped to their closest match
 // here. These URLs are indexed by Google and used as final URLs by live ads, so
 // they have to keep resolving. Sources match with or without the WordPress
-// trailing slash, so each one redirects in a single hop.
+// trailing slash, so each one redirects in a single hop. They send 301 rather
+// than Next's default 308 for `permanent: true`, as the SEO brief asks.
 //
 // `/thank-you/` is deliberately absent — it is a real page again
 // (src/app/thank-you/page.js), which is what lets the existing Google Ads
@@ -16,6 +17,8 @@ const LEGACY_PAGES = {
   '/loan-services/collector': '/vehicles',
   '/loan-services/carsbids': '/partners',
   '/vehicle-we-finance': '/vehicles',
+  '/luxury': '/vehicles',
+  '/refinance': '/cash-out-refinance',
   '/company': '/about',
   '/eligibility-requirements': '/eligibility',
   // Sanity slug is `check-availability`; `/availability` has no page and 404s.
@@ -79,10 +82,10 @@ const nextConfig = {
   },
   async redirects() {
     return [
-      ...Object.entries(LEGACY_PAGES).map(([source, destination]) => ({ source: `${source}{/}?`, destination, permanent: true })),
-      ...LEGACY_POSTS.map((slug) => ({ source: `/${slug}{/}?`, destination: `/blog/${slug}`, permanent: true })),
-      ...LEGACY_ARCHIVES.map((source) => ({ source: `${source}{/}?`, destination: '/blog', permanent: true })),
-      { source: '/home{/}?', destination: '/', permanent: true },
+      ...Object.entries(LEGACY_PAGES).map(([source, destination]) => ({ source: `${source}{/}?`, destination, statusCode: 301 })),
+      ...LEGACY_POSTS.map((slug) => ({ source: `/${slug}{/}?`, destination: `/blog/${slug}`, statusCode: 301 })),
+      ...LEGACY_ARCHIVES.map((source) => ({ source: `${source}{/}?`, destination: '/blog', statusCode: 301 })),
+      { source: '/home{/}?', destination: '/', statusCode: 301 },
       { source: '/my-account{/}?', destination: 'https://rizzlending.accountportalonline.com/', permanent: false },
       // Stands in for Next's built-in slash redirect (off via skipTrailingSlashRedirect); must stay last.
       { source: '/:path+/', destination: '/:path+', permanent: true },
