@@ -4,11 +4,12 @@ import { getPage } from '@/lib/sanity';
 export const revalidate = 60;
 
 export const metadata = {
-  description: "Financing built by car people, for car people. The car you want, on a payment that makes sense. Fast, private, and fluent in the cars your bank won't touch.",
+  title: { absolute: 'Exotic Car Financing & Supercar Loans | Rizz Lending' },
+  description: "Exotic car financing from car people. Supercar and luxury car loans up to $1M+, with fast, private decisions on the cars your bank won't touch.",
   alternates: { canonical: '/' },
   openGraph: {
     url: '/',
-    description: "Financing built by car people, for car people. The car you want, on a payment that makes sense. Fast, private, and fluent in the cars your bank won't touch.",
+    description: "Exotic car financing from car people. Supercar and luxury car loans up to $1M+, with fast, private decisions on the cars your bank won't touch.",
   },
 };
 

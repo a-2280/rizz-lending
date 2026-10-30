@@ -20,7 +20,7 @@ export default function FireConversionOnMount() {
       return;
     }
 
-    // gtag loads with strategy="afterInteractive", so it may not be there on the
+    // gtag loads with strategy="lazyOnload", so it may not be there on the
     // first tick. Retry briefly, then give up rather than poll forever.
     let attempts = 0;
     const id = setInterval(() => {

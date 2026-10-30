@@ -106,18 +106,16 @@ export default async function RootLayout({ children }) {
           <Script id="consent-default" strategy="beforeInteractive">{CONSENT_SCRIPT}</Script>
           {GOOGLE_ADS_ID && (
             <>
-              <Script id="gtag-loader" src={`https://www.googletagmanager.com/gtag/js?id=${GOOGLE_ADS_ID}`} strategy="afterInteractive" />
+              <Script id="gtag-loader" src={`https://www.googletagmanager.com/gtag/js?id=${GOOGLE_ADS_ID}`} strategy="lazyOnload" />
               <Script id="gtag-init" strategy="afterInteractive">{`gtag('js',new Date());gtag('config','${GOOGLE_ADS_ID}');${GA4_ID ? `gtag('config','${GA4_ID}');` : ''}`}</Script>
             </>
           )}
           {/* HubSpot tracking script. It sets the `hubspotutk` cookie, which the
               forms read and pass to /api/hubspot so HubSpot can tie a submission to
               that visitor's browsing history, and it serves the cookie banner whose
-              choice feeds CONSENT_SCRIPT above. afterInteractive (not lazyOnload) so
-              the consent listener answers inside gtag's wait_for_update window.
-              Skipped entirely when no portal is configured, rather than loading a
-              bogus URL. */}
-          {HUBSPOT_PORTAL_ID && <Script id="hs-script-loader" src={`https://${HUBSPOT_SCRIPT_HOST}/${HUBSPOT_PORTAL_ID}.js`} strategy="afterInteractive" async defer />}
+              choice feeds CONSENT_SCRIPT above. Skipped entirely when no portal is
+              configured, rather than loading a bogus URL. */}
+          {HUBSPOT_PORTAL_ID && <Script id="hs-script-loader" src={`https://${HUBSPOT_SCRIPT_HOST}/${HUBSPOT_PORTAL_ID}.js`} strategy="lazyOnload" async defer />}
           {META_PIXEL_ID && (
             <>
               <Script id="meta-pixel" strategy="lazyOnload">{`if(window.self===window.top){!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');if(window.__adConsentDenied)fbq('consent','revoke');fbq('init','${META_PIXEL_ID}');fbq('track','PageView');}`}</Script>

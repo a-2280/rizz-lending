@@ -9,8 +9,8 @@ import ApplicationFrame from '@/components/applicationFrame';
 // /apply-now redirects here (next.config.mjs).
 
 export const metadata = {
-  title: 'Apply',
-  description: 'Start your Rizz Lending application. Exotic, luxury & collector car financing with fast, private approvals.',
+  title: { absolute: 'Apply for an Exotic Car Loan | Rizz Lending' },
+  description: 'Apply for an exotic car loan with Rizz Lending. Start your secure application for supercar and luxury financing, with approvals typically within 24 hours.',
   alternates: { canonical: '/apply' },
 };
 
