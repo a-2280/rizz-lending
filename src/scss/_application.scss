@@ -6,6 +6,7 @@
 // inside its frame, so the page itself never does.
 .application-page {
     display: flex;
+    flex-direction: column;
     // CreditAppCenter's own page background, so the area around the frame matches the form.
     background-color: #f5f6fa;
     height: 100vh;
@@ -14,9 +15,17 @@
 
 .application-frame {
     flex: 1;
+    min-height: 0;
     display: flex;
     iframe {
         flex: 1;
         border: 0;
     }
+}
+
+// The footer is left off this page, so this line carries the phone and NMLS links.
+.application-contact {
+    padding: 10px 20px;
+    color: var(--midnight);
+    text-align: center;
 }

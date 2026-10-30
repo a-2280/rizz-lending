@@ -1,4 +1,5 @@
 import ApplicationFrame from '@/components/applicationFrame';
+import { linkifyContact } from '@/lib/links';
 
 // The loan application, embedded under the site header. The form itself is
 // CreditAppCenter on application.rizzlending.com — this page only frames it. The
@@ -19,6 +20,7 @@ export default function ApplyPage() {
     <main className="application-page pth">
       <h1 className="sr-only">Apply for Exotic Car Financing</h1>
       <ApplicationFrame />
+      <p className="application-contact f-14">Questions? Call {linkifyContact('801-880-9955')}. Rizz Lending, LLC {linkifyContact('NMLS #2682279')}</p>
     </main>
   );
 }
