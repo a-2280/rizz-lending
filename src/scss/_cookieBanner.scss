@@ -1,0 +1,103 @@
+/*--------------------------------------------------------------
+## HubSpot cookie banner (mobile)
+--------------------------------------------------------------*/
+
+// HubSpot's banner renders as a floating card pinned near the top with ~400
+// characters of copy and three buttons, which on a phone covers most of the
+// screen (and became the LCP element). On mobile it becomes a fixed-height bar
+// along the bottom: two-line clamped copy, Accept + Decline only.
+//
+// HubSpot injects its own stylesheet and may set its --hs-banner-* variables
+// inline, so the layout is set on the real properties with !important instead
+// of through those variables. Ids are prefixed with #hs-banner-parent to outrank
+// HubSpot's `#hs-banner-parent *` reset. Desktop keeps HubSpot's layout.
+//
+// The banner is loaded early from src/app/layout.js. Copy and button labels are
+// HubSpot settings (Settings → Privacy & consent → Cookies), not code.
+
+$cookie-bar-h: 64px;
+
+@media (max-width: 768px) {
+  #hs-banner-parent #hs-eu-cookie-confirmation {
+    inset: auto 0 0 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    height: $cookie-bar-h !important;
+    max-height: $cookie-bar-h !important;
+    margin: 0 !important;
+    border-radius: 0 !important;
+    overflow: hidden !important;
+    font-size: 12px !important;
+  }
+
+  #hs-banner-parent #hs-eu-cookie-confirmation-inner {
+    flex-direction: row !important;
+    align-items: center;
+    gap: 12px !important;
+    height: 100%;
+    padding: 8px 16px !important;
+  }
+
+  // Copy: two lines max. The wrapper's max-height is the fallback if the HubSpot
+  // copy ever spans several paragraphs; only the first is shown.
+  #hs-banner-parent #hs-eu-policy-wording {
+    flex: 1 1 auto;
+    min-width: 0;
+    max-height: 2.8em;
+    overflow: hidden;
+    line-height: 1.4em;
+
+    * {
+      line-height: 1.4em;
+    }
+
+    p {
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+      line-clamp: 2;
+      overflow: hidden;
+    }
+
+    p:not(:first-of-type) {
+      display: none;
+    }
+  }
+
+  // Leaves Accept + Decline. Per-category settings stay available on desktop.
+  #hs-banner-parent #hs-eu-header-container,
+  #hs-banner-parent #hs-eu-cookie-disclaimer,
+  #hs-banner-parent #hs-eu-cookie-settings-button {
+    display: none !important;
+  }
+
+  #hs-banner-parent #hs-eu-cookie-confirmation-buttons-area,
+  #hs-banner-parent #hs-eu-opt-in-buttons,
+  #hs-banner-parent #hs-eu-confirmation-button-group {
+    flex: 0 0 auto !important;
+    flex-wrap: nowrap !important;
+    gap: 8px !important;
+  }
+
+  #hs-banner-parent #hs-eu-confirmation-button,
+  #hs-banner-parent #hs-eu-decline-button {
+    flex: 0 0 auto !important;
+    min-width: 0 !important;
+    height: 36px !important;
+    padding: 0 14px !important;
+    line-height: 1 !important;
+    white-space: nowrap;
+  }
+
+  // Reserve room for the bar so it never covers the end of the page, and lift the
+  // fixed reveal footer (_footer.scss) above it. Space is added only at the bottom
+  // of the document, so nothing already on screen moves (no CLS). HubSpot marks the
+  // banner .hs-hidden once the visitor chooses, which releases the space.
+  body:has(#hs-eu-cookie-confirmation:not(.hs-hidden)) {
+    padding-bottom: $cookie-bar-h;
+
+    .footer-content {
+      bottom: $cookie-bar-h;
+    }
+  }
+}

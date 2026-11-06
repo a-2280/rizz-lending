@@ -43,6 +43,7 @@ export const viewport = {
 const HUBSPOT_PORTAL_ID = process.env.NEXT_PUBLIC_HUBSPOT_PORTAL_ID;
 const HUBSPOT_REGION = process.env.NEXT_PUBLIC_HUBSPOT_REGION?.trim() || 'na1';
 const HUBSPOT_SCRIPT_HOST = HUBSPOT_REGION === 'na1' ? 'js.hs-scripts.com' : `js-${HUBSPOT_REGION}.hs-scripts.com`;
+const HUBSPOT_BANNER_HOST = HUBSPOT_REGION === 'na1' ? 'js.hs-banner.com' : `js-${HUBSPOT_REGION}.hs-banner.com`;
 
 // Google Ads, loaded directly rather than through the client's GTM container —
 // see the note in src/lib/tracking.js for why. `config` here is what sets the
@@ -104,6 +105,17 @@ export default async function RootLayout({ children }) {
           <SalInit />
           <UtmCapture />
           <Script id="consent-default" strategy="beforeInteractive">{CONSENT_SCRIPT}</Script>
+          {/* HubSpot cookie banner, loaded early on its own. The HubSpot loader below
+              (lazyOnload) normally injects this same banner.js, but only when no element
+              with this id exists yet, so rendering the tag here means the loader skips
+              it and the rest of HubSpot (analytics, collected forms, ads pixel) stays
+              lazy. A lazy-loaded banner painted so late that it became the mobile LCP
+              element. Plain `defer` rather than next/script: the browser's preload scanner
+              finds it in the HTML, and it runs after parsing without waiting for
+              hydration. It must come after consent-default so the _hsp queue and its
+              consent listener already exist. The attributes copy what the loader sets.
+              Mobile layout is in src/scss/_cookieBanner.scss. */}
+          {HUBSPOT_PORTAL_ID && <script id={`cookieBanner-${HUBSPOT_PORTAL_ID}`} src={`https://${HUBSPOT_BANNER_HOST}/v2/${HUBSPOT_PORTAL_ID}/banner.js`} defer data-cookieconsent="ignore" data-hs-ignore="true" data-loader="hs-scriptloader" data-hsjs-portal={HUBSPOT_PORTAL_ID} data-hsjs-env="prod" data-hsjs-hublet={HUBSPOT_REGION} />}
           {GOOGLE_ADS_ID && (
             <>
               <Script id="gtag-loader" src={`https://www.googletagmanager.com/gtag/js?id=${GOOGLE_ADS_ID}`} strategy="lazyOnload" />
@@ -112,9 +124,9 @@ export default async function RootLayout({ children }) {
           )}
           {/* HubSpot tracking script. It sets the `hubspotutk` cookie, which the
               forms read and pass to /api/hubspot so HubSpot can tie a submission to
-              that visitor's browsing history, and it serves the cookie banner whose
-              choice feeds CONSENT_SCRIPT above. Skipped entirely when no portal is
-              configured, rather than loading a bogus URL. */}
+              that visitor's browsing history. It would also inject the cookie banner,
+              but the early cookieBanner tag above already has, so it skips that. Skipped
+              entirely when no portal is configured, rather than loading a bogus URL. */}
           {HUBSPOT_PORTAL_ID && <Script id="hs-script-loader" src={`https://${HUBSPOT_SCRIPT_HOST}/${HUBSPOT_PORTAL_ID}.js`} strategy="lazyOnload" async defer />}
           {META_PIXEL_ID && (
             <>
