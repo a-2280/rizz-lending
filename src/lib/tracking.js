@@ -67,15 +67,51 @@ export function getFbclid() {
 }
 
 const UTM_KEYS = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content'];
-const UTM_STORAGE_KEY = 'first_touch_utms';
+// Also hard-coded in CONSENT_SCRIPT (src/app/layout.js), which deletes it on opt-out.
+export const UTM_STORAGE_KEY = 'first_touch_utms';
 
 function readUtmsFromUrl() {
   const params = new URLSearchParams(window.location.search);
   return Object.fromEntries(UTM_KEYS.map((key) => [key, params.get(key)]).filter(([, value]) => value));
 }
 
-/** The UTMs from the first visit that had any. Saved once, never overwritten. */
+/** True once the HubSpot banner has reported an advertising opt-out (set by CONSENT_SCRIPT). */
+export function utmConsentDenied() {
+  return typeof window !== 'undefined' && window.__utmConsent === 'denied';
+}
+
+/**
+ * Run `cb` once the visitor's consent choice is known. HubSpot's consent listener
+ * answers on every page load; if it never does (portal not configured, script
+ * blocked), fall back after `timeoutMs` to the site's default-granted posture.
+ * Returns a cleanup function.
+ */
+export function whenConsentKnown(cb, timeoutMs = 1500) {
+  if (typeof window === 'undefined') return () => {};
+  if (window.__utmConsent) {
+    cb();
+    return () => {};
+  }
+  let done = false;
+  const run = () => {
+    if (done) return;
+    done = true;
+    window.removeEventListener('utmconsent', run);
+    clearTimeout(timer);
+    cb();
+  };
+  const timer = setTimeout(run, timeoutMs);
+  window.addEventListener('utmconsent', run);
+  return () => {
+    done = true;
+    window.removeEventListener('utmconsent', run);
+    clearTimeout(timer);
+  };
+}
+
+/** The UTMs from the first visit that had any. Saved once, never overwritten. Nothing is read or stored after an opt-out. */
 export function getFirstTouchUtms() {
+  if (utmConsentDenied()) return {};
   try {
     const stored = localStorage.getItem(UTM_STORAGE_KEY);
     if (stored) return JSON.parse(stored);
@@ -88,7 +124,7 @@ export function getFirstTouchUtms() {
 }
 
 export function getUtms() {
-  if (typeof window === 'undefined') return {};
+  if (typeof window === 'undefined' || utmConsentDenied()) return {};
   const firstTouch = getFirstTouchUtms();
   const fromUrl = readUtmsFromUrl();
   return Object.keys(fromUrl).length ? fromUrl : firstTouch;

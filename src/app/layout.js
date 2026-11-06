@@ -62,7 +62,10 @@ const META_PIXEL_ID = process.env.NEXT_PUBLIC_META_PIXEL_ID;
 // hits briefly so a returning opted-out visitor is denied before anything fires.
 // The same listener revokes the Meta Pixel; __adConsentDenied covers the case
 // where HubSpot answers before the Pixel has loaded (see the Pixel snippet).
-const CONSENT_SCRIPT = `window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}window.gtag=gtag;gtag('consent','default',{ad_storage:'granted',analytics_storage:'granted',ad_user_data:'granted',ad_personalization:'granted',wait_for_update:500});var _hsp=window._hsp=window._hsp||[];_hsp.push(['addPrivacyConsentListener',function(c){var cat=c.categories||{};var a=c.allowed||cat.analytics?'granted':'denied';var ad=c.allowed||cat.advertisement?'granted':'denied';gtag('consent','update',{analytics_storage:a,ad_storage:ad,ad_user_data:ad,ad_personalization:ad});window.__adConsentDenied=ad==='denied';if(typeof window.fbq==='function')window.fbq('consent',ad==='denied'?'revoke':'grant');}]);`;
+// It also gates the stored first-touch UTMs (src/lib/tracking.js): on opt-out it
+// deletes them, and __utmConsent + the `utmconsent` event tell UtmCapture and the
+// /apply iframe whether they may store or forward UTMs.
+const CONSENT_SCRIPT = `window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}window.gtag=gtag;gtag('consent','default',{ad_storage:'granted',analytics_storage:'granted',ad_user_data:'granted',ad_personalization:'granted',wait_for_update:500});var _hsp=window._hsp=window._hsp||[];_hsp.push(['addPrivacyConsentListener',function(c){var cat=c.categories||{};var a=c.allowed||cat.analytics?'granted':'denied';var ad=c.allowed||cat.advertisement?'granted':'denied';gtag('consent','update',{analytics_storage:a,ad_storage:ad,ad_user_data:ad,ad_personalization:ad});window.__adConsentDenied=ad==='denied';window.__utmConsent=ad;if(ad==='denied'){try{localStorage.removeItem('first_touch_utms')}catch(e){}}window.dispatchEvent(new Event('utmconsent'));if(typeof window.fbq==='function')window.fbq('consent',ad==='denied'?'revoke':'grant');}]);`;
 
 const JSON_LD = {
   '@context': 'https://schema.org',
