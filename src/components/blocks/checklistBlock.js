@@ -2,6 +2,20 @@ import Link from 'next/link';
 import { Check } from 'lucide-react';
 import ApplyNow from '../applyNow';
 import { resolveHref } from '@/lib/links';
+import { PortableText } from 'next-sanity';
+
+const descriptionComponents = {
+  block: {
+    normal: ({ children }) => <p>{children}</p>,
+  },
+  marks: {
+    checklistLink: ({ children, value }) => (
+      <a className="underline" href={value?.href || '#'}>
+        {children}
+      </a>
+    ),
+  },
+};
 
 export default function ChecklistBlock({ items, buttons }) {
   const hasItems = items?.length > 0;
@@ -18,7 +32,7 @@ export default function ChecklistBlock({ items, buttons }) {
                 </div>
                 <div className='flex flex-col gap-5'>
                   {item.heading && <p className='f-display text-midnight weight-700'>{item.heading}</p>}
-                  {item.description && <p>{item.description}</p>}
+                  {item.description && (typeof item.description === 'string' ? <p>{item.description}</p> : <PortableText value={item.description} components={descriptionComponents} />)}
                 </div>
               </div>
             ))}

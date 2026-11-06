@@ -1,5 +1,6 @@
 import {defineArrayMember, defineField, defineType} from 'sanity'
 import {CheckmarkCircleIcon} from '@sanity/icons/CheckmarkCircle'
+import {LinkIcon} from '@sanity/icons/Link'
 
 export const checklistBlockType = defineType({
   name: 'checklistBlock',
@@ -30,10 +31,42 @@ export const checklistBlockType = defineType({
           name: 'item',
           fields: [
             defineField({name: 'heading', type: 'string'}),
-            defineField({name: 'description', type: 'text'}),
+            defineField({
+              name: 'description',
+              type: 'array',
+              of: [
+                {
+                  type: 'block',
+                  styles: [{title: 'Normal', value: 'normal'}],
+                  lists: [],
+                  marks: {
+                    decorators: [],
+                    annotations: [
+                      {
+                        name: 'checklistLink',
+                        type: 'object',
+                        title: 'Link',
+                        icon: LinkIcon,
+                        fields: [{name: 'href', title: 'URL', type: 'string'}],
+                      },
+                    ],
+                  },
+                },
+              ],
+            }),
           ],
           preview: {
-            select: {title: 'heading', subtitle: 'description'},
+            select: {title: 'heading', description: 'description'},
+            prepare({title, description}) {
+              const subtitle =
+                typeof description === 'string'
+                  ? description
+                  : (description || [])
+                      .filter((block) => block._type === 'block')
+                      .map((block) => (block.children || []).map((child) => child.text).join(''))
+                      .join(' ')
+              return {title, subtitle}
+            },
           },
         }),
       ],
