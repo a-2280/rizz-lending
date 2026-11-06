@@ -54,21 +54,44 @@ export function withGclid(href) {
   }
 }
 
+export function getFbclid() {
+  if (typeof window === 'undefined') return undefined;
+
+  const fromUrl = new URLSearchParams(window.location.search).get('fbclid');
+  if (fromUrl) return fromUrl;
+
+  const cookie = readCookie('_fbc');
+  if (!cookie) return undefined;
+  const parts = cookie.split('.');
+  return parts.length > 3 ? parts.slice(3).join('.') : undefined;
+}
+
 const UTM_KEYS = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content'];
 const UTM_STORAGE_KEY = 'first_touch_utms';
+
+function readUtmsFromUrl() {
+  const params = new URLSearchParams(window.location.search);
+  return Object.fromEntries(UTM_KEYS.map((key) => [key, params.get(key)]).filter(([, value]) => value));
+}
 
 /** The UTMs from the first visit that had any. Saved once, never overwritten. */
 export function getFirstTouchUtms() {
   try {
     const stored = localStorage.getItem(UTM_STORAGE_KEY);
     if (stored) return JSON.parse(stored);
-    const params = new URLSearchParams(window.location.search);
-    const utms = Object.fromEntries(UTM_KEYS.map((key) => [key, params.get(key)]).filter(([, value]) => value));
+    const utms = readUtmsFromUrl();
     if (Object.keys(utms).length) localStorage.setItem(UTM_STORAGE_KEY, JSON.stringify(utms));
     return utms;
   } catch {
     return {};
   }
+}
+
+export function getUtms() {
+  if (typeof window === 'undefined') return {};
+  const firstTouch = getFirstTouchUtms();
+  const fromUrl = readUtmsFromUrl();
+  return Object.keys(fromUrl).length ? fromUrl : firstTouch;
 }
 
 export const GOOGLE_ADS_ID = process.env.NEXT_PUBLIC_GOOGLE_ADS_ID;
