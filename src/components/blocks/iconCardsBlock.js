@@ -1,21 +1,30 @@
 import Link from 'next/link';
+import { PortableText } from 'next-sanity';
 import { ArrowRight } from 'lucide-react';
 import ApplyNow from '../applyNow';
 import { resolveHref } from '@/lib/links';
+import { proseComponents } from '../prose';
 
-export default function IconCardsBlock({ eyebrow, heading, description, quote, theme = 'light', layout = 'grid', cards, buttons }) {
+export default function IconCardsBlock({ eyebrow, heading, description, richDescription, quote, richQuote, theme = 'light', layout = 'grid', cards, buttons }) {
   const hasCards = cards?.length > 0;
   const isDark = theme === 'dark';
   const isSplit = layout === 'split';
   const cardsAreDark = isDark && !isSplit;
+  const hasDescription = richDescription?.length > 0 || description;
 
-  const content = (eyebrow || heading || description) && (
+  const content = (eyebrow || heading || hasDescription) && (
     <div className="flex flex-col gap-15">
       <div className="flex flex-col gap-10 fade--in" data-sal>
         {eyebrow && <span className="eyebrow">{eyebrow}</span>}
         {heading && <h2 className={`h2${isDark ? ' text-silk' : ' text-carbon'}`}>{heading}</h2>}
       </div>
-      {description && <p className={`pre-line fade--in${isSplit ? '' : ' max-600'}`} data-sal>{description}</p>}
+      {richDescription?.length > 0 ? (
+        <div className={`prose-rich fade--in${isSplit ? '' : ' max-600'}`} data-sal>
+          <PortableText value={richDescription} components={proseComponents} />
+        </div>
+      ) : (
+        description && <p className={`pre-line fade--in${isSplit ? '' : ' max-600'}`} data-sal>{description}</p>
+      )}
       {isSplit && buttons?.length > 0 && (
         <div className="flex gap-10">
           {buttons.map((btn) => (btn._type === 'applyButton' ? <ApplyNow key={btn._key} /> : <Link key={btn._key} className="button-2" href={resolveHref(btn)}>{btn.label}</Link>))}
@@ -30,7 +39,13 @@ export default function IconCardsBlock({ eyebrow, heading, description, quote, t
         <div className={`card p30 radius-5 flex flex-col gap-10 m-max-unset${isSplit ? '' : ' max-400'}${cardsAreDark ? ' bg-carbon border-line' : ' bg-white border-line-d'}`} key={card._key}>
           {card.marker && (card.marker === '→' ? <ArrowRight className="marker" size={24} strokeWidth={2.5} /> : <span className="marker">{card.marker}</span>)}
           {card.heading && <p className={`f-18 f-display weight-700${cardsAreDark ? ' text-silk' : ' text-midnight'}`}>{card.heading}</p>}
-          {card.description && <p className={`f-14${cardsAreDark ? ' text-silk-dim' : ' text-ink-dim'}`}>{card.description}</p>}
+          {card.richDescription?.length > 0 ? (
+            <div className={`prose-rich f-14${cardsAreDark ? ' text-silk-dim' : ' text-ink-dim'}`}>
+              <PortableText value={card.richDescription} components={proseComponents} />
+            </div>
+          ) : (
+            card.description && <p className={`f-14${cardsAreDark ? ' text-silk-dim' : ' text-ink-dim'}`}>{card.description}</p>
+          )}
         </div>
       ))}
     </div>
@@ -52,7 +67,13 @@ export default function IconCardsBlock({ eyebrow, heading, description, quote, t
       <div className="flex flex-col gap-40">
         {content}
         {cardList}
-        {quote && <p className={`f-20 f-serif italic max-600 fade--in${isDark ? ' text-silk' : ' text-midnight'}`} data-sal>{quote}</p>}
+        {richQuote?.length > 0 ? (
+          <div className={`prose-rich f-20 f-serif italic max-600 fade--in${isDark ? ' text-silk' : ' text-midnight'}`} data-sal>
+            <PortableText value={richQuote} components={proseComponents} />
+          </div>
+        ) : (
+          quote && <p className={`f-20 f-serif italic max-600 fade--in${isDark ? ' text-silk' : ' text-midnight'}`} data-sal>{quote}</p>
+        )}
         {buttons?.length > 0 && (
           <div className="flex gap-10">
             {buttons.map((btn) => (btn._type === 'applyButton' ? <ApplyNow key={btn._key} /> : <Link key={btn._key} className="button-2" href={resolveHref(btn)}>{btn.label}</Link>))}

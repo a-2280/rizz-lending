@@ -9,6 +9,8 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import ApplyNow from '../applyNow';
 import { Check } from 'lucide-react';
 import { resolveHref } from '@/lib/links';
+import Breadcrumbs from '../breadcrumbs';
+import { proseComponents } from '../prose';
 
 const headingComponents = {
   block: {
@@ -28,7 +30,7 @@ const disclaimerComponents = {
   },
 };
 
-export default function TextHero({ eyebrow, eyebrowColor, heading, subText, buttons, disclaimer, showIcon, image, video }) {
+export default function TextHero({ eyebrow, eyebrowColor, heading, subText, richSubText, buttons, disclaimer, showIcon, image, video, breadcrumbs }) {
   const hasMedia = hasHeroMedia({ image, video });
   const hasApplyButton = buttons?.some((btn) => btn._type === 'applyButton');
   const sectionRef = useRef(null);
@@ -64,11 +66,18 @@ export default function TextHero({ eyebrow, eyebrowColor, heading, subText, butt
       {hasMedia && <div className="hero-scrim" />}
       <div className="flex flex-col justify-center p30 py70 z-3 pos-rel gap-30">
         <div className="flex flex-col gap-20">
+          {breadcrumbs?.length > 0 && <Breadcrumbs items={breadcrumbs} />}
           <div>
             {eyebrow && <p className={eyebrowColor === 'light' ? 'eyebrow eyebrow-light' : 'eyebrow eyebrow-orange'}>{eyebrow}</p>}
             <h1 className="h1">{heading && <PortableText value={heading} components={headingComponents} />}</h1>
           </div>
-          {subText && <p className="max-500 text-balanced">{subText}</p>}
+          {richSubText?.length > 0 ? (
+            <div className="max-500 text-balanced prose-rich">
+              <PortableText value={richSubText} components={proseComponents} />
+            </div>
+          ) : (
+            subText && <p className="max-500 text-balanced">{subText}</p>
+          )}
         </div>
         <div className="flex flex-col gap-20">
           {buttons?.length > 0 && (

@@ -1,6 +1,7 @@
 import {defineField, defineType} from 'sanity'
 import {TextIcon} from '@sanity/icons/Text'
 import {ColorWheelIcon} from '@sanity/icons/ColorWheel'
+import {proseField} from '../proseText'
 
 export const textHeroType = defineType({
   name: 'textHero',
@@ -85,6 +86,7 @@ export const textHeroType = defineType({
       type: 'text',
       group: 'content',
     }),
+    proseField('richSubText', 'Sub text with links', 'Optional. When set, this is shown instead of the plain sub text and can include links.', 'content'),
     defineField({
       name: 'buttons',
       title: 'Buttons',

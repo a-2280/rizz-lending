@@ -1,0 +1,28 @@
+/*--------------------------------------------------------------
+## Breadcrumbs
+--------------------------------------------------------------*/
+
+.breadcrumbs ol {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  list-style: none;
+  font-size: 14px;
+  color: var(--silk-dim);
+}
+
+.breadcrumbs li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.breadcrumbs li + li::before {
+  content: "›";
+}
+
+.breadcrumbs a:hover,
+.breadcrumbs [aria-current="page"] {
+  color: var(--silk);
+}

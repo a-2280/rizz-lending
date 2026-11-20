@@ -11,6 +11,7 @@ import IconCardsBlock from './blocks/iconCardsBlock';
 import LeadershipStoryBlock from './blocks/leadershipStoryBlock';
 import ChecklistBlock from './blocks/checklistBlock';
 import HighlightsBlock from './blocks/highlightsBlock';
+import RichTextBlock from './blocks/richTextBlock';
 import TestimonialsBlock from './blocks/testimonialsBlock';
 import FaqBlock from './blocks/faqBlock';
 import DealerFaqFormBlock from './blocks/dealerFaqFormBlock';
@@ -27,7 +28,7 @@ import LegalBlock from './blocks/legalBlock';
 import BlogGrid from './blocks/blogGrid';
 import { toPlainText } from 'next-sanity';
 
-export default function PageBuilder({ blocks }) {
+export default function PageBuilder({ blocks, breadcrumbs, includeFaqJsonLd = true }) {
   if (!Array.isArray(blocks)) return null;
   const faqs = blocks
     .filter((block) => block._type === 'faqBlock' || block._type === 'dealerFaqFormBlock')
@@ -42,12 +43,13 @@ export default function PageBuilder({ blocks }) {
       acceptedAnswer: { '@type': 'Answer', text: typeof item.answer === 'string' ? item.answer : toPlainText(item.answer) },
     })),
   };
-  const content = blocks.map((block) => {
+  const crumbIndex = breadcrumbs?.length ? blocks.findIndex((block) => block._type === 'textHero') : -1;
+  const content = blocks.map((block, index) => {
     switch (block._type) {
       case 'hero':
         return <Hero key={block._key} {...block} />;
       case 'textHero':
-        return <TextHero key={block._key} {...block} />;
+        return <TextHero key={block._key} {...block} breadcrumbs={index === crumbIndex ? breadcrumbs : null} />;
       case 'estimationBlock':
         return <EstimationBlock key={block._key} {...block} />;
       case 'estimatorHero':
@@ -70,6 +72,8 @@ export default function PageBuilder({ blocks }) {
         return <ChecklistBlock key={block._key} {...block} />;
       case 'highlightsBlock':
         return <HighlightsBlock key={block._key} {...block} />;
+      case 'richTextBlock':
+        return <RichTextBlock key={block._key} {...block} />;
       case 'testimonialsBlock':
         return <TestimonialsBlock key={block._key} {...block} />;
       case 'faqBlock':
@@ -104,7 +108,7 @@ export default function PageBuilder({ blocks }) {
   });
   return (
     <>
-      {faqJsonLd && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd).replace(/</g, '\\u003c') }} />}
+      {includeFaqJsonLd && faqJsonLd && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd).replace(/</g, '\\u003c') }} />}
       {content}
     </>
   );

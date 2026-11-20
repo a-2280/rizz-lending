@@ -14,6 +14,7 @@ import { iconCardsBlockType } from './blocks/iconCardsBlockType'
 import { leadershipStoryBlockType } from './blocks/leadershipStoryBlockType'
 import { checklistBlockType } from './blocks/checklistBlockType'
 import { highlightsBlockType } from './blocks/highlightsBlockType'
+import { richTextBlockType } from './blocks/richTextBlockType'
 import { testimonialsBlockType } from './blocks/testimonialsBlockType'
 import { faqBlockType } from './blocks/faqBlockType'
 import { dealerFaqFormBlockType } from './blocks/dealerFaqFormBlockType'
@@ -53,6 +54,7 @@ export const schemaTypes = [
   leadershipStoryBlockType,
   checklistBlockType,
   highlightsBlockType,
+  richTextBlockType,
   testimonialsBlockType,
   faqBlockType,
   dealerFaqFormBlockType,

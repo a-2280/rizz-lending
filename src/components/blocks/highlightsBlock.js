@@ -1,20 +1,40 @@
-export default function HighlightsBlock({ eyebrow, heading, description, items }) {
+import { PortableText } from 'next-sanity';
+import { proseComponents } from '@/components/prose';
+
+function paragraphs(text) {
+  if (!text || typeof text !== 'string') return [];
+  return text.split(/\n\s*\n/).map((part) => part.trim()).filter(Boolean);
+}
+
+export default function HighlightsBlock({ eyebrow, heading, description, body, items }) {
   const hasItems = items?.length > 0;
+  const prose = paragraphs(description);
+  const hasRich = body?.length > 0;
 
   return (
     <section className="p30 py70 text-silk-dim">
       <div className="flex justify-center max-1400 ma">
-        <div className="flex flex-col gap-40">
-          {(eyebrow || heading || description) && (
+        <div className="flex flex-col gap-40 w-100">
+          {(eyebrow || heading || hasRich || prose.length > 0) && (
             <div className="flex flex-col gap-15">
               <div className="flex flex-col gap-10 fade--in" data-sal>
                 {eyebrow && <span className="eyebrow">{eyebrow}</span>}
                 {heading && <h2 className="h2 text-silk">{heading}</h2>}
               </div>
-              {description && (
-                <p className="fade--in" data-sal>
-                  {description}
-                </p>
+              {hasRich ? (
+                <div className="prose-measure prose-rich fade--in" data-sal>
+                  <PortableText value={body} components={proseComponents} />
+                </div>
+              ) : (
+                prose.length > 0 && (
+                  <div className="prose-measure flex flex-col gap-15 fade--in" data-sal>
+                    {prose.map((paragraph, index) => (
+                      <p className="pre-line" key={index}>
+                        {paragraph}
+                      </p>
+                    ))}
+                  </div>
+                )
               )}
             </div>
           )}

@@ -1,11 +1,11 @@
 'use client';
 
-import { useEffect } from 'react';
-import Image from 'next/image';
 import useEmblaCarousel from 'embla-carousel-react';
 import AutoScroll from 'embla-carousel-auto-scroll';
 import { WheelGesturesPlugin } from 'embla-carousel-wheel-gestures';
-import { sanityImage } from '@/lib/image';
+import { marqueDestination } from '@/data/marqueLinks';
+import MarqueLogo from '@/components/marqueLogo';
+import { useLogoMarquee } from '@/components/useLogoMarquee';
 
 // Every logo is sized to the same area rather than the same height, so a wide
 // wordmark and a compact badge carry equal visual weight. Raise to scale them all.
@@ -14,24 +14,15 @@ const LOGO_MAX_W = 260;
 const LOGO_MAX_H = 104;
 const LOGO_GAP = 50;
 
-export default function LogoGridBlock({ eyebrow, heading, description, logos }) {
+export default function LogoGridBlock({ _key, eyebrow, heading, description, logos }) {
   const marques = logos?.filter((item) => item.logo?.asset?.url) || [];
   const repeats = marques.length ? Math.max(3, Math.ceil(24 / marques.length)) : 0;
   const track = Array.from({ length: repeats }, () => marques).flat();
+  const hasLinks = marques.some((item) => marqueDestination(_key, item));
 
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true, dragFree: true, align: 'start' }, [AutoScroll({ speed: 1, stopOnInteraction: true, stopOnMouseEnter: false, startDelay: 0 }), WheelGesturesPlugin()]);
 
-  useEffect(() => {
-    if (!emblaApi) return;
-    let timer;
-    const resume = () => (timer = setTimeout(() => emblaApi.plugins().autoScroll?.play(), 300));
-    const cancel = () => clearTimeout(timer);
-    emblaApi.on('pointerUp', resume).on('pointerDown', cancel);
-    return () => {
-      cancel();
-      emblaApi.off('pointerUp', resume).off('pointerDown', cancel);
-    };
-  }, [emblaApi]);
+  useLogoMarquee(emblaApi, hasLinks);
 
   return (
     <section className="logo-grid py70 flex flex-col gap-50">
@@ -58,7 +49,8 @@ export default function LogoGridBlock({ eyebrow, heading, description, logos }) 
               const fit = Math.min(1, LOGO_MAX_W / (LOGO_BASE * scale), (LOGO_MAX_H * scale) / LOGO_BASE);
               const w = Math.round(LOGO_BASE * scale * fit);
               const h = Math.round((LOGO_BASE / scale) * fit);
-              return <Image className="shrink-0 grayscale-invert" key={`${item._key}-${i}`} src={sanityImage(item.logo, w * 2)} alt={item.brand || ''} width={w} height={h} loading="eager" style={{ '--lw': `${w}px`, '--lh': `${h}px`, marginRight: i === track.length - 1 ? LOGO_GAP : undefined }} />;
+              const destination = marqueDestination(_key, item);
+              return <MarqueLogo key={`${item._key}-${i}`} item={item} width={w} height={h} className="shrink-0 grayscale-invert" isClone={i >= marques.length} href={destination?.href} label={destination?.label} marginRight={i === track.length - 1 ? LOGO_GAP : undefined} />;
             })}
           </div>
         </div>

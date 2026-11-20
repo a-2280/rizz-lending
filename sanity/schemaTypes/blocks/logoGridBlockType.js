@@ -38,6 +38,12 @@ export const logoGridBlockType = defineType({
           fields: [
             defineField({name: 'brand', title: 'Brand name', type: 'string'}),
             defineField({name: 'logo', title: 'Logo image', type: 'image'}),
+            defineField({
+              name: 'link',
+              title: 'Link',
+              type: 'link',
+              description: 'Optional. Known marques on the Vehicles and Hypercar rows link without this. Set it to override that link, or to link a marque that has no mapping.',
+            }),
           ],
           preview: {
             select: {title: 'brand', media: 'logo'},
