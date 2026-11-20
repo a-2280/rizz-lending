@@ -2,6 +2,8 @@ import { notFound } from 'next/navigation';
 import { getPage } from '@/lib/sanity';
 import PageBuilder from '@/components/page-builder';
 import { sanityImage } from '@/lib/image';
+import { FINANCING_SEO } from '@/data/financingPages';
+import { financingCrumbs, financingJsonLd } from '@/lib/financingJsonLd';
 
 export const revalidate = 60;
 
@@ -20,6 +22,7 @@ const SEO = {
   contact: { title: 'Contact Rizz Lending | Exotic Car Financing', description: 'Contact Rizz Lending about exotic or luxury car financing. Call 801-880-9955 to talk with our team of car people. NMLS #2682279.' },
   blog: { title: 'Exotic & Luxury Car Financing Guides | Rizz Lending Blog', description: 'Guides to luxury car financing, exotic car loans and supercar ownership: buying tips, model spotlights and how to finance your next car with confidence.' },
   licenses: { title: 'Licenses & Disclosures | Rizz Lending, NMLS #2682279', description: 'Rizz Lending, LLC (NMLS #2682279) state licenses and registrations, plus regulator contact details and disclosures for borrowers in the states we serve.' },
+  ...FINANCING_SEO,
 };
 
 export async function generateStaticParams() {
@@ -32,12 +35,23 @@ export async function generateMetadata({ params }) {
   const page = await getPage(slugPath);
   if (!page) return {};
   const image = sanityImage(page.pageBuilder?.[0]?.image, 1200);
-  const seo = SEO[slugPath];
+  const fallback = SEO[slugPath];
+  const title = page.seo?.title?.trim() || fallback?.title;
+  const description = page.seo?.description?.trim() || fallback?.description;
   return {
-    title: seo ? { absolute: seo.title } : page.title,
-    ...(seo && { description: seo.description }),
+    title: title ? { absolute: title } : page.title,
+    ...(description && { description }),
     alternates: { canonical: `/${slugPath}` },
-    ...(image && { openGraph: { siteName: 'Rizz Lending', type: 'website', locale: 'en_US', images: [image] } }),
+    ...(page.seo?.noindex && { robots: { index: false, follow: true } }),
+    openGraph: {
+      siteName: 'Rizz Lending',
+      type: 'website',
+      locale: 'en_US',
+      url: `/${slugPath}`,
+      ...(title && { title }),
+      ...(description && { description }),
+      ...(image && { images: [image] }),
+    },
   };
 }
 
@@ -46,9 +60,11 @@ export default async function CmsPage({ params }) {
   const slugPath = slug.join('/');
   const page = await getPage(slugPath);
   if (!page) notFound();
+  const jsonLd = financingJsonLd(slugPath, page);
   return (
     <main>
-      <PageBuilder blocks={page.pageBuilder} />
+      {jsonLd && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, '\\u003c') }} />}
+      <PageBuilder blocks={page.pageBuilder} breadcrumbs={financingCrumbs(slugPath)} includeFaqJsonLd={!jsonLd} />
     </main>
   );
 }

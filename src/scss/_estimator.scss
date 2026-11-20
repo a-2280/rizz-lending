@@ -2,6 +2,11 @@
 ## Price Estimator Styling
 --------------------------------------------------------------*/
 
+#calculator,
+#estimator-amount {
+  scroll-margin-top: 80px;
+}
+
 .estimator {
   input[type="range"] {
     width: 100%;
