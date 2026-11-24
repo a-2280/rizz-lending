@@ -5,6 +5,22 @@
 /* Fixed box from the block's --lw/--lh so a slide never resizes when its image
    loads — that trips Embla's ResizeObserver into a reInit and stutters the track
    (same fix as _photoLogoBlock.scss). */
+.marque-link {
+  display: block;
+  border-radius: 4px;
+  transition: transform 0.2s ease;
+
+  &:hover {
+    opacity: 1;
+    transform: translateY(-4px);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--flame-bright);
+    outline-offset: 6px;
+  }
+}
+
 .logo-grid img {
     width: calc(var(--lw) * var(--logo-scale, 1));
     height: calc(var(--lh) * var(--logo-scale, 1));

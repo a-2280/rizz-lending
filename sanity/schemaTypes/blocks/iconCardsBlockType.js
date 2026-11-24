@@ -1,5 +1,6 @@
 import {defineArrayMember, defineField, defineType} from 'sanity'
 import {ComponentIcon} from '@sanity/icons/Component'
+import {proseField} from '../proseText'
 
 export const iconCardsBlockType = defineType({
   name: 'iconCardsBlock',
@@ -41,12 +42,14 @@ export const iconCardsBlockType = defineType({
       type: 'text',
       group: 'content',
     }),
+    proseField('richDescription', 'Description with links', 'Optional. When set, this is shown instead of the plain description and can include links.', 'content'),
     defineField({
       name: 'quote',
       title: 'Closing quote',
       type: 'text',
       group: 'content',
     }),
+    proseField('richQuote', 'Closing quote with links', 'Optional. When set, this is shown instead of the plain closing quote and can include links.', 'content'),
     defineField({
       name: 'buttons',
       title: 'Buttons',
@@ -67,6 +70,7 @@ export const iconCardsBlockType = defineType({
             defineField({name: 'marker', title: 'Marker (e.g. 01, →, ◆)', type: 'string'}),
             defineField({name: 'heading', type: 'string'}),
             defineField({name: 'description', type: 'text'}),
+            proseField('richDescription', 'Description with links', 'Optional. When set, this is shown instead of the plain description and can include links.'),
           ],
           preview: {
             select: {title: 'heading', subtitle: 'marker'},
