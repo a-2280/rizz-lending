@@ -2,6 +2,8 @@ import { notFound } from 'next/navigation';
 import { getPage } from '@/lib/sanity';
 import PageBuilder from '@/components/page-builder';
 import { sanityImage } from '@/lib/image';
+import JsonLd from '@/components/jsonLd';
+import { breadcrumbJsonLd } from '@/lib/jsonLd';
 import { FINANCING_SEO } from '@/data/financingPages';
 import { financingCrumbs, financingJsonLd } from '@/lib/financingJsonLd';
 
@@ -60,11 +62,18 @@ export default async function CmsPage({ params }) {
   const slugPath = slug.join('/');
   const page = await getPage(slugPath);
   if (!page) notFound();
-  const jsonLd = financingJsonLd(slugPath, page);
+  const financingLd = financingJsonLd(slugPath, page);
+  // Brand financing pages already carry one BreadcrumbList inside their graph.
+  // Every other CMS page uses the site-wide trail. Skip the second list so a
+  // page never emits two BreadcrumbList blocks.
+  const breadcrumbLd = financingLd ? null : breadcrumbJsonLd(`/${slugPath}`);
   return (
-    <main>
-      {jsonLd && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, '\\u003c') }} />}
-      <PageBuilder blocks={page.pageBuilder} breadcrumbs={financingCrumbs(slugPath)} includeFaqJsonLd={!jsonLd} />
-    </main>
+    <>
+      <JsonLd data={financingLd} />
+      <JsonLd data={breadcrumbLd} />
+      <main>
+        <PageBuilder blocks={page.pageBuilder} breadcrumbs={financingCrumbs(slugPath)} includeFaqJsonLd={!financingLd} />
+      </main>
+    </>
   );
 }

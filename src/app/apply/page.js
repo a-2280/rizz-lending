@@ -1,5 +1,7 @@
 import ApplicationFrame from '@/components/applicationFrame';
 import { linkifyContact } from '@/lib/links';
+import JsonLd from '@/components/jsonLd';
+import { breadcrumbJsonLd } from '@/lib/jsonLd';
 
 // The loan application, embedded under the site header. The form itself is
 // CreditAppCenter on application.rizzlending.com — this page only frames it. The
@@ -18,6 +20,7 @@ export const metadata = {
 export default function ApplyPage() {
   return (
     <main className="application-page pth">
+      <JsonLd data={breadcrumbJsonLd('/apply')} />
       <h1 className="sr-only">Apply for Exotic Car Financing</h1>
       <section className="softpull-card" aria-label="Soft credit pull">
         <p className="softpull-card__title">Checking your options is a soft credit pull.</p>

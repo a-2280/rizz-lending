@@ -40,3 +40,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# lighthouse temp profiles (written to the repo root when TEMP holds a Windows path)
+/C:*lighthouse.*/

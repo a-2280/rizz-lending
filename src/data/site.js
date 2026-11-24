@@ -36,6 +36,27 @@ export const ROUTES = [
   { path: "/licenses", title: "Licenses & Disclosures" },
 ];
 
+const BORROW_SMART = { name: "Borrow Smart", path: "/overview" };
+
+export const BREADCRUMBS = {
+  "/overview": [BORROW_SMART],
+  "/cash-out-refinance": [BORROW_SMART, { name: "Cash-Out Refinance", path: "/cash-out-refinance" }],
+  "/lease-buyout": [BORROW_SMART, { name: "Lease Buyout", path: "/lease-buyout" }],
+  "/vehicles": [{ name: "Vehicles", path: "/vehicles" }],
+  "/hypercar": [{ name: "Hypercar", path: "/hypercar" }],
+  "/eligibility": [{ name: "Eligibility", path: "/eligibility" }],
+  "/dealers": [{ name: "Dealers", path: "/dealers" }],
+  "/partners": [{ name: "Partners", path: "/partners" }],
+  "/about": [{ name: "About", path: "/about" }],
+  "/apply": [{ name: "Apply", path: "/apply" }],
+  "/check-availability": [{ name: "Check Availability", path: "/check-availability" }],
+  "/careers": [{ name: "Careers", path: "/careers" }],
+  "/contact": [{ name: "Contact", path: "/contact" }],
+  "/blog": [{ name: "Blog", path: "/blog" }],
+  "/privacy-policy": [{ name: "Privacy Policy", path: "/privacy-policy" }],
+  "/licenses": [{ name: "Licenses & Disclosures", path: "/licenses" }],
+};
+
 // NOTE: nothing imports NAV/NAV_CTAS — src/components/header.js hardcodes its own
 // links. Kept in sync with the real slugs so they aren't a trap if anything does
 // start importing them.
