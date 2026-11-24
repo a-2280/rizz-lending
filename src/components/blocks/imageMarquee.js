@@ -7,8 +7,27 @@ import useEmblaCarousel from 'embla-carousel-react';
 import AutoScroll from 'embla-carousel-auto-scroll';
 import { WheelGesturesPlugin } from 'embla-carousel-wheel-gestures';
 
+function ImageBand({ eyebrow, heading, image }) {
+  const src = sanityImage(image, 2400);
+  if (!src) return null;
+  return (
+    <section className="image-band">
+      {(eyebrow || heading) && (
+        <div className="flex flex-col gap-10 max-700 fade--in" data-sal style={{ textAlign: 'center', margin: '0 auto', padding: '70px 30px 30px' }}>
+          {eyebrow && <span className="eyebrow">{eyebrow}</span>}
+          {heading && <h2 className="h2">{heading}</h2>}
+        </div>
+      )}
+      <div className="image-band-frame">
+        <Image className="bg-image" src={src} alt={image.alt || ''} fill sizes="100vw" />
+      </div>
+    </section>
+  );
+}
+
 export default function ImageMarquee({ eyebrow, heading, images }) {
-  const hasImages = images?.length > 0;
+  const isBand = images?.length === 1;
+  const hasImages = images?.length > 1;
   const track = hasImages ? [...images, ...images, ...images] : [];
 
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true, dragFree: true, align: 'start' }, [AutoScroll({ speed: 1, stopOnInteraction: true, stopOnMouseEnter: false, startDelay: 0 }), WheelGesturesPlugin()]);
@@ -24,6 +43,8 @@ export default function ImageMarquee({ eyebrow, heading, images }) {
       emblaApi.off('pointerUp', resume).off('pointerDown', cancel);
     };
   }, [emblaApi]);
+
+  if (isBand) return <ImageBand eyebrow={eyebrow} heading={heading} image={images[0]} />;
 
   return (
     <section className='py70 flex justify-center'>

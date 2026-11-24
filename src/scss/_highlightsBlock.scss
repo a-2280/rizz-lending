@@ -1,3 +1,27 @@
 /*--------------------------------------------------------------
 ## Highlights Block Styling
 --------------------------------------------------------------*/
+
+.prose-measure {
+  max-width: 720px;
+}
+
+.prose-rich {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+
+  a {
+    color: var(--flame-text);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  ul,
+  ol {
+    padding-left: 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+}

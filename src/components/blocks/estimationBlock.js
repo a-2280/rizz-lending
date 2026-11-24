@@ -22,7 +22,7 @@ export default function EstimationBlock({ eyebrow, heading, subText, details, ca
   const monthly = months ? monthlyPayment(financed, months, apr / 100) : 0;
 
   return (
-    <section className="estimator p30 py70">
+    <section id="calculator" className="estimator p30 py70">
       <div className='flex align-center gap-50 space-between justify-center m-flex-col max-1400 ma'>
         <Content eyebrow={eyebrow} heading={heading} subText={subText} details={details} />
         <Calculator calcEyebrow={calcEyebrow} calcHeading={calcHeading} minFinanced={minFinanced} maxFinanced={maxFinanced} financed={financed} setFinanced={setFinanced} terms={terms} months={months} setMonths={setMonths} monthly={monthly} disclaimer={disclaimer} />

@@ -22,6 +22,10 @@ export default function ApplyPage() {
     <main className="application-page pth">
       <JsonLd data={breadcrumbJsonLd('/apply')} />
       <h1 className="sr-only">Apply for Exotic Car Financing</h1>
+      <section className="softpull-card" aria-label="Soft credit pull">
+        <p className="softpull-card__title">Checking your options is a soft credit pull.</p>
+        <p className="softpull-card__sub">It won&apos;t affect your credit score.</p>
+      </section>
       <ApplicationFrame />
       <p className="application-contact f-14">Questions? Call {linkifyContact('801-880-9955')}. Rizz Lending, LLC {linkifyContact('NMLS #2682279')}</p>
     </main>

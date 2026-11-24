@@ -8,6 +8,14 @@ export const client = createClient({
   useCdn: true,
 });
 
+const rich = (field) => `${field}[]{
+  ...,
+  markDefs[]{
+    ...,
+    _type == "link" => { "pageSlug": page->slug.current }
+  }
+}`;
+
 const PAGE_BUILDER_FIELDS = `pageBuilder[]{
   _key,
   _type,
@@ -18,6 +26,10 @@ const PAGE_BUILDER_FIELDS = `pageBuilder[]{
   description,
   quote,
   subText,
+  ${rich('body')},
+  ${rich('richSubText')},
+  ${rich('richDescription')},
+  ${rich('richQuote')},
   buttons[]{ _key, _type, label, linkType, href, "pageSlug": page->slug.current },
   disclaimer,
   note,
@@ -61,6 +73,7 @@ const PAGE_BUILDER_FIELDS = `pageBuilder[]{
     marker,
     heading,
     description,
+    ${rich('richDescription')},
     link{ label, linkType, href, "pageSlug": page->slug.current }
   },
   items[]{
@@ -80,13 +93,15 @@ const PAGE_BUILDER_FIELDS = `pageBuilder[]{
   logos[]{
     _key,
     brand,
-    logo{ asset->{ url, metadata{ dimensions{ width, height } } } }
+    logo{ asset->{ _id, url, metadata{ dimensions{ width, height } } } },
+    link{ label, linkType, href, "pageSlug": page->slug.current }
   },
   states[]{ abbr, name, status, note }
 }`;
 
-const PAGE_QUERY = groq`*[_type == "page" && slug.current == $slug][0]{
+const PAGE_QUERY = groq`*[_type == "page" && slug.current == $slug && !(_id in path("drafts.**"))][0]{
   title,
+  seo{ title, description, noindex },
   ${PAGE_BUILDER_FIELDS}
 }`;
 
@@ -100,7 +115,7 @@ const POST_LIST_QUERY = groq`*[_type == "post" && showOnBlog == true] | order(pu
   _updatedAt
 }`;
 
-const PAGE_DATES_QUERY = groq`*[_type == "page" && defined(slug.current)]{
+const PAGE_DATES_QUERY = groq`*[_type == "page" && defined(slug.current) && !(_id in path("drafts.**"))]{
   "slug": slug.current,
   _updatedAt
 }`;

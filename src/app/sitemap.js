@@ -10,11 +10,11 @@ export default async function sitemap() {
   const updatedAt = Object.fromEntries(pages.map((page) => [page.slug, page._updatedAt]));
 
   return [
-    ...ROUTES.map(({ path }) => ({
-      url: `${SITE_URL}${path === "/" ? "" : path}`,
-      lastModified: new Date(updatedAt[path === "/" ? "home" : path.slice(1)] ?? STATIC_LASTMOD),
+    ...ROUTES.map((route) => ({
+      url: `${SITE_URL}${route.path === "/" ? "" : route.path}`,
+      lastModified: new Date(updatedAt[route.path === "/" ? "home" : route.path.slice(1)] ?? STATIC_LASTMOD),
       changeFrequency: "monthly",
-      priority: path === "/" ? 1 : 0.7,
+      priority: route.priority ?? (route.path === "/" ? 1 : 0.7),
     })),
     ...posts.map((post) => ({
       url: `${SITE_URL}/blog/${post.slug}`,
