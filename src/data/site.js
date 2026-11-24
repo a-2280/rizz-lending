@@ -37,6 +37,7 @@ export const ROUTES = [
 ];
 
 const BORROW_SMART = { name: "Borrow Smart", path: "/overview" };
+const EXOTIC = { name: "Exotic car financing", path: "/exotic-car-financing" };
 
 export const BREADCRUMBS = {
   "/overview": [BORROW_SMART],
@@ -44,6 +45,13 @@ export const BREADCRUMBS = {
   "/lease-buyout": [BORROW_SMART, { name: "Lease Buyout", path: "/lease-buyout" }],
   "/vehicles": [{ name: "Vehicles", path: "/vehicles" }],
   "/hypercar": [{ name: "Hypercar", path: "/hypercar" }],
+  "/exotic-car-financing": [EXOTIC],
+  "/porsche-financing": [EXOTIC, { name: "Porsche financing", path: "/porsche-financing" }],
+  "/ferrari-financing": [EXOTIC, { name: "Ferrari financing", path: "/ferrari-financing" }],
+  "/lamborghini-financing": [EXOTIC, { name: "Lamborghini financing", path: "/lamborghini-financing" }],
+  "/mclaren-financing": [EXOTIC, { name: "McLaren financing", path: "/mclaren-financing" }],
+  "/bentley-financing": [EXOTIC, { name: "Bentley financing", path: "/bentley-financing" }],
+  "/aston-martin-financing": [EXOTIC, { name: "Aston Martin financing", path: "/aston-martin-financing" }],
   "/eligibility": [{ name: "Eligibility", path: "/eligibility" }],
   "/dealers": [{ name: "Dealers", path: "/dealers" }],
   "/partners": [{ name: "Partners", path: "/partners" }],

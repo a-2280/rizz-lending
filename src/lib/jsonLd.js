@@ -1,6 +1,11 @@
 import { SITE_URL, BREADCRUMBS } from '../data/site.js';
 
-const absoluteUrl = (path) => (path === '/' ? SITE_URL : `${SITE_URL}${path}`);
+export const absoluteUrl = (path) => (path === '/' ? SITE_URL : `${SITE_URL}${path}`);
+
+export function breadcrumbTrail(path) {
+  const trail = BREADCRUMBS[path];
+  return trail ? [{ name: 'Home', path: '/' }, ...trail] : null;
+}
 
 export function siteJsonLd(socials) {
   const sameAs = (socials ?? []).map((social) => social.href).filter((href) => /^https?:\/\//i.test(href ?? ''));
@@ -41,11 +46,11 @@ export function siteJsonLd(socials) {
 }
 
 export function breadcrumbJsonLd(path) {
-  const trail = BREADCRUMBS[path];
+  const trail = breadcrumbTrail(path);
   if (!trail) return null;
   return {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
-    itemListElement: [{ name: 'Home', path: '/' }, ...trail].map((crumb, index) => ({ '@type': 'ListItem', position: index + 1, name: crumb.name, item: absoluteUrl(crumb.path) })),
+    itemListElement: trail.map((crumb, index) => ({ '@type': 'ListItem', position: index + 1, name: crumb.name, item: absoluteUrl(crumb.path) })),
   };
 }

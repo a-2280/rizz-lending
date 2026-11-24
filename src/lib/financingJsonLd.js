@@ -1,11 +1,7 @@
 import { toPlainText } from 'next-sanity';
 import { SITE_URL } from '@/data/site';
 import { FINANCING_PAGES } from '@/data/financingPages';
-
-function absolute(href) {
-  if (href === '/') return `${SITE_URL}/`;
-  return `${SITE_URL}${href}`;
-}
+import { absoluteUrl, breadcrumbTrail } from '@/lib/jsonLd';
 
 function answerText(answer) {
   if (!answer) return '';
@@ -27,7 +23,8 @@ function faqEntities(page) {
 }
 
 export function financingCrumbs(slug) {
-  return FINANCING_PAGES[slug]?.crumbs || null;
+  if (!FINANCING_PAGES[slug]) return null;
+  return breadcrumbTrail(`/${slug}`)?.map((crumb) => ({ name: crumb.name, href: crumb.path })) ?? null;
 }
 
 // WebPage + BreadcrumbList + LoanOrCredit + FAQPage for the hub and brand pages.
@@ -57,11 +54,11 @@ export function financingJsonLd(slug, page) {
     {
       '@type': 'BreadcrumbList',
       '@id': `${url}#breadcrumb`,
-      itemListElement: config.crumbs.map((crumb, index) => ({
+      itemListElement: (breadcrumbTrail(`/${slug}`) ?? []).map((crumb, index) => ({
         '@type': 'ListItem',
         position: index + 1,
         name: crumb.name,
-        item: absolute(crumb.href),
+        item: absoluteUrl(crumb.path),
       })),
     },
     {

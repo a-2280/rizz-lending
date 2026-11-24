@@ -70,6 +70,5 @@ export default async function CmsPage({ params }) {
         <PageBuilder blocks={page.pageBuilder} breadcrumbs={financingCrumbs(slugPath)} includeFaqJsonLd={!jsonLd} />
       </main>
     </>
-
   );
 }
