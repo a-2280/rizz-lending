@@ -2,6 +2,8 @@ import { notFound } from 'next/navigation';
 import { getPage } from '@/lib/sanity';
 import PageBuilder from '@/components/page-builder';
 import { sanityImage } from '@/lib/image';
+import JsonLd from '@/components/jsonLd';
+import { breadcrumbJsonLd } from '@/lib/jsonLd';
 
 export const revalidate = 60;
 
@@ -47,8 +49,11 @@ export default async function CmsPage({ params }) {
   const page = await getPage(slugPath);
   if (!page) notFound();
   return (
-    <main>
-      <PageBuilder blocks={page.pageBuilder} />
-    </main>
+    <>
+      <JsonLd data={breadcrumbJsonLd(`/${slugPath}`)} />
+      <main>
+        <PageBuilder blocks={page.pageBuilder} />
+      </main>
+    </>
   );
 }

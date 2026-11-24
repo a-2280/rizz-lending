@@ -8,7 +8,9 @@ import SmoothScroll from '@/components/smoothScroll';
 import SalInit from '@/components/salInit';
 import UtmCapture from '@/components/utmCapture';
 import MetaPixel from '@/components/metaPixel';
-import { SITE_URL } from '@/data/site';
+import HubspotScript from '@/components/hubspotScript';
+import JsonLd from '@/components/jsonLd';
+import { siteJsonLd } from '@/lib/jsonLd';
 
 export const metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? 'https://rizzlending.com'),
@@ -67,49 +69,18 @@ const META_PIXEL_ID = process.env.NEXT_PUBLIC_META_PIXEL_ID;
 // /apply iframe whether they may store or forward UTMs.
 const CONSENT_SCRIPT = `window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}window.gtag=gtag;gtag('consent','default',{ad_storage:'granted',analytics_storage:'granted',ad_user_data:'granted',ad_personalization:'granted',wait_for_update:500});var _hsp=window._hsp=window._hsp||[];_hsp.push(['addPrivacyConsentListener',function(c){var cat=c.categories||{};var a=c.allowed||cat.analytics?'granted':'denied';var ad=c.allowed||cat.advertisement?'granted':'denied';gtag('consent','update',{analytics_storage:a,ad_storage:ad,ad_user_data:ad,ad_personalization:ad});window.__adConsentDenied=ad==='denied';window.__utmConsent=ad;if(ad==='denied'){try{localStorage.removeItem('first_touch_utms')}catch(e){}}window.dispatchEvent(new Event('utmconsent'));if(typeof window.fbq==='function')window.fbq('consent',ad==='denied'?'revoke':'grant');}]);`;
 
-const JSON_LD = {
-  '@context': 'https://schema.org',
-  '@graph': [
-    {
-      '@type': 'FinancialService',
-      '@id': `${SITE_URL}/#organization`,
-      name: 'Rizz Lending',
-      url: SITE_URL,
-      logo: `${SITE_URL}/logo.png`,
-      image: `${SITE_URL}/logo.png`,
-      telephone: '+1-801-880-9955',
-      address: {
-        '@type': 'PostalAddress',
-        streetAddress: '13222 Tree Sparrow Dr., Suite R-327',
-        addressLocality: 'Riverton',
-        addressRegion: 'UT',
-        postalCode: '84096',
-        addressCountry: 'US',
-      },
-      identifier: { '@type': 'PropertyValue', propertyID: 'NMLS', value: '2682279' },
-    },
-    {
-      '@type': 'WebSite',
-      '@id': `${SITE_URL}/#website`,
-      name: 'Rizz Lending',
-      url: SITE_URL,
-      publisher: { '@id': `${SITE_URL}/#organization` },
-    },
-  ],
-};
-
 export default async function RootLayout({ children }) {
   const footer = await getFooter();
   return (
     <SmoothScroll>
       <html lang="en" className={`${clash.variable} ${gambetta.variable} ${archivo.variable}`}>
         <body>
-          <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(JSON_LD).replace(/</g, '\\u003c') }} />
+          <JsonLd data={siteJsonLd(footer?.socials)} />
           <SalInit />
           <UtmCapture />
           <Script id="consent-default" strategy="beforeInteractive">{CONSENT_SCRIPT}</Script>
           {/* HubSpot cookie banner, loaded early on its own. The HubSpot loader below
-              (lazyOnload) normally injects this same banner.js, but only when no element
+              normally injects this same banner.js, but only when no element
               with this id exists yet, so rendering the tag here means the loader skips
               it and the rest of HubSpot (analytics, collected forms, ads pixel) stays
               lazy. A lazy-loaded banner painted so late that it became the mobile LCP
@@ -130,7 +101,7 @@ export default async function RootLayout({ children }) {
               that visitor's browsing history. It would also inject the cookie banner,
               but the early cookieBanner tag above already has, so it skips that. Skipped
               entirely when no portal is configured, rather than loading a bogus URL. */}
-          {HUBSPOT_PORTAL_ID && <Script id="hs-script-loader" src={`https://${HUBSPOT_SCRIPT_HOST}/${HUBSPOT_PORTAL_ID}.js`} strategy="lazyOnload" async defer />}
+          {HUBSPOT_PORTAL_ID && <HubspotScript src={`https://${HUBSPOT_SCRIPT_HOST}/${HUBSPOT_PORTAL_ID}.js`} />}
           {META_PIXEL_ID && (
             <>
               <Script id="meta-pixel" strategy="lazyOnload">{`if(window.self===window.top){!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');if(window.__adConsentDenied)fbq('consent','revoke');fbq('init','${META_PIXEL_ID}');fbq('track','PageView');}`}</Script>

@@ -6,6 +6,14 @@ import { SITE_URL } from '@/data/site';
 
 export const revalidate = 60;
 
+const SEO_TITLES = {
+  'long-term-exotic-car-loans-up-to-20-years-how-they-work-risks-and-smart-alternatives': 'Long-Term Exotic Car Loans: How They Work | Rizz Lending',
+  'porsche-911-turbo-s-financing-smart-strategies-to-own-an-icon-without-overpaying': 'Porsche 911 Turbo S Financing Guide | Rizz Lending',
+  'dead-cars-new-opportunities': 'Dead Cars, New Opportunities in Auto Finance | Rizz Lending',
+  'the-lamborghini-veneno-the-ultimate-dream-car-how-to-finance-one': 'Lamborghini Veneno Financing: How It Works | Rizz Lending',
+  'navigating-the-impact-of-new-u-s-tariffs-on-exotic-car-brands': 'How New U.S. Tariffs Affect Exotic Car Brands | Rizz Lending',
+};
+
 export async function generateStaticParams() {
   return [];
 }
@@ -16,7 +24,7 @@ export async function generateMetadata({ params }) {
   if (!post) return {};
   const image = sanityImage(post.mainImage, 1200);
   return {
-    title: post.title,
+    title: SEO_TITLES[slug] ? { absolute: SEO_TITLES[slug] } : post.title,
     description: post.excerpt,
     alternates: { canonical: `/blog/${slug}` },
     ...(image && { openGraph: { siteName: 'Rizz Lending', type: 'article', locale: 'en_US', publishedTime: post.publishedAt, images: [image] } }),
