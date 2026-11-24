@@ -23,7 +23,7 @@ export default function ImageHero({ eyebrow, eyebrowColor, heading, subText, ima
           {subText && <p className="f-18 text-silk-dim max-500 text-balanced">{subText}</p>}
         </div>
         {hasMedia && (
-          <div className="pos-rel ratio-22-9 radius-10 overflow fade--in" data-sal>
+          <div className="pos-rel ratio-22-9 radius-10 overflow fade--load">
             {/* Boxed, max-1400 inside p30 gutters — never wider than 1340 CSS px. */}
             <HeroMedia image={image} video={video} width={1600} sizes="(max-width: 1400px) 100vw, 1400px" priority />
           </div>
