@@ -1,0 +1,15 @@
+/*--------------------------------------------------------------
+## Blog Grid
+--------------------------------------------------------------*/
+
+/* The shared .grid is three columns at every width. Scope a breakpoint to the
+   blog index only: one card on phones, two on tablet, three from 769px up. */
+.blog-grid .grid {
+  @media (max-width: 768px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (max-width: 640px) {
+    grid-template-columns: 1fr;
+  }
+}
